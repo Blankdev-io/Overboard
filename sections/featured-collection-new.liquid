@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="slider-buttons no-js-hidden">
           <button
             type="button"
-            class="slider-button slider-button--prev {% if total_svgs <= 1 %}pagi-mobile{% endif %}"
+            class="slider-button slider-button--prev featured-button--prev {% if total_svgs <= 1 %}pagi-mobile{% endif %}"
             name="previous"
             aria-label="{{ 'general.slider.previous_slide' | t }}"
             aria-controls="Slider-{{ section.id }}"
@@ -244,7 +244,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
           <button
             type="button"
-            class="slider-button slider-button--next {% if total_svgs <= 1 %}pagi-mobile{% endif %}"
+            class="slider-button slider-button--next featured-button--next {% if total_svgs <= 1 %}pagi-mobile{% endif %}"
             name="next"
             aria-label="{{ 'general.slider.next_slide' | t }}"
             aria-controls="Slider-{{ section.id }}"
@@ -270,8 +270,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Event listeners for next and previous buttons
-    var nextButton = document.querySelector('.slider-button--next');
-    var prevButton = document.querySelector('.slider-button--prev');
+    var nextButton = document.querySelector('.featured-button--next');
+    var prevButton = document.querySelector('.featured-button--prev');
 
     if (nextButton) {
         nextButton.addEventListener('click', function() {
