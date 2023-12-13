@@ -818,30 +818,31 @@ class SlideshowComponent extends SliderComponent {
     this.sliderControlButtons[this.currentPage - 1].classList.add('slider-counter__link--active');
     this.sliderControlButtons[this.currentPage - 1].setAttribute('aria-current', true);
 
-
-    //custom-slideshow.liquid
-
-    this.sliderControlButtons = this.querySelectorAll('.slider-counter__link_slideshow');
-    this.prevButton.removeAttribute('disabled');
-
-    if (!this.sliderControlButtons.length) return;
-    this.sliderControlButtons.forEach((button, index) => {
-      button.classList.remove('slider-counter__link_slideshow--active');
-      button.removeAttribute('aria-current');
-    
-      // Find the <rect> element within the button
-      const rect = button.querySelector('rect');
-      if (rect) {
-        // If it's the current slide, set the fill to #AED7EA, else set it to #C1C1C1
-        rect.setAttribute('fill', index === this.currentPage - 1 ? '#AED7EA' : '#C1C1C1');
-      }
-    });
-    // Adding the active class and aria-current attribute to the current page button
-    this.sliderControlButtons[this.currentPage - 1].classList.add('slider-counter__link_slideshow--active');
-    this.sliderControlButtons[this.currentPage - 1].setAttribute('aria-current', 'true');
-
   }
+  update() {
+    super.update();
 
+      //custom-slideshow.liquid
+
+      this.sliderControlButtons = this.querySelectorAll('.slider-counter__link_slideshow');
+      this.prevButton.removeAttribute('disabled');
+  
+      if (!this.sliderControlButtons.length) return;
+      this.sliderControlButtons.forEach((button, index) => {
+        button.classList.remove('slider-counter__link_slideshow--active');
+        button.removeAttribute('aria-current');
+      
+        // Find the <rect> element within the button
+        const rect = button.querySelector('rect');
+        if (rect) {
+          // If it's the current slide, set the fill to #AED7EA, else set it to #C1C1C1
+          rect.setAttribute('fill', index === this.currentPage - 1 ? '#AED7EA' : '#C1C1C1');
+        }
+      });
+      // Adding the active class and aria-current attribute to the current page button
+      this.sliderControlButtons[this.currentPage - 1].classList.add('slider-counter__link_slideshow--active');
+      this.sliderControlButtons[this.currentPage - 1].setAttribute('aria-current', 'true');
+    }
   autoPlayToggle() {
     this.togglePlayButtonState(this.autoplayButtonIsSetToPlay);
     this.autoplayButtonIsSetToPlay ? this.pause() : this.play();
