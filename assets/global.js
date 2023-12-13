@@ -1,3 +1,4 @@
+@ -1,1267 +1,1293 @@
 function getFocusableElements(container) {
   return Array.from(
     container.querySelectorAll(
@@ -810,8 +811,22 @@ class SlideshowComponent extends SliderComponent {
 
     if (!this.sliderControlButtons.length) return;
 
+    this.sliderControlButtons.forEach((link) => {
+      link.classList.remove('slider-counter__link--active');
+      link.removeAttribute('aria-current');
+    });
+    this.sliderControlButtons[this.currentPage - 1].classList.add('slider-counter__link--active');
+    this.sliderControlButtons[this.currentPage - 1].setAttribute('aria-current', true);
+
+
+    //custom-slideshow.liquid
+
+    this.sliderControlButtons = this.querySelectorAll('.slider-counter__link_slideshow');
+    this.prevButton.removeAttribute('disabled');
+
+    if (!this.sliderControlButtons.length) return;
     this.sliderControlButtons.forEach((button, index) => {
-      button.classList.remove('slider-counter__link--active');
+      button.classList.remove('slider-counter__link_slideshow--active');
       button.removeAttribute('aria-current');
     
       // Find the <rect> element within the button
@@ -821,12 +836,9 @@ class SlideshowComponent extends SliderComponent {
         rect.setAttribute('fill', index === this.currentPage - 1 ? '#AED7EA' : '#C1C1C1');
       }
     });
-    
     // Adding the active class and aria-current attribute to the current page button
-    this.sliderControlButtons[this.currentPage - 1].classList.add('slider-counter__link--active');
+    this.sliderControlButtons[this.currentPage - 1].classList.add('slider-counter__link_slideshow--active');
     this.sliderControlButtons[this.currentPage - 1].setAttribute('aria-current', 'true');
-    
-
 
   }
 
