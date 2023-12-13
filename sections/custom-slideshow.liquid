@@ -333,7 +333,7 @@
               class="ratio-video video-section__media deferred-media no-js-hidden  global-media-settings{% if block.settings.full_width %} global-media-settings--full-width{% endif %}{% if fix_ratio %} media-fit-cover{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
               data-media-id="{{ video_id }}"
             >
-              <button
+              <div
                 id="Deferred-Poster-Modal-{{ video_id }}"
                 class="video-section__poster media deferred-media__poster media--landscape"
                 type="button"
@@ -348,42 +348,7 @@
                 {%- else -%}
                   {{ 'hero-apparel-3' | placeholder_svg_tag: 'placeholder-svg placeholder' }}
                 {%- endif -%}
-                <span class="deferred-media__poster-button motion-reduce">
-                  {%- render 'icon-play' -%}
-                </span>
-                {% if block.settings.media_type == 'video' %}
-                  <div class="slideshow__text-wrapper banner__content banner__content--{{ block.settings.box_align }} page-width{% if settings.animations_reveal_on_scroll and forloop.index == 1 %} scroll-trigger animate--slide-in{% endif %}">
-                    <div class="slideshow__text banner__box content-container content-container--full-width-mobile  slideshow__text--{{ block.settings.text_alignment }} slideshow__text-mobile--{{ block.settings.text_alignment_mobile }}">
-                      {%- if block.settings.heading != blank -%}
-                        <h2 style="color:{{- block.settings.colortext -}}; text-transform: uppercase;" class="font-size-header banner__heading inline-richtext category-header {{ block.settings.heading_size }}">
-                          {{ block.settings.heading }}
-                        </h2>
-                      {%- endif -%}
-                      {%- if block.settings.subheading != blank -%}
-                        <div class="banner__text rte" {{ block.shopify_attributes }}>
-                          <p class= "font-size-subheader category-header"style="color:{{- block.settings.colortext -}}; text-transform: uppercase;">{{ block.settings.subheading }}</p>
-                        </div>
-                      {%- endif -%}
-                      {%- if block.settings.button_label != blank -%}
-                        <div class=" display-none text-alignment-mobile-{{- block.settings.text_alignment_mobile -}}     banner__buttons text-alignment-{{- block.settings.text_alignment -}} " style="margin-top: 2rem;">
-                          <a
-                            {% if block.settings.link %}
-                              href="{{ block.settings.link }}"
-                            {% else %}
-                              role="link" aria-disabled="true"
-                            {% endif %}
-                            class="button button--primary mobilecenter round-button-slide button button--primary"
-                            style="color:{{- block.settings.colortext -}}; background:{{- block.settings.colorbackgroundbutton -}}"
-                          >
-                            {{- block.settings.button_label | escape -}}
-                          </a>
-                        </div>
-                      {%- endif -%}
-                    </div>
-                  </div>
-                  {%- endif -%}
-              </button>
-              <template>
+                </div>
                 {%- if block.settings.video == null and block.settings.video_url != null -%}
                   {%- liquid
                     assign loop = ''
@@ -411,10 +376,42 @@
                 {%- else -%}
                   {{
                     block.settings.video
-                    | video_tag: loop: true, autoplay: true, muted: true }}
-                {%- endif -%}
-              </template>
+                    | video_tag: loop: true, autoplay: true, muted: true, preload:true
+                  }}
+                {%- endif -%}    
+                {% if block.settings.media_type == 'video' %}
+                  <div class="slideshow__text-wrapper banner__content banner__content--{{ block.settings.box_align }} page-width{% if settings.animations_reveal_on_scroll and forloop.index == 1 %} scroll-trigger animate--slide-in{% endif %}">
+                    <div class="slideshow__text banner__box content-container content-container--full-width-mobile  slideshow__text--{{ block.settings.text_alignment }} slideshow__text-mobile--{{ block.settings.text_alignment_mobile }}">
+                      {%- if block.settings.heading != blank -%}
+                        <h2 style="color:{{- block.settings.colortext -}}; text-transform: uppercase;" class="font-size-header banner__heading inline-richtext category-header {{ block.settings.heading_size }}">
+                          {{ block.settings.heading }}
+                        </h2>
+                      {%- endif -%}
+                      {%- if block.settings.subheading != blank -%}
+                        <div class="banner__text rte" {{ block.shopify_attributes }}>
+                          <p class= "font-size-subheader category-header"style="color:{{- block.settings.colortext -}}; text-transform: uppercase;">{{ block.settings.subheading }}</p>
+                        </div>
+                      {%- endif -%}
+                      {%- if block.settings.button_label != blank -%}
+                        <div class="text-alignment-mobile-{{- block.settings.text_alignment_mobile -}}     banner__buttons text-alignment-{{- block.settings.text_alignment -}} " style="margin-top: 2rem;">
+                          <a
+                            {% if block.settings.link %}
+                              href="{{ block.settings.link }}"
+                            {% else %}
+                              role="link" aria-disabled="true"
+                            {% endif %}
+                            class="button button--primary mobilecenter round-button-slide button button--primary"
+                            style="color:{{- block.settings.colortext -}}; background:{{- block.settings.colorbackgroundbutton -}}"
+                          >
+                            {{- block.settings.button_label | escape -}}
+                          </a>
+                        </div>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                  {%- endif -%}            
             </deferred-media>
+            
           </div>
         {%- endif -%}
         {% unless block.settings.media_type == 'video' %}
