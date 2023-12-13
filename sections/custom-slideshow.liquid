@@ -348,9 +348,9 @@
                 {%- else -%}
                   {{ 'hero-apparel-3' | placeholder_svg_tag: 'placeholder-svg placeholder' }}
                 {%- endif -%}
-                {% comment %}<span class="deferred-media__poster-button motion-reduce">
+                <span class="deferred-media__poster-button motion-reduce">
                   {%- render 'icon-play' -%}
-                </span>{% endcomment %}
+                </span>
                 {% if block.settings.media_type == 'video' %}
                   <div class="slideshow__text-wrapper banner__content banner__content--{{ block.settings.box_align }} page-width{% if settings.animations_reveal_on_scroll and forloop.index == 1 %} scroll-trigger animate--slide-in{% endif %}">
                     <div class="slideshow__text banner__box content-container content-container--full-width-mobile  slideshow__text--{{ block.settings.text_alignment }} slideshow__text-mobile--{{ block.settings.text_alignment_mobile }}">
