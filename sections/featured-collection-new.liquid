@@ -261,9 +261,14 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
     function updatePaginationBullets() {
         var current = parseInt(document.querySelector('.featured-current').textContent);
-        var bullets = document.querySelectorAll('.featured-pagination-bullet svg');
+        var desktopBullets = document.querySelectorAll('.pagi-desktop svg');
+        var mobileBullets = document.querySelectorAll('.pagi-mobile svg');
 
-        bullets.forEach(function(bullet, index) {
+        desktopBullets.forEach(function(bullet, index) {
+            var fillColor = (index + 1) === current ? '#030000' : '#C1C1C1';
+            bullet.querySelector('rect').setAttribute('fill', fillColor);
+        });
+        mobileBullets.forEach(function(bullet, index) {
             var fillColor = (index + 1) === current ? '#030000' : '#C1C1C1';
             bullet.querySelector('rect').setAttribute('fill', fillColor);
         });
