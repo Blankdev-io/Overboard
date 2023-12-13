@@ -56,6 +56,13 @@
     justify-self: end !important;
   }
 }
+
+@media screen and (min-width: 1174px) {
+  .desktop-margin-right{
+    margin-right: 1vw !important;
+  }
+}
+  
   .menu-drawer-container {
     display: flex;
   }
@@ -329,7 +336,7 @@
         {%- endcase -%}
       {%- endfor -%}
 
-      <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
+      <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset desktop-margin-right" id="cart-icon-bubble">
         {%- liquid
           if cart == empty
             render 'icon-cart-empty'
