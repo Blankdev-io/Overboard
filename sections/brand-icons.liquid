@@ -1,0 +1,175 @@
+<div class="brand-carousel-container">
+  <div class="swiper brand-carousel">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        <div class="swiper-slide">
+        {% assign svg_filename = block.settings.image %}
+        {% assign svg_file = svg_filename | append: '.svg' %}
+        {% if block.settings.url != blank %}
+          <a href="{{ block.settings.url }}">
+        {% endif %}
+            <img src="{{ svg_file | asset_url }}" alt="{{ block.settings.text }}" title="{{ block.settings.text }}">
+        {% if block.settings.url != blank %}
+          </a>
+        {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+  
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  new Swiper('.brand-carousel', {
+    slidesPerView: '2',
+    spaceBetween: 0,
+    loop: true,
+    autoplay: {
+      delay: 2500,
+      disableOnInteraction: false,
+    },
+    breakpoints: {
+      320: {
+        slidesPerView: '2',
+        spaceBetween: 10
+      },
+      800: {
+        slidesPerView: '4',
+        spaceBetween: 10
+      },
+      1000: {
+        slidesPerView: '5',
+        spaceBetween: 50
+      },
+      1200: {
+        slidesPerView: '6',
+        spaceBetween: 50
+      },
+      1400: {
+        slidesPerView: '7',
+        spaceBetween: 72
+      }
+    }
+  });
+});
+
+  </script>
+
+
+
+<style>
+
+  .swiper-wrapper {
+  align-items: center;
+  }
+  
+  .brand-carousel-container {
+    margin: 0 6vw;
+  }
+  
+  .brand-carousel-container {
+    text-align: center;
+    margin-top: {{ section.settings.margintop }}px !important;
+    margin-bottom: {{ section.settings.marginbot }}px !important;
+  }
+
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .swiper-slide img {
+    max-width: 90%;
+    height: 61px;
+  }
+
+  @media (max-width: 768px) {
+  .swiper-slide img {
+    max-width: 80%;
+  }
+
+    .swiper-slide {
+      margin-right: 50px;
+    }
+  }
+
+  /*@media (max-width: 480px) {
+    .brand-carousel-container {
+      margin: 0 25px;
+    }*/
+
+@media (max-width: 750px) {
+  .brand-carousel-container {
+    margin: 0 0;
+  }
+}
+  
+@media (min-width: 2000px) {
+  .swiper-slide img {
+    max-width: 150px;
+    height: 61px;
+  }
+}
+</style>
+
+
+{% schema %}
+{
+  "name": "Brand Icons",
+  "class": "brand-icons",
+  "settings": [
+    {
+      "type": "range",
+      "id": "margintop",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "marginbot",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 50
+    }
+  ],
+  "max_blocks": 10,
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Brand Image",
+      "settings": [
+        {
+          "type": "text",
+          "id": "image",
+          "label": "SVG File Name",
+          "info": "The file name of the .svg file (without \".svg\" at the end) that is uploaded to the Assets folder of the theme files."
+        },
+        {
+          "type": "text",
+          "id": "alttext",
+          "label": "Alt Text",
+          "default": "Brand Image"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Url"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand Icons"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,102 @@
+<div class="icon-with-text-container">
+  {% for block in section.blocks %}
+    <div class="icon-with-text-block">
+      {% if block.settings.image %}
+        {% assign svg_filename = block.settings.image %}
+        {% assign svg_file = svg_filename | append: '.svg' %}
+        <img src="{{ svg_file | asset_url }}" alt="{{ block.settings.text }}" title="{{ block.settings.text }}">
+      {% endif %}
+      <p class="icon-with-text">{{ block.settings.text }}</p>
+    </div>
+  {% endfor %}
+</div>
+
+<style>
+.icon-with-text-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  text-align: center;
+  margin-top: {{ section.settings.margintop }}px !important;
+  margin-bottom: {{ section.settings.marginbot }}px !important;
+}
+
+.icon-with-text-block {
+  flex-basis: calc(20% - 10px);
+}
+
+@media (max-width: 768px) {
+  .icon-with-text-block {
+    flex-basis: 100%;
+  }
+}
+
+.icon-with-text-block img {
+  width: 100px;
+  height: 100px;
+  object-fit: none !important;
+}
+
+.icon-with-text {
+  font-weight: bold !important;
+  text-transform: uppercase !important;
+  color: black !important;
+  letter-spacing: normal !important;
+  font-size: 19px !important;
+}
+</style>
+
+{% schema %}
+{
+  "name": "Icons with Text",
+    "settings": [
+    {
+      "type": "range",
+      "id": "margintop",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "marginbot",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 50
+    }
+  ],
+  "max_blocks": 5,
+  "blocks": [
+    {
+      "type": "icon_block",
+      "name": "Icon Block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "image",
+          "label": "SVG File Name",
+          "info": "The file name of the .svg file (without \".svg\" at the end) that is uploaded to the Assets folder of the theme files."
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Icon Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Icons with Text"
+    }
+  ]
+}
+{% endschema %}
+
