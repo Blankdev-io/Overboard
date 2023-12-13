@@ -1,4 +1,3 @@
-@ -1,1293 +1,1279 @@
 function getFocusableElements(container) {
   return Array.from(
     container.querySelectorAll(
