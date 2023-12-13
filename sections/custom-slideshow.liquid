@@ -411,13 +411,7 @@
                 {%- else -%}
                   {{
                     block.settings.video
-                    | video_tag:
-                      image_size: '1100x',
-                      autoplay: true,
-                      loop: block.settings.enable_video_looping,
-                      controls: false,
-                      muted: true
-                  }}
+                    | video_tag: loop: true, autoplay: true, muted: true }}
                 {%- endif -%}
               </template>
             </deferred-media>
