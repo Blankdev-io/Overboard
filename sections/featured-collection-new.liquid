@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
           {%- endfor -%}
         {%- endfor -%}
       </ul>
-{% comment %}
+
           {% assign total_svgs = products_to_display | minus: 2 %}
           {% assign total_svgs_mobile = products_to_display %}
       
@@ -252,7 +252,7 @@ document.addEventListener('DOMContentLoaded', function() {
             {% render 'icon-caret' %} 
           </button>
         </div>
-      {%- endif -%}{% endcomment %}
+      {%- endif -%}
     </slider-component> 
   </div>
 </div>
