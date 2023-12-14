@@ -91,7 +91,9 @@
         "template--17022770643186__e3da38ee-277d-4121-a48c-f5de50d0e3f2-slide-1"
       ],
       "settings": {
-        "slide_height": "medium"
+        "slide_height": "medium",
+        "auto_rotate": true,
+        "change_slides_speed": 5
       }
     },
     "461e995f-bc8e-43f0-a438-25cebae0e630": {
