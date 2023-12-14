@@ -527,6 +527,25 @@
   <script src="{{ 'theme-editor.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}
 
+<script>
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var slideshowElement = document.querySelector('.slideshow');
+
+    if (slideshowElement) {
+        // Assuming your slideshow uses 'mouseenter' and 'mouseleave' events to control autoplay
+        slideshowElement.removeEventListener('mouseenter', pauseSlideshowFunction);
+        slideshowElement.removeEventListener('mouseleave', resumeSlideshowFunction);
+        
+        // Alternatively, if the event listeners are anonymous functions,
+        // you might need to modify the original component where these are defined.
+    }
+});
+
+// Replace 'pauseSlideshowFunction' and 'resumeSlideshowFunction' with the actual function names used in your theme.
+
+</script>
+
 {% schema %}
 {
   "name": "Custom Slideshow",
