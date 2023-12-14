@@ -867,10 +867,10 @@ class SlideshowComponent extends SliderComponent {
     this.autoplay = setInterval(this.autoRotateSlides.bind(this), this.autoplaySpeed);
   }
 
-  pause() {
-    this.slider.setAttribute('aria-live', 'polite');
-    clearInterval(this.autoplay);
-  }
+  //pause() {
+  //  this.slider.setAttribute('aria-live', 'polite');
+  //  clearInterval(this.autoplay);
+  //}
 
   togglePlayButtonState(pauseAutoplay) {
     if (pauseAutoplay) {
