@@ -1,0 +1,26 @@
+<nav aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ shop.url }}">Home</a></li>
+
+    {% if template contains 'product' %}
+      {% assign category_found = false %}
+      {% for tag in product.tags %}
+        {% if category_found == false %}
+          {% if tag == 'Boards' or tag == 'Clothing' or tag == 'Wetsuits' or tag == 'Accessories' %}
+            <li><a href="/collections/{{ tag | handleize }}">{{ tag }}</a></li>
+            {% assign category_found = true %}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+      <!-- Product Name -->
+      <li>{{ product.title }}</li>
+
+    {% elsif template contains 'collection' %}
+      <!-- Collection Name -->
+      <li>{{ collection.title }}</li>
+
+    <!-- Add other page types here if needed -->
+
+    {% endif %}
+  </ol>
+</nav>
