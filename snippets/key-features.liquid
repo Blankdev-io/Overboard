@@ -51,7 +51,7 @@
 
 {% if product_included %}
   {% if main_image %}
-    <img src="https://cdn.shopify.com/s/files/{{ main_image | split: '/' | last }}/..." alt="Main Image">
+    {{ main_image | media_tag }}
   {% endif %}
 
   {% if heading_1 %}
