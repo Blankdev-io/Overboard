@@ -2,6 +2,8 @@
 {% assign current_product_gid = 'gid://shopify/Product/' | append: product.id %}
 {% assign product_included = false %}
 
+<script>console.log('{{ current_product_gid }}')</script>
+
 {% for key_feature in shop.metaobjects.key_features.values %}
   
   <script>console.log('{{ key_feature }}')</script>
