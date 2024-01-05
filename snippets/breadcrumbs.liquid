@@ -1,4 +1,27 @@
-<nav aria-label="Breadcrumb">
+<style>
+.breadcrumb ol {
+  list-style-type: none; /* Removes default list styling */
+  padding: 0; /* Removes default padding */
+  display: flex; /* Aligns items horizontally */
+  align-items: center; /* Center items vertically */
+}
+
+.breadcrumb ol li {
+  margin-right: 10px; /* Adjust as needed for spacing */
+}
+
+.breadcrumb ol li:not(:last-child)::after {
+  content: '>'; /* Adds the '>' symbol */
+  margin-left: 10px; /* Spacing after the '>' symbol */
+}
+
+.breadcrumb ol li a {
+  text-decoration: none; /* Optional: Removes underline from links */
+  /* Add more styles here for link colors, font, etc. */
+}
+</style>
+
+<nav aria-label="Breadcrumb" class="breadcrumb">
   <ol>
     <li><a href="{{ shop.url }}">Home</a></li>
 
