@@ -51,7 +51,7 @@
 
 {% if product_included %}
   {% if main_image %}
-    {{ main_image | media_tag }}
+    {{ main_image | image_url: width: 200 | image_tag }}
   {% endif %}
 
   {% if heading_1 %}
