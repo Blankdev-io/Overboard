@@ -71,7 +71,7 @@
   {% endif %}
 
   {% if image_1 %}
-    <img src="{{ image_1 | media_url }}" alt="Image 1">
+    {{ image_1 | image_url: width: 500 | image_tag }}
   {% endif %}
 
   {% if heading_2 %}
@@ -91,7 +91,7 @@
   {% endif %}
 
   {% if image_2 %}
-    <img src="{{ image_2 | media_url }}" alt="Image 2">
+    {{ image_2 | image_url: width: 500 | image_tag }}
   {% endif %}
 
   {% if heading_3 %}
@@ -111,6 +111,6 @@
   {% endif %}
 
   {% if image_3 %}
-    <img src="{{ image_3 | media_url }}" alt="Image 3">
+    {{ image_3 | image_url: width: 500 | image_tag }}
   {% endif %}
 {% endif %}
