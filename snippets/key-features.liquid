@@ -2,7 +2,12 @@
 {% assign current_product_gid = 'gid://shopify/Product/' | append: product.id %}
 
 {% for key_feature in shop.metaobjects.key_features.values %}
+  {% assign product_gids = key_feature.products | join: ',' %}
 
+  {% if product_gids contains current_product_gid %}
+    {% assign product_included = true %}
+  {% endif %}
+  
 <script>console.log('{{ key_feature.products }}')</script>
   
     {% for key_product_gid in key_feature.products %}
