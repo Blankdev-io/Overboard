@@ -5,13 +5,14 @@
   <script>console.log('{{ key_feature }}')</script>
   <script>console.log('{{ key_feature.products }}')</script>
   
-    {% for key_product in key_feature.products %}
-        <script>console.log('{{ key_product.id }}')</script>
-      {% if key_product.id == product.id %}
+  {% if key_feature.products != blank %}
+    {% for key_product_gid in key_feature.products %}
+      {% if key_product_gid == current_product_gid %}
         {% assign product_included = true %}
         {% break %}
       {% endif %}
     {% endfor %}
+  {% endif %}
 
     {% if key_feature.collections and product_included == false %}
     {% for key_collection in key_feature.collections %}
