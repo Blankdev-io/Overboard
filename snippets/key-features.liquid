@@ -5,7 +5,6 @@
 
 {% for key_feature in shop.metaobjects.key_features.values %}
   
-  <script>console.log('{{ key_feature }}')</script>
   <script>console.log('{{ key_feature.products }}')</script>
   
     {% for key_product_gid in key_feature.products %}
