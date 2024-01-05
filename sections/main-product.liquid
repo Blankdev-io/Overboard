@@ -1,3 +1,4 @@
+{%- capture breadcrumb -%}
     <nav aria-label="{{ 'general.breadcrumb.title' | t }}" class="breadcrumb breadcrumb--floating text--xsmall hidden-phone">
       <ol class="breadcrumb__list" role="list">
         <li class="breadcrumb__item">
@@ -26,6 +27,7 @@
         </li>
       </ol>
     </nav>
+  {%- endcapture -%}
 
 <section
   id="MainProduct-{{ section.id }}"
@@ -93,8 +95,7 @@
   <div class="page-width">
     <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
     
-
-      
+      {{- breadcrumb -}}
       <div class="grid__item product__media-wrapper{% if section.settings.media_position == 'right' %} medium-hide large-up-hide{% endif %}">
       {% render 'product-media-gallery', variant_images: variant_images %}
     </div>
