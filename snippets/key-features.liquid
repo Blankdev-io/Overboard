@@ -8,6 +8,20 @@
     {% assign product_included = true %}
   {% endif %}
 
+  {% if key_feature.collections and product_included == false %}
+    {% for key_collection in key_feature.collections %}
+      {% for collection in product.collections %}
+        {% if key_collection.id == collection.id %}
+          {% assign product_included = true %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+      {% if product_included %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
   {% if product_included %}
     {% liquid
         assign main_image = key_features.main_image
