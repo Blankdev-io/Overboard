@@ -87,7 +87,30 @@
   {% endif %}
 
   {% if table_2 %}
-    {{ table_2 | remove_first: '["' | remove_last: '"]' | split: '","' }}
+    {% assign table_items = table_2 | remove_first: '["' | remove_last: '"]' | split: '","' %}
+    {% assign total_items = table_items.size %}
+    {% assign half_size = total_items | divided_by: 2 %}
+    
+    <table>
+      <tr>
+        <td> <!-- Left Column for Odd Numbers -->
+          {% for i in (0..half_size) %}
+            {% assign index = i | times: 2 %}
+            {% if table_items[index] %}
+              <p>{{ table_items[index] }}</p>
+            {% endif %}
+          {% endfor %}
+        </td>
+        <td> <!-- Right Column for Even Numbers -->
+          {% for i in (0..half_size) %}
+            {% assign index = i | times: 2 | plus: 1 %}
+            {% if table_items[index] %}
+              <p>{{ table_items[index] }}</p>
+            {% endif %}
+          {% endfor %}
+        </td>
+      </tr>
+    </table>
   {% endif %}
 
   {% if image_2 %}
