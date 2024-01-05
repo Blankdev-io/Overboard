@@ -1,8 +1,8 @@
 {% assign product_included = false %}
 
 {% if key_features.products %}
-  {% for key_features_product in key_features.products %}
-    {% if key_features_product.id == product.id %}
+  {% for key_product in key_features.products %}
+    {% if key_product.id == product.id %}
       {% assign product_included = true %}
       {% break %}
     {% endif %}
