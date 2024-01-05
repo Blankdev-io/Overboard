@@ -87,7 +87,7 @@
   {% endif %}
 
   {% if table_2 %}
-    {{ table_2 }}
+    {{ table_2 | remove_first: '["' | remove_last: '"]' | split: '","' }}
   {% endif %}
 
   {% if image_2 %}
