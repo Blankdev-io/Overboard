@@ -86,26 +86,9 @@
     <p>{{ description_2 }}</p>
   {% endif %}
 
-{% if table_2 %}
-  {% assign table_items = table_2 | remove_first: '["' | remove_last: '"]' | split: '","' %}
-  <table>
-    {% for item in table_items %}
-      {% if forloop.index0 | modulo: 2 == 0 %}
-        {% if forloop.index0 != 0 %}
-          </tr>
-        {% endif %}
-        <tr>
-      {% endif %}
-      <td>{{ item }}</td>
-      {% if forloop.last and forloop.length | modulo: 2 != 0 %}
-        <td></td>
-      {% endif %}
-    {% endfor %}
-  </tr>
-  </table>
-{% endif %}
-
-
+  {% if table_2 %}
+    {{ table_2 }}
+  {% endif %}
 
   {% if image_2 %}
     {{ image_2 | image_url: width: 500 | image_tag }}
