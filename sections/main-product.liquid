@@ -1,3 +1,34 @@
+{%- capture breadcrumb -%}
+    <nav aria-label="{{ 'general.breadcrumb.title' | t }}" class="breadcrumb breadcrumb--floating text--xsmall hidden-phone">
+      <ol class="breadcrumb__list" role="list">
+        <li class="breadcrumb__item">
+          <a class="breadcrumb__link" href="{{ routes.root_url }}">{{ 'general.breadcrumb.home' | t }}</a>
+        </li>
+
+        <li class="breadcrumb__item">
+          <span class="breadcrumb__link" aria-current="page">
+            {%- if collection.handle == 'all' -%}
+              {{- 'collection.general.all_products' | t -}}
+            {%- else -%}
+              {% if collection.title contains "-" %}
+                {% assign collection_splited = collection.title | split: " - " %}
+                {% assign school_collection = collection_splited[0] %}
+                {% assign school_collection_formated = school_collection | downcase | split: " " | join: '-' %}
+                {% assign cloth_collection = collection_splited[1] %}
+                {% comment %} {{ school_collection_formated }} {% endcomment %}
+                <a class="breadcrumb__link" href="{{collections[school_collection_formated].url}}">{{ school_collection }}</a>
+                <span>/</span>
+                <span>{{ cloth_collection }}</span>
+              {% else %}
+                {{- collection.title -}}
+              {% endif %}
+            {%- endif -%}
+          </span>
+        </li>
+      </ol>
+    </nav>
+  {%- endcapture -%}
+
 <section
   id="MainProduct-{{ section.id }}"
   class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}"
@@ -63,31 +94,7 @@
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
   <div class="page-width">
 
-    <nav aria-label="Breadcrumb">
-  <ol>
-    <li><a href="{{ shop.url }}">Home</a></li>
-
-    {% if template contains 'product' %}
-      {% assign category_found = false %}
-      {% for tag in product.tags %}
-        {% if category_found == false %}
-          {% if tag == 'Boards' or tag == 'Clothing' or tag == 'Wetsuits' or tag == 'Accessories' %}
-            <li><a href="/collections/{{ tag | handleize }}">{{ tag }}</a></li>
-            {% assign category_found = true %}
-          {% endif %}
-        {% endif %}
-      {% endfor %}
-      <!-- Product Name -->
-      <li>{{ product.title }}</li>
-
-    {% elsif template contains 'collection' %}
-      <!-- Collection Name -->
-      <li>{{ collection.title }}</li>
-
-    {% endif %}
-  </ol>
-</nav>
-
+    {{- breadcrumb -}}
     
     <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
     <div class="grid__item product__media-wrapper{% if section.settings.media_position == 'right' %} medium-hide large-up-hide{% endif %}">
