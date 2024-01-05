@@ -2,7 +2,7 @@
 
 {% for key_feature in shop.metaobjects.key_features.values %}
   <script>console.log('{{ key_feature }}')</script>
-  <script>console.log('{{ key_features.products }}')</script>
+  <script>console.log('{{ key_feature.products }}')</script>
   
   {% if key_feature.products %}
     {% for key_product in key_feature.products %}
