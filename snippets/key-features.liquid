@@ -2,6 +2,8 @@
 {% assign current_product_gid = 'gid://shopify/Product/' | append: product.id %}
 
 {% for key_feature in shop.metaobjects.key_features.values %}
+
+<script>console.log('{{ key_feature.products }}')</script>
   
     {% for key_product_gid in key_feature.products %}
       <script>console.log('{{ key_product_gid }}')</script>
@@ -38,9 +40,7 @@
   {% endif %}
 {% endfor %}
 
-
 <script>console.log('{{ product_included }}')</script>
-<script>console.log('{{ heading_1 }}')</script>
 
 {% if product_included %}
   {% if main_image %}
