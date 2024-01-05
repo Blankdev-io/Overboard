@@ -86,22 +86,23 @@
     <p>{{ description_2 }}</p>
   {% endif %}
 
-  {% if table_2 %}
-    {% assign table_items = table_2 | remove_first: '[' | remove_last: ']' | split: '","' %}
-  
-    <table>
-      {% for i in (0..table_items.size) %}
-        {% if forloop.index0 | modulo: 2 == 0 %}
-          <tr>
-            <td>{{ table_items[i] | strip }}</td>
-            {% if table_items[i+1] %}
-              <td>{{ table_items[i+1] | strip }}</td>
-            {% endif %}
-          </tr>
-        {% endif %}
-      {% endfor %}
-    </table>
-  {% endif %}
+{% if table_2 %}
+  {% assign table_items = table_2 | remove_first: '[' | remove_last: ']' | split: '","' %}
+
+  <table>
+    {% for i in (0..table_items.size) %}
+      {% assign current_index = forloop.index0 %}
+      {% if current_index | modulo: 2 == 0 %}
+        <tr>
+          <td>{{ table_items[i] | strip }}</td>
+          {% if table_items[i+1] %}
+            <td>{{ table_items[i+1] | strip }}</td>
+          {% endif %}
+        </tr>
+      {% endif %}
+    {% endfor %}
+  </table>
+{% endif %}
 
 
   {% if image_2 %}
