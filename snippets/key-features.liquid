@@ -51,7 +51,8 @@
 
 {% if product_included %}
   {% if main_image %}
-    {{ main_image | media_tag }}
+    {% assign image_url = main_image | image_url: '1024x1024' %}
+    {{ image_url | media_tag }}
   {% endif %}
 
   {% if heading_1 %}
