@@ -7,19 +7,6 @@
   {% if product_gids contains current_product_gid %}
     {% assign product_included = true %}
   {% endif %}
-  
-<script>console.log('{{ key_feature.products }}')</script>
-  
-    {% for key_product_gid in key_feature.products %}
-      <script>console.log('{{ key_product_gid }}')</script>
-      <script>console.log('{{ current_product_gid }}')</script>
-      {% if key_product_gid == current_product_gid %}
-        {% assign product_included = true %}
-        {% break %}
-      {% endif %}
-    {% endfor %}
-
-
 
   {% if product_included %}
     {% liquid
