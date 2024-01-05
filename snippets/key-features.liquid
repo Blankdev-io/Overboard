@@ -26,27 +26,29 @@
       {% endif %}
     {% endfor %}
   {% endif %}
-  
-  {% liquid
-      assign main_image = key_features.main_image
-      assign heading_1 = key_features.heading_1
-      assign subheading_1 = key_features.subheading_1
-      assign description_1 = key_features.description_1
-      assign table_1 = key_features.table_1
-      assign image_1 = key_features.image_1
-    
-      assign heading_2 = key_features.heading_2
-      assign subheading_2 = key_features.subheading_2
-      assign description_2 = key_features.description_2
-      assign table_2 = key_features.table_2
-      assign image_2 = key_features.image_2
-    
-      assign heading_3 = key_features.heading_3
-      assign subheading_3 = key_features.subheading_3
-      assign description_3 = key_features.description_3
-      assign table_3 = key_features.table_3
-      assign image_3 = key_features.image_3
-  %}
+
+  {% if product_included %}
+    {% liquid
+        assign main_image = key_features.main_image
+        assign heading_1 = key_features.heading_1
+        assign subheading_1 = key_features.subheading_1
+        assign description_1 = key_features.description_1
+        assign table_1 = key_features.table_1
+        assign image_1 = key_features.image_1
+      
+        assign heading_2 = key_features.heading_2
+        assign subheading_2 = key_features.subheading_2
+        assign description_2 = key_features.description_2
+        assign table_2 = key_features.table_2
+        assign image_2 = key_features.image_2
+      
+        assign heading_3 = key_features.heading_3
+        assign subheading_3 = key_features.subheading_3
+        assign description_3 = key_features.description_3
+        assign table_3 = key_features.table_3
+        assign image_3 = key_features.image_3
+    %}
+  {% endif %}
 {% endfor %}
 
 
