@@ -5,7 +5,6 @@
   <script>console.log('{{ key_feature }}')</script>
   <script>console.log('{{ key_feature.products }}')</script>
   
-  {% if key_feature.products != blank %}
     {% for key_product_gid in key_feature.products %}
       <script>console.log('{{ key_product_gid }}')</script>
       <script>console.log('{{ current_product_gid }}')</script>
@@ -14,7 +13,6 @@
         {% break %}
       {% endif %}
     {% endfor %}
-  {% endif %}
 
     {% if key_feature.collections and product_included == false %}
     {% for key_collection in key_feature.collections %}
