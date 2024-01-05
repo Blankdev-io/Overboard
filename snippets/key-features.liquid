@@ -1,27 +1,43 @@
-{% assign product_included = false %}
+{% for key_feature in shop.metaobjects.key_features.values %}
+  
+  {% assign product_included = false %}
 
-{% if key_features.products %}
-  {% for key_product in key_features.products %}
-    {% if key_product.id == product.id %}
-      {% assign product_included = true %}
-      {% break %}
-    {% endif %}
-  {% endfor %}
-{% endif %}
-
-{% if key_features.collections and product_included == false %}
-  {% for key_collection in key_features.collections %}
-    {% for collection in product.collections %}
-      {% if key_collection.id == collection.id %}
+  {% if key_features.products %}
+    {% for key_product in key_features.products %}
+      {% if key_product.id == product.id %}
         {% assign product_included = true %}
         {% break %}
       {% endif %}
     {% endfor %}
-    {% if product_included %}
-      {% break %}
-    {% endif %}
-  {% endfor %}
-{% endif %}
+  {% endif %}
+  
+  {% if key_features.collections and product_included == false %}
+    {% for key_collection in key_features.collections %}
+      {% for collection in product.collections %}
+        {% if key_collection.id == collection.id %}
+          {% assign product_included = true %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+      {% if product_included %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+  
+    {% liquid
+      assign main_image = key_features.main_image
+    %}
+
+
+{% endfor %}
+
+
+
+
+
+
+
 
 {% if product_included %}
   {% if key_features.main_image %}
