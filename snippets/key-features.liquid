@@ -6,8 +6,8 @@
   <script>console.log('{{ key_feature.products }}')</script>
   
     {% for key_product_gid in key_feature.products %}
-      <script>console.log('{{ key_product_gid }}')</script>
-      <script>console.log('{{ current_product_gid }}')</script>
+      {{ key_product_gid }}
+      {{ current_product_gid }}
       {% if key_product_gid == current_product_gid %}
         {% assign product_included = true %}
         {% break %}
