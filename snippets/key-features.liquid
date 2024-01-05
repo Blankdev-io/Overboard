@@ -1,6 +1,7 @@
+  {% assign product_included = false %}
+
 {% for key_feature in shop.metaobjects.key_features.values %}
   <script>console.log('{{ key_feature }}')</script>
-  {% assign product_included = false %}
 
   {% if key_features.products %}
     {% for key_product in key_features.products %}
