@@ -6,6 +6,7 @@
   
   {% if key_feature.products %}
     {% for key_product in key_feature.products %}
+        <script>console.log('{{ key_product.id }}')</script>
       {% if key_product.id == product.id %}
         {% assign product_included = true %}
         {% break %}
