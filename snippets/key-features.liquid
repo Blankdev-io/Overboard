@@ -4,7 +4,7 @@
   <script>console.log('{{ key_feature }}')</script>
   <script>console.log('{{ key_feature.products }}')</script>
   
-  {% if key_feature.products != 0 %}
+  {% if key_feature.products != blank %}
     {% for key_product in key_feature.products %}
         <script>console.log('{{ key_product.id }}')</script>
       {% if key_product.id == product.id %}
