@@ -1,0 +1,90 @@
+{% assign product_included = false %}
+
+{% if key_features.products %}
+  {% for key_product in key_features.products %}
+    {% if key_product.id == product.id %}
+      {% assign product_included = true %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if key_features.collections and product_included == false %}
+  {% for key_collection in key_features.collections %}
+    {% for collection in product.collections %}
+      {% if key_collection.id == collection.id %}
+        {% assign product_included = true %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+    {% if product_included %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if product_included %}
+  {% if key_features.main_image %}
+    <img src="{{ key_features.main_image }}" alt="Main Image">
+  {% endif %}
+
+  {% if key_features.heading_1 %}
+    <h2>{{ key_features.heading_1 }}</h2>
+  {% endif %}
+
+  {% if key_features.subheading_1 %}
+    <h3>{{ key_features.subheading_1 }}</h3>
+  {% endif %}
+
+  {% if key_features.description_1 %}
+    <p>{{ key_features.description_1 }}</p>
+  {% endif %}
+
+  {% if key_features.table_1 %}
+    {{ key_features.table_1 }}
+  {% endif %}
+
+  {% if key_features.image_1 %}
+    <img src="{{ key_features.image_1 }}" alt="Image 1">
+  {% endif %}
+
+  {% if key_features.heading_2 %}
+    <h2>{{ key_features.heading_2 }}</h2>
+  {% endif %}
+
+  {% if key_features.subheading_2 %}
+    <h3>{{ key_features.subheading_2 }}</h3>
+  {% endif %}
+
+  {% if key_features.description_2 %}
+    <p>{{ key_features.description_2 }}</p>
+  {% endif %}
+
+  {% if key_features.table_2 %}
+    {{ key_features.table_2 }}
+  {% endif %}
+
+  {% if key_features.image_2 %}
+    <img src="{{ key_features.image_2 }}" alt="Image 2">
+  {% endif %}
+
+  {% if key_features.heading_3 %}
+    <h2>{{ key_features.heading_3 }}</h2>
+  {% endif %}
+
+  {% if key_features.subheading_3 %}
+    <h3>{{ key_features.subheading_3 }}</h3>
+  {% endif %}
+
+  {% if key_features.description_3 %}
+    <p>{{ key_features.description_3 }}</p>
+  {% endif %}
+
+  {% if key_features.table_3 %}
+    {{ key_features.table_3 }}
+  {% endif %}
+
+  {% if key_features.image_3 %}
+    <img src="{{ key_features.image_3 }}" alt="Image 3">
+  {% endif %}
+{% endif %}
