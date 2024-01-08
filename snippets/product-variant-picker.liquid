@@ -44,11 +44,11 @@
     </tr>
 
     {% for variant in product.variants %}
+      <fieldset class="js product-form__input">
         <tr class="variant-row{% if variant.available %}{% else %} variant-unavailable{% endif %}" data-variant-id="{{ variant.id }}">
         {% for option in variant.options %}
           <td>{{ option }}</td>
         {% endfor %}
-
         <td>
           {% if variant.available %}
             <span class="stock-pill available">
@@ -68,6 +68,7 @@
           {% endif %}
         </td>
       </tr>
+    </fieldset>
     {% endfor %}
   </table>
 {% endif %}
