@@ -33,18 +33,12 @@
     </variant-radios>
   {%- elsif block.settings.picker_type == 'list' -%}
 
-<ul class="product-variants">
-  {% for variant in product.variants %}
-    <li class="variant-item">
-      {{ variant.title }}
-      {% if variant.available %}
-        - Available
-      {% else %}
-        - Sold Out
-      {% endif %}
-    </li>
-  {% endfor %}
-</ul>
+{% for variant in product.variants %}
+  <div class="variant-container" data-variant-id="{{ variant.id }}">
+    {{ variant.title }}
+  </div>
+{% endfor %}
+
 
   {%- else -%}
     <variant-selects
