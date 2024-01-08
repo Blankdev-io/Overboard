@@ -3682,7 +3682,7 @@ h1, .highrise {
     text-underline-offset: 8px;
 }
 
-.variant-option-list {
+.variant-container {
   cursor: pointer;
   padding: 10px;
   margin-bottom: 5px;
@@ -3690,7 +3690,7 @@ h1, .highrise {
   transition: background-color 0.3s ease;
 }
 
-.variant-option-list.selected {
+.variant-container.selected {
   background-color: #f0f0f0; /* Highlight color */
   border-color: #333; /* Border color for selected variant */
 }
