@@ -44,7 +44,7 @@
     </tr>
 
     {% for variant in product.variants %}
-        <tr id="variant-radios-{{ section.id }}" data-url="{{ product.url }}" data-section="{{ section.id }}" class="no-js-hidden variant-row{% if variant.available %}{% else %} variant-unavailable{% endif %}" data-variant-id="{{ variant.id }}">
+        <tr value="{{ value | escape }}" class="variant-row{% if variant.available %}{% else %} variant-unavailable{% endif %}" data-variant-id="{{ variant.id }}">
         {% for option in variant.options %}
           <td>{{ option }}</td>
         {% endfor %}
