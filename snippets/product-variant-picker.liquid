@@ -72,11 +72,18 @@
   </table>
 {% endif %}
 
-<select name="id" id="ProductSelect-{{ product.id }}" style="display:none;">
-  {% for variant in product.variants %}
-    <option value="{{ variant.id }}">{{ variant.title }}</option>
-  {% endfor %}
-</select>
+    <option
+      value="{{ value | escape }}"
+      {% if option.selected_value == value %}
+        selected="selected"
+      {% endif %}
+    >
+      {% if option_disabled -%}
+        {{- 'products.product.value_unavailable' | t: option_value: value -}}
+      {%- else -%}
+        {{- value -}}
+      {%- endif %}
+    </option>
                 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -101,11 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         row.style.border = '2px solid black';
 
-        var selectElement = document.querySelector('select[name=id]');
-        selectElement.value = variantId;
-      
-        var event = new Event('change', { bubbles: true });
-        selectElement.dispatchEvent(event);
+        document.querySelector('select[name=id]').value = variantId;
       });
 
       if (!defaultSelected) {
