@@ -70,9 +70,8 @@
       </tr>
     {% endfor %}
   </table>
-{% endif %}
 
-    <option
+      <option
       value="{{ value | escape }}"
       {% if option.selected_value == value %}
         selected="selected"
@@ -84,6 +83,8 @@
         {{- value -}}
       {%- endif %}
     </option>
+                
+{% endif %}
                 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
