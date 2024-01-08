@@ -39,6 +39,27 @@
   </div>
 {% endfor %}
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  var variantContainers = document.querySelectorAll('.variant-container');
+
+  variantContainers.forEach(function(container) {
+    container.addEventListener('click', function() {
+      // Remove 'selected' class from all variant containers
+      variantContainers.forEach(function(c) { c.classList.remove('selected'); });
+
+      // Add 'selected' class to clicked container
+      container.classList.add('selected');
+
+      // Update selected variant
+      var variantId = container.getAttribute('data-variant-id');
+      // Assuming you have a select element for variants
+      document.querySelector('select[name=id]').value = variantId;
+    });
+  });
+});
+
+</script>
 
   {%- else -%}
     <variant-selects
