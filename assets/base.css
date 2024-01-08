@@ -3740,11 +3740,12 @@ h1, .highrise {
 .variant-table th, .variant-table td {
   border: none; 
   padding: 10px;
-  text-align: left;
+  text-align: center;
 }
 
 .variant-table tr {
   border-bottom: 1px solid #ddd; 
+  text-align: center;
 }
 
 .variant-table tr:last-child {
