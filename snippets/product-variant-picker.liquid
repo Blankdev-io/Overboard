@@ -34,28 +34,40 @@
   {%- elsif block.settings.picker_type == 'list' -%}
 
 {% for variant in product.variants %}
-  <div class="variant-container" data-variant-id="{{ variant.id }}">
-    {{ variant.title }}
+  <div class="variant-container{% if variant.available %}{% else %} variant-unavailable{% endif %}" data-variant-id="{{ variant.id }}">
+    <span class="variant-title">{{ variant.title }}</span>
+    <span class="variant-stock">
+      {% if variant.available %}
+        {% if variant.inventory_management == 'shopify' %}
+          {{ variant.inventory_quantity }} in stock
+        {% else %}
+          In stock
+        {% endif %}
+      {% else %}
+        Not in stock
+      {% endif %}
+    </span>
   </div>
 {% endfor %}
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
   var variantContainers = document.querySelectorAll('.variant-container');
 
   variantContainers.forEach(function(container) {
-    container.addEventListener('click', function() {
-      // Remove 'selected' class from all variant containers
-      variantContainers.forEach(function(c) { c.classList.remove('selected'); });
+    if (!container.classList.contains('variant-unavailable')) {
+      container.addEventListener('click', function() {
+        // Remove 'selected' class from all variant containers
+        variantContainers.forEach(function(c) { c.classList.remove('selected'); });
 
-      // Add 'selected' class to clicked container
-      container.classList.add('selected');
+        // Add 'selected' class to clicked container
+        container.classList.add('selected');
 
-      // Update selected variant
-      var variantId = container.getAttribute('data-variant-id');
-      // Assuming you have a select element for variants
-      document.querySelector('select[name=id]').value = variantId;
-    });
+        // Update selected variant
+        var variantId = container.getAttribute('data-variant-id');
+        document.querySelector('select[name=id]').value = variantId;
+      });
+    }
   });
 });
 
