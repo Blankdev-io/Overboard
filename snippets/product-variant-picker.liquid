@@ -70,39 +70,40 @@
       </tr>
     {% endfor %}
   </table>
+
+  <select name="id" id="ProductSelect" style="display: none;">
+  {% for variant in product.variants %}
+    <option value="{{ variant.id }}">{{ variant.title }}</option>
+  {% endfor %}
+  </select>            
 {% endif %}
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   var variantRows = document.querySelectorAll('.variant-row');
-  var defaultSelected = false;
+  var variantSelect = document.querySelector('select[name=id]'); // Select element for variants
 
   variantRows.forEach(function(row) {
     var variantId = row.getAttribute('data-variant-id');
 
-    if (row.classList.contains('variant-unavailable')) {
-
-      row.style.pointerEvents = 'none';
-    } else {
-
-      row.addEventListener('click', function() {
-        variantRows.forEach(function(r) {
-          r.style.borderTop = 'none';
-          r.style.borderLeft = 'none';
-          r.style.borderRight = 'none';
-          r.style.borderBottom = '1px solid #ddd'; 
-        });
-
-        row.style.border = '2px solid black';
-
-        document.querySelector('select[name=id]').value = variantId;
+    row.addEventListener('click', function() {
+      // Update styles for all rows
+      variantRows.forEach(function(r) {
+        r.style.borderTop = 'none';
+        r.style.borderLeft = 'none';
+        r.style.borderRight = 'none';
+        r.style.borderBottom = '1px solid #ddd';
       });
 
-      if (!defaultSelected) {
-        row.click();
-        defaultSelected = true;
+      // Highlight the selected row
+      row.style.border = '1px solid black';
+
+      // Update the select element
+      if (variantSelect) {
+        variantSelect.value = variantId;
+        variantSelect.dispatchEvent(new Event('change')); // Trigger the change event
       }
-    }
+    });
   });
 });
 </script>
