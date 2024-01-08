@@ -78,46 +78,33 @@ document.addEventListener('DOMContentLoaded', function() {
   var defaultSelected = false;
 
   variantRows.forEach(function(row) {
-    row.addEventListener('click', function() {
-      var variantId = row.getAttribute('data-variant-id');
+    var variantId = row.getAttribute('data-variant-id');
 
-      // Find the corresponding variant selector in the Dawn theme
-      var variantSelector = document.querySelector(`input[value="${variantId}"]`);
-      
-      // Check if the variant selector exists and is not already selected
-      if(variantSelector && !variantSelector.checked) {
-        variantSelector.checked = true; // Update the radio button status
+    if (row.classList.contains('variant-unavailable')) {
 
-        // Trigger the change event for the variant selector
-        var event = new Event('change', { bubbles: true });
-        variantSelector.dispatchEvent(event);
+      row.style.pointerEvents = 'none';
+    } else {
+
+      row.addEventListener('click', function() {
+        variantRows.forEach(function(r) {
+          r.style.borderTop = 'none';
+          r.style.borderLeft = 'none';
+          r.style.borderRight = 'none';
+          r.style.borderBottom = '1px solid #ddd'; 
+        });
+
+        row.style.border = '2px solid black';
+
+        document.querySelector('select[name=id]').value = variantId;
+      });
+
+      if (!defaultSelected) {
+        row.click();
+        defaultSelected = true;
       }
-    });
+    }
   });
 });
-
-document.addEventListener('DOMContentLoaded', function() {
-  var variantRows = document.querySelectorAll('.variant-row');
-
-  variantRows.forEach(function(row) {
-    row.addEventListener('click', function() {
-      var variantId = row.getAttribute('data-variant-id');
-
-      // Find the corresponding variant selector in the Dawn theme
-      var variantSelector = document.querySelector(`input[value="${variantId}"]`);
-      
-      // Check if the variant selector exists and is not already selected
-      if(variantSelector && !variantSelector.checked) {
-        variantSelector.checked = true; // Update the radio button status
-
-        // Trigger the change event for the variant selector
-        var event = new Event('change', { bubbles: true });
-        variantSelector.dispatchEvent(event);
-      }
-    });
-  });
-});
-
 </script>
 
   {%- else -%}
