@@ -3759,3 +3759,7 @@ h1, .highrise {
 .variant-row {
   cursor: pointer;
 }
+
+.hidden-variant-inputs {
+  display: none;
+}
