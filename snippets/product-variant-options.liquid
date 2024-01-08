@@ -76,19 +76,6 @@
         {{- value -}}
       {%- endif %}
     </option>
-  {%- elsif block.settings.picker_type == 'list' -%}
-<ul class="product-variants">
-  {% for variant in product.variants %}
-    <li class="variant-item">
-      {{ variant.title }}
-      {% if variant.available %}
-        - Available
-      {% else %}
-        - Sold Out
-      {% endif %}
-    </li>
-  {% endfor %}
-</ul>
   {%- endif -%}
 {%- endfor -%}
 
