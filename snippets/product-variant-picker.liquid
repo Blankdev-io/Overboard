@@ -32,7 +32,7 @@
       </script>
     </variant-radios>
     
-  {%- elsif block.settings.picker_type == 'list' -%}
+  {%- elsif block.settings.picker_type == 'list' and product.tags contains 'Boards' -%}
 
   {% for variant in product.variants %}
     <div class="variant-container{% if variant.available %}{% else %} variant-unavailable{% endif %}" data-variant-id="{{ variant.id }}">
