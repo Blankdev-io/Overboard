@@ -3684,6 +3684,8 @@ h1, .highrise {
 
 .variant-container {
   cursor: pointer;
+  display: flex;
+  justify-content: space-between;
   padding: 10px;
   margin-bottom: 5px;
   border: 1px solid #ddd;
@@ -3691,6 +3693,20 @@ h1, .highrise {
 }
 
 .variant-container.selected {
-  background-color: #f0f0f0; /* Highlight color */
-  border-color: #333; /* Border color for selected variant */
+  background-color: #f0f0f0;
+  border-color: #333;
+}
+
+.variant-container.variant-unavailable {
+  color: #999;
+  cursor: default;
+  background-color: #f9f9f9;
+}
+
+.variant-title {
+  /* Styles for the variant title */
+}
+
+.variant-stock {
+  /* Styles for the stock information */
 }
