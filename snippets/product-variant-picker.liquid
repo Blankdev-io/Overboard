@@ -35,19 +35,10 @@
   {%- elsif block.settings.picker_type == 'list' and product.tags contains 'Boards' -%}
 
 {% if product.variants.size > 0 %}
-
-<variant-radios
-  id="variant-radios-{{ section.id }}"
-  class="no-js-hidden"
-  data-section="{{ section.id }}"
-  data-url="{{ product.url }}"
-  {{ block.shopify_attributes }}
->
-  
   <table class="variant-table">
     <tr>
-      {% for option in product.options_with_values %}
-        <th>{{ option.name }}</th>
+      {% for option in product.options %}
+        <th>{{ option }}</th>
       {% endfor %}
       <th>In Stock</th>
     </tr>
@@ -55,21 +46,7 @@
     {% for variant in product.variants %}
         <tr class="variant-row{% if variant.available %}{% else %} variant-unavailable{% endif %}" data-variant-id="{{ variant.id }}">
         {% for option in variant.options %}
-          {% assign variant_value = variant.options[forloop.index0] %}
-          <td><input
-              type="radio"
-              id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-              name="{{ option.name }}"
-              value="{{ variant_value | escape }}"
-              form="{{ product_form_id }}"
-              {% if option.selected_value == value %}
-                checked
-              {% endif %}
-            >
-            <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
-              {{ value }}
-            </label>
-          </td>
+          <td>{{ option }}</td>
         {% endfor %}
 
         <td>
@@ -93,11 +70,6 @@
       </tr>
     {% endfor %}
   </table>
-
-  <script type="application/json">
-    {{ product.variants | json }}
-  </script>
-</variant-radios>
 {% endif %}
                 
 <script>
@@ -123,6 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         row.style.border = '2px solid black';
 
+        document.querySelector('select[name=id]').value = variantId;
       });
 
       if (!defaultSelected) {
