@@ -3741,6 +3741,7 @@ h1, .highrise {
   border: none; 
   padding: 10px;
   text-align: center;
+  text-transform: capitalize;
 }
 
 .variant-table tr {
