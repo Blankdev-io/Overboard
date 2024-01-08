@@ -89,3 +89,23 @@
     </div>
   {%- endif -%}
 {%- endfor -%}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var variantOptions = document.querySelectorAll('.variant-option');
+
+  variantOptions.forEach(function(option) {
+    option.addEventListener('click', function() {
+      // Update visual state
+      variantOptions.forEach(function(opt) { opt.classList.remove('selected'); });
+      option.classList.add('selected');
+
+      // Update the selected variant
+      var value = option.getAttribute('data-value');
+      var selectElement = document.querySelector('select[name="{{ option.name }}"]');
+      selectElement.value = value;
+      selectElement.dispatchEvent(new Event('change')); // Trigger the change event
+    });
+  });
+});
+</script>
