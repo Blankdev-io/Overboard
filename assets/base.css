@@ -3686,21 +3686,23 @@ h1, .highrise {
   cursor: pointer;
   display: flex;
   justify-content: space-between;
-  padding: 10px;
-  margin-bottom: 5px;
-  border: 1px solid #ddd;
-  transition: background-color 0.3s ease;
+  padding: 5px; /* Reduced padding */
+  margin-bottom: 0; /* Reduced vertical space */
+  border-bottom: 1px solid #ddd; /* Thin gray line between variants */
+  transition: border-color 0.3s ease;
+}
+
+.variant-container:last-child {
+  border-bottom: none; /* Remove border from the last variant */
 }
 
 .variant-container.selected {
-  background-color: #f0f0f0;
-  border-color: #333;
+  border: 1px solid black; /* Black border for selected variant */
 }
 
 .variant-container.variant-unavailable {
   color: #999;
   cursor: default;
-  background-color: #f9f9f9;
 }
 
 .variant-title {
