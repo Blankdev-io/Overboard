@@ -3722,10 +3722,12 @@ h1, .highrise {
   margin-right: 5px;
 }
 
-.stock-pill.available {
-    fill: lightgreen;
+.stock-pill.available svg {
+  fill: lightgreen;
+  margin-left: 5px;
 }
 
-.stock-pill.unavailable {
+.stock-pill.unavailable svg {
   fill: red;
+  margin-left: 5px;
 }
