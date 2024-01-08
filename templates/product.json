@@ -4,9 +4,9 @@
       "type": "category-banner",
       "settings": {
         "background_color1": "#aed7ea",
-        "background_color2": "#ffffff",
-        "background_color3": "#ffffff",
-        "background_color4": "#ffffff"
+        "background_color2": "#778c71",
+        "background_color3": "#004bff",
+        "background_color4": "#dd1d1d"
       }
     },
     "main": {
