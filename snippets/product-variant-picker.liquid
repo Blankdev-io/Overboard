@@ -82,22 +82,16 @@ document.addEventListener('DOMContentLoaded', function() {
     var variantId = row.getAttribute('data-variant-id');
 
     if (row.classList.contains('variant-unavailable')) {
-      // Disable click for unavailable variants
       row.style.pointerEvents = 'none';
     } else {
-      // Click event for variant selection
       row.addEventListener('click', function() {
-        // Remove selection from all rows
         variantRows.forEach(function(r) { r.style.border = 'none'; });
 
-        // Highlight the selected row
         row.style.border = '1px solid black';
 
-        // Select the variant in Shopify's system
         document.querySelector('select[name=id]').value = variantId;
       });
 
-      // Set the first available variant as default
       if (!defaultSelected) {
         row.click();
         defaultSelected = true;
