@@ -45,9 +45,7 @@
 
     {% for variant in product.variants %}
       <fieldset class="js product-form__input">
-        <tr class="variant-row{% if variant.available %}{% else %} variant-unavailable{% endif %}" data-variant-id="{{ variant.id }}">
-        {% for option in variant.options %}
-          <td>      <input
+      <input
       type="radio"
       id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
       name="{{ option.name }}"
@@ -63,7 +61,11 @@
     <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
       {{ value -}}
       <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
-    </label></td>
+    </label>
+      </fieldset>
+        <tr class="variant-row{% if variant.available %}{% else %} variant-unavailable{% endif %}" data-variant-id="{{ variant.id }}">
+        {% for option in variant.options %}
+          <td>{{ option }}</td>
         {% endfor %}
         <td>
           {% if variant.available %}
@@ -84,7 +86,6 @@
           {% endif %}
         </td>
       </tr>
-    </fieldset>
     {% endfor %}
   </table>
 {% endif %}
