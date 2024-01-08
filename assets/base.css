@@ -3740,6 +3740,7 @@ h1, .highrise {
 .variant-table th, .variant-table td {
   border: none; 
   padding: 10px;
+  text-align: left;
 }
 
 .variant-table tr {

@@ -36,7 +36,6 @@
 
 {% if product.variants.size > 0 %}
   <table class="variant-table">
-    <!-- Table Header -->
     <tr>
       {% for option in product.options %}
         <th>{{ option }}</th>
@@ -46,7 +45,6 @@
 
     {% for variant in product.variants %}
       <tr class="{% if variant.available %}{% else %}variant-unavailable{% endif %}" data-variant-id="{{ variant.id }}">
-        <!-- Variant Options -->
         {% for option in variant.options %}
           <td>{{ option }}</td>
         {% endfor %}
