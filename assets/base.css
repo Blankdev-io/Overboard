@@ -3751,3 +3751,8 @@ h1, .highrise {
 .variant-table tr:last-child {
   border-bottom: none;
 }
+
+.variant-unavailable {
+  color: #999;
+  cursor: not-allowed; /* Shows a disabled cursor */
+}
