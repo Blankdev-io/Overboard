@@ -65,10 +65,6 @@
               {% if option.selected_value == value %}
                 checked
               {% endif %}
-              {% if not variant.available %}
-                class="disabled"
-                disabled
-              {% endif %}
             >
             <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
               {{ value }}
