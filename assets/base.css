@@ -3723,7 +3723,7 @@ h1, .highrise {
 }
 
 .stock-pill.available {
-    fill: green;
+    fill: lightgreen;
 }
 
 .stock-pill.unavailable {
