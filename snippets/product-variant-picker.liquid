@@ -50,14 +50,7 @@
       {% if option.selected_value == value %}
         selected="selected"
       {% endif %}
-    >
-      {% if option_disabled -%}
-        {{- 'products.product.value_unavailable' | t: option_value: value -}}
-      {%- else -%}
-        {{- value -}}
-      {%- endif %}
-    
-    
+    >    
         <tr class="variant-row{% if variant.available %}{% else %} variant-unavailable{% endif %}" data-variant-id="{{ variant.id }}">
         {% for option in variant.options %}
           <td>{{ option }}</td>
