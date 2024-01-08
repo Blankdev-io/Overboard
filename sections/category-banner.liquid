@@ -1,3 +1,16 @@
+{% if template contains 'product' %}
+  
+  {% assign category_found = false %}
+  {% for tag in product.tags %}
+    {% if category_found == false %}
+      {% if tag == 'Boards' or tag == 'Clothing' or tag == 'Wetsuits' or tag == 'Accessories' %}
+        {% assign current_tag = tag | handleize %}
+        {% assign category_found = true %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
 <style>
   .category-banner-container {
     height: 179px;
@@ -10,7 +23,9 @@
   }
 </style>
 
-<div class="category-banner-container">
+
+
+<div class="category-banner-container" style="background-color: {% if current_tag == 'Boards' %}#AED7EA;{% elsif current_tag == 'Clothing' %}#7E8D79;{% elsif current_tag == 'Wetsuits' %}red;{% elsif current_tag == 'Accessories' %}blue;{% else %}white;{% endif %}">
 
 </div>
 
