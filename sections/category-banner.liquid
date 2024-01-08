@@ -35,7 +35,14 @@ style="background-color: {% if current_tag == 'Boards' %}#AED7EA;{% elsif curren
 {% schema %}
   {
     "name": "Category Banner",
-    "settings": [],
+    "settings": [
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background Color",
+        "default": "#ffffff"
+      }
+    ],
     "presets": [
       {
         "name": "Category Banner"
