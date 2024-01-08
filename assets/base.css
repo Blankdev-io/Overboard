@@ -3752,9 +3752,9 @@ h1, .highrise {
   border-bottom: none;
 }
 
-.variant-unavailable {
+.variant-row.variant-unavailable {
   color: #999;
-  cursor: not-allowed; /* Shows a disabled cursor */
+  cursor: not-allowed;
 }
 
 .variant-row {
