@@ -77,5 +77,15 @@
       {%- endif %}
     </option>
   {%- elsif block.settings.picker_type == 'list' -%}
+    <div
+      id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+      class="variant-option-list{% if option.selected_value == value %} selected{% endif %}"
+      data-value="{{ value | escape }}"
+      role="button"
+      tabindex="0"
+      aria-pressed="{% if option.selected_value == value %}true{% else %}false{% endif %}"
+    >
+      {{ value -}}
+    </div>
   {%- endif -%}
 {%- endfor -%}
