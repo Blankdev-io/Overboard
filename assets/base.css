@@ -3717,8 +3717,15 @@ h1, .highrise {
 }
 
 .stock-pill svg {
-  fill: white;
   width: 1em;
   height: 1em;
   margin-right: 5px;
+}
+
+.stock-pill.available {
+    fill: green;
+}
+
+.stock-pill.unavailable {
+  fill: red;
 }
