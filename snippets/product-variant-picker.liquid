@@ -72,6 +72,12 @@
   </table>
 {% endif %}
 
+<select name="id" id="ProductSelect-{{ product.id }}" style="display:none;">
+  {% for variant in product.variants %}
+    <option value="{{ variant.id }}">{{ variant.title }}</option>
+  {% endfor %}
+</select>
+                
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   var variantRows = document.querySelectorAll('.variant-row');
@@ -95,7 +101,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         row.style.border = '2px solid black';
 
-        document.querySelector('select[name=id]').value = variantId;
+        var selectElement = document.querySelector('select[name=id]');
+        selectElement.value = variantId;
+      
+        var event = new Event('change', { bubbles: true });
+        selectElement.dispatchEvent(event);
       });
 
       if (!defaultSelected) {
