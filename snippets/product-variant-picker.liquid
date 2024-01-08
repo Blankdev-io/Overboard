@@ -35,41 +35,59 @@
   {%- elsif block.settings.picker_type == 'list' and product.tags contains 'Boards' -%}
 
 {% if product.variants.size > 0 %}
+<variant-radios
+  id="variant-radios-{{ section.id }}"
+  class="no-js-hidden"
+  data-section="{{ section.id }}"
+  data-url="{{ product.url }}"
+  {{ block.shopify_attributes }}
+>
   <table class="variant-table">
+    <!-- Table Header -->
     <tr>
-      {% for option in product.options %}
-        <th>{{ option }}</th>
+      <!-- Header for each option -->
+      {% for option in product.options_with_values %}
+        <th>{{ option.name }}</th>
       {% endfor %}
-      <th>In Stock</th>
     </tr>
 
+    <!-- Variants Rows -->
     {% for variant in product.variants %}
-        <tr class="variant-row{% if variant.available %}{% else %} variant-unavailable{% endif %}" data-variant-id="{{ variant.id }}">
-        {% for option in variant.options %}
-          <td>{{ option }}</td>
-        {% endfor %}
-
-        <td>
-          {% if variant.available %}
-            <span class="stock-pill available">
-              {% if variant.inventory_management == 'shopify' %}
-                {{ variant.inventory_quantity }} in stock 
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 00-1.06-1.06L6 9.88 3.28 7.16a.75.75 0 10-1.06 1.06l3.25 3.25c.3.3.77.3 1.06 0l7.25-7.25z"/></svg>
-              {% else %}
-                In stock
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 00-1.06-1.06L6 9.88 3.28 7.16a.75.75 0 10-1.06 1.06l3.25 3.25c.3.3.77.3 1.06 0l7.25-7.25z"/></svg>
+      <tr class="variant-row">
+        {% for option in product.options_with_values %}
+          {% assign value = variant.options[forloop.index0] %}
+          <td>
+            <input
+              type="radio"
+              id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+              name="{{ option.name }}"
+              value="{{ value | escape }}"
+              form="{{ product_form_id }}"
+              {% if option.selected_value == value %}
+                checked
               {% endif %}
-            </span>
-          {% else %}
-            <span class="stock-pill unavailable">
-              Not in stock
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8.53 8l3.25-3.25a.75.75 0 00-1.06-1.06L7.47 6.94 4.22 3.69a.75.75 0 00-1.06 1.06L6.44 8l-3.25 3.25a.75.75 0 001.06 1.06L7.47 9.06l3.25 3.25a.75.75 0 001.06-1.06L8.53 8z"/></svg>
-            </span>
-          {% endif %}
-        </td>
+              {% if not variant.available %}
+                class="disabled"
+                disabled
+              {% endif %}
+            >
+            <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
+              {{ value }}
+              {% if not variant.available %}
+                <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
+              {% endif %}
+            </label>
+          </td>
+        {% endfor %}
       </tr>
     {% endfor %}
   </table>
+
+  <script type="application/json">
+    {{ product.variants | json }}
+  </script>
+</variant-radios>
+
 {% endif %}
                 
 <script>
