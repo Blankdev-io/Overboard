@@ -43,7 +43,7 @@
 </style>
 
 <div class="category-banner-container" 
-style="background-color: {% if current_tag == 'boards' %}{{ background_color1 }};{% elsif current_tag == 'clothing' %}#7E8D79;{% elsif current_tag == 'wetsuits' %}red;{% elsif current_tag == 'accessories' %}blue;{% else %}black;{% endif %}">
+style="background-color: {% if current_tag == 'boards' %}#{{ background_color1 }};{% elsif current_tag == 'clothing' %}#7E8D79;{% elsif current_tag == 'wetsuits' %}red;{% elsif current_tag == 'accessories' %}blue;{% else %}black;{% endif %}">
   <h2 class="category-header category-header-text">{{ current_tag }}</h2>
 </div>
 
