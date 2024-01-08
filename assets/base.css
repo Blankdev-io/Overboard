@@ -3755,7 +3755,6 @@ h1, .highrise {
 
 .variant-row.variant-unavailable {
   color: #999;
-  cursor: not-allowed;
 }
 
 .variant-row {
