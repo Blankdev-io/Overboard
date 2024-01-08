@@ -44,7 +44,7 @@
     </tr>
 
     {% for variant in product.variants %}
-        <tr value="{{ value | escape }}" {% if option.selected_value == value %}selected="selected" {% endif %} class="variant-row{% if variant.available %}{% else %} variant-unavailable{% endif %}" data-variant-id="{{ variant.id }}">
+        <tr class="variant-row{% if variant.available %}{% else %} variant-unavailable{% endif %}" data-variant-id="{{ variant.id }}">
         {% for option in variant.options %}
           <td>{{ option }}</td>
         {% endfor %}
@@ -70,44 +70,39 @@
       </tr>
     {% endfor %}
   </table>
-
-<select name="id" style="display:none;">
-  {% for variant in product.variants %}
-    <option value="{{ variant.id }}">{{ variant.title }}</option>
-  {% endfor %}
-</select>
-                         
 {% endif %}
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   var variantRows = document.querySelectorAll('.variant-row');
-  var variantSelect = document.querySelector('select[name=id]'); // Shopify variant select element
+  var defaultSelected = false;
 
   variantRows.forEach(function(row) {
     var variantId = row.getAttribute('data-variant-id');
 
-    row.addEventListener('click', function() {
-      // Check if variant is available
-      if (!row.classList.contains('variant-unavailable')) {
-        // Reset borders for all rows to default styles
+    if (row.classList.contains('variant-unavailable')) {
+
+      row.style.pointerEvents = 'none';
+    } else {
+
+      row.addEventListener('click', function() {
         variantRows.forEach(function(r) {
           r.style.borderTop = 'none';
           r.style.borderLeft = 'none';
           r.style.borderRight = 'none';
-          r.style.borderBottom = '1px solid #ddd';
+          r.style.borderBottom = '1px solid #ddd'; 
         });
 
-        // Highlight the selected row
         row.style.border = '2px solid black';
 
-        // Update the Shopify variant select element
-        if (variantSelect) {
-          variantSelect.value = variantId;
-          variantSelect.dispatchEvent(new Event('change')); // Trigger the change event
-        }
+        document.querySelector('select[name=id]').value = variantId;
+      });
+
+      if (!defaultSelected) {
+        row.click();
+        defaultSelected = true;
       }
-    });
+    }
   });
 });
 </script>
