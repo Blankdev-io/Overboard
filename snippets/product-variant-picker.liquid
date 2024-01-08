@@ -70,9 +70,14 @@
       </tr>
     {% endfor %}
   </table>
+
+<select id="variant-select" name="id" style="display: none;">
+  {% for variant in product.variants %}
+    <option value="{{ variant.id }}" {% if forloop.first %}selected{% endif %}>{{ variant.title }}</option>
+  {% endfor %}
+</select>
+                
 {% endif %}
-
-
                 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -107,6 +112,27 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  var variantRows = document.querySelectorAll('.variant-row');
+
+  variantRows.forEach(function(row) {
+    var variantId = row.getAttribute('data-variant-id');
+
+    row.addEventListener('click', function() {
+      // Update hidden select element
+      document.getElementById('variant-select').value = variantId;
+
+      // Trigger a change event on the select element to update Shopify
+      var event = new Event('change', { bubbles: true });
+      document.getElementById('variant-select').dispatchEvent(event);
+
+      // Update UI for selected row, if necessary
+      // (e.g., changing border color, highlighting, etc.)
+    });
+  });
+});
+
 </script>
 
   {%- else -%}
