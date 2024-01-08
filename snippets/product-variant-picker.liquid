@@ -44,13 +44,6 @@
     </tr>
 
     {% for variant in product.variants %}
-
-    <option
-      value="{{ value | escape }}"
-      {% if option.selected_value == value %}
-        selected="selected"
-      {% endif %}
-    >    
         <tr class="variant-row{% if variant.available %}{% else %} variant-unavailable{% endif %}" data-variant-id="{{ variant.id }}">
         {% for option in variant.options %}
           <td>{{ option }}</td>
@@ -75,7 +68,6 @@
           {% endif %}
         </td>
       </tr>
-      </option>
     {% endfor %}
   </table>
 {% endif %}
