@@ -25,6 +25,7 @@
     <li><a href="{{ shop.url }}">Home</a></li>
 
     {% if template contains 'product' %}
+      
       {% assign category_found = false %}
       {% for tag in product.tags %}
         {% if category_found == false %}
