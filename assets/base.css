@@ -3756,3 +3756,7 @@ h1, .highrise {
   color: #999;
   cursor: not-allowed; /* Shows a disabled cursor */
 }
+
+.variant-row {
+  cursor: pointer;
+}
