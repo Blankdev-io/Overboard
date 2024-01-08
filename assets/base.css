@@ -3705,10 +3705,20 @@ h1, .highrise {
   cursor: default;
 }
 
-.variant-title {
-  /* Styles for the variant title */
+.stock-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  background-color: black;
+  color: white;
+  border-radius: 15px; 
+  font-size: 0.8em;
+  white-space: nowrap;
 }
 
-.variant-stock {
-  /* Styles for the stock information */
+.stock-pill svg {
+  fill: white;
+  width: 1em;
+  height: 1em;
+  margin-right: 5px;
 }
