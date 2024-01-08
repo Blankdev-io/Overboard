@@ -3686,18 +3686,18 @@ h1, .highrise {
   cursor: pointer;
   display: flex;
   justify-content: space-between;
-  padding: 5px; /* Reduced padding */
-  margin-bottom: 0; /* Reduced vertical space */
-  border-bottom: 1px solid #ddd; /* Thin gray line between variants */
+  padding: 5px; 
+  margin-bottom: 0; 
+  border-bottom: 1px solid #ddd;
   transition: border-color 0.3s ease;
 }
 
 .variant-container:last-child {
-  border-bottom: none; /* Remove border from the last variant */
+  border-bottom: none;
 }
 
 .variant-container.selected {
-  border: 1px solid black; /* Black border for selected variant */
+  border: 1px solid black;
 }
 
 .variant-container.variant-unavailable {
