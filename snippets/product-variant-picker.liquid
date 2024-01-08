@@ -35,7 +35,7 @@
   {%- elsif block.settings.picker_type == 'list' and product.tags contains 'Boards' -%}
 
 {% if product.variants.size > 0 %}
-  <table>
+  <table class="variant-table">
     <!-- Table Header -->
     <tr>
       {% for option in product.options %}
