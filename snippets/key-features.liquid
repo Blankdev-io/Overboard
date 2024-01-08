@@ -3,9 +3,6 @@
 
 {% for key_feature in shop.metaobjects.key_features.values %}
 
-<script>console.log('{{ key_feature.main_image }}')</script>
-
-  
   {% assign product_gids = key_feature.products | join: ',' %}
   {% if product_gids contains current_product_gid %}
     {% assign product_included = true %}
