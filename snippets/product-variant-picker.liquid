@@ -100,7 +100,39 @@
 </variant-radios>
 {% endif %}
                 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var variantRows = document.querySelectorAll('.variant-row');
+  var defaultSelected = false;
 
+  variantRows.forEach(function(row) {
+    var variantId = row.getAttribute('data-variant-id');
+
+    if (row.classList.contains('variant-unavailable')) {
+
+      row.style.pointerEvents = 'none';
+    } else {
+
+      row.addEventListener('click', function() {
+        variantRows.forEach(function(r) {
+          r.style.borderTop = 'none';
+          r.style.borderLeft = 'none';
+          r.style.borderRight = 'none';
+          r.style.borderBottom = '1px solid #ddd'; 
+        });
+
+        row.style.border = '2px solid black';
+
+      });
+
+      if (!defaultSelected) {
+        row.click();
+        defaultSelected = true;
+      }
+    }
+  });
+});
+</script>
 
   {%- else -%}
     <variant-selects
