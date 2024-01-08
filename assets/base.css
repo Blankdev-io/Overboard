@@ -3731,3 +3731,22 @@ h1, .highrise {
   fill: red;
   margin-left: 5px;
 }
+
+/* Style for the variant table */
+.variant-table {
+  width: 100%;
+  border-collapse: collapse; /* Removes space between borders */
+}
+
+.variant-table th, .variant-table td {
+  border: none; /* Removes all borders from cells */
+  padding: 10px; /* Adds some padding for cell content */
+}
+
+.variant-table tr {
+  border-bottom: 1px solid #ddd; /* Adds a border to the bottom of each row */
+}
+
+.variant-table tr:last-child {
+  border-bottom: none; /* Removes the border from the last row */
+}
