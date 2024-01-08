@@ -70,9 +70,6 @@
             >
             <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
               {{ value }}
-              {% if not variant.available %}
-                <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
-              {% endif %}
             </label>
           </td>
         {% endfor %}
