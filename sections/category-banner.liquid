@@ -1,6 +1,6 @@
+{% assign category_found = false %}
+
 {% if template contains 'product' %}
-  
-  {% assign category_found = false %}
   {% for tag in product.tags %}
     {% if category_found == false %}
       {% if tag == 'Boards' or tag == 'Clothing' or tag == 'Wetsuits' or tag == 'Accessories' %}
@@ -9,6 +9,8 @@
       {% endif %}
     {% endif %}
   {% endfor %}
+{% elsif template contains 'collection' %}
+  {% assign current_tag = collection.title | handleize %}
 {% endif %}
 
 <script>console.log('{{ current_tag }}')</script>
