@@ -72,7 +72,6 @@
   </table>
 {% endif %}
 
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   var variantRows = document.querySelectorAll('.variant-row');
@@ -82,16 +81,26 @@ document.addEventListener('DOMContentLoaded', function() {
     var variantId = row.getAttribute('data-variant-id');
 
     if (row.classList.contains('variant-unavailable')) {
+      // Disable click for unavailable variants
       row.style.pointerEvents = 'none';
     } else {
+      // Click event for variant selection
       row.addEventListener('click', function() {
-        variantRows.forEach(function(r) { r.style.border = 'none'; });
+        // Remove top, left, and right borders from all rows
+        variantRows.forEach(function(r) {
+          r.style.borderTop = 'none';
+          r.style.borderLeft = 'none';
+          r.style.borderRight = 'none';
+        });
 
+        // Highlight the selected row with a border on all sides
         row.style.border = '1px solid black';
 
+        // Select the variant in Shopify's system
         document.querySelector('select[name=id]').value = variantId;
       });
 
+      // Set the first available variant as default
       if (!defaultSelected) {
         row.click();
         defaultSelected = true;
