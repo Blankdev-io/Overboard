@@ -204,7 +204,145 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 {% endfor %}
 
+{% for option in product.options_with_values %}
+  <div class="product-options">
+    <label>{{ option.name }}</label>
+    <div>
+      {% for value in option.values %}
+        {% assign input_id = option.name | append: '-' | append: value | handleize %}
+        {% if option.name == 'Size' %}
+          {% if first_size_checked == false %}
+            <input type="radio" name="options[{{ option.name }}]" value="{{ value | escape }}" id="{{ input_id }}" class="variant-option size-option" checked>
+            {% assign first_size_checked = true %}
+          {% else %}
+            <input type="radio" name="options[{{ option.name }}]" value="{{ value | escape }}" id="{{ input_id }}" class="variant-option size-option">
+          {% endif %}
+          <label for="{{ input_id }}" class="size-label">{{ value }}</label>
+        {% elsif option.name == 'Color' %}
+          {% assign color_name = value | split: ' / ' | last %}
+          {% if first_color_checked == false %}
+            <input type="radio" name="options[{{ option.name }}]" value="{{ value | escape }}" id="{{ input_id }}" class="color-variant-option{% if color_name == 'Black' %} black-color{% endif %}" data-color="{{ color_name }}" checked>
+            <label for="{{ input_id }}" class="color-label{% if color_name == 'White' %} white-color{% endif %}" style="background-color: {{ color_name }}"></label>
+            {% assign first_color_checked = true %}
+          {% else %}
+            <input type="radio" name="options[{{ option.name }}]" value="{{ value | escape }}" id="{{ input_id }}" class="color-variant-option{% if color_name == 'Black' %} black-color{% endif %}" data-color="{{ color_name }}">
+            <label for="{{ input_id }}" class="color-label{% if color_name == 'White' %} white-color{% endif %}" style="background-color: {{ color_name }}"></label>
+          {% endif %}
+        {% endif %}
+        <label for="{{ input_id }}">{% comment %}{{ value }}{% endcomment %}</label>
+      {% endfor %}
+    </div>
+  </div>
+{% endfor %}
+                  
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var form = document.querySelector('form[action="/cart/add"]');
+  var priceElement = document.getElementById('productPrice');
+  var comparePriceElement = document.getElementById('comparePrice');
+  var variantElements = form.querySelectorAll('.variant-option');
+  var quantityInput = form.querySelector('input[name="quantity"]');
+  var decreaseButton = document.getElementById('decrease-quantity');
+  var increaseButton = document.getElementById('increase-quantity');
+  var quantityInput = document.getElementById('quantity-input');
+  var thumbnails = document.querySelectorAll('.thumbnail-image');
+  var currentVariant;
+
+  document.querySelectorAll('.thumbnail-image').forEach(function(thumbnail) {
+        thumbnail.addEventListener('click', function() {
+            var mainImage = document.getElementById('main-product-image');
+            mainImage.src = this.getAttribute('data-src');
+        });
+    });
+
+  thumbnails.forEach(function(thumbnail) {
+        thumbnail.addEventListener('click', function() {
+            var mainImage = document.getElementById('main-product-image');
+            mainImage.src = this.getAttribute('data-src');
+
+            // Update active class for thumbnails
+            thumbnails.forEach(function(img) {
+                img.classList.remove('active');
+            });
+            this.classList.add('active');
+        });
+    });
+
+    // Set the first thumbnail as active initially
+    if(thumbnails.length > 0) {
+        thumbnails[0].classList.add('active');
+    }
+  
+  decreaseButton.addEventListener('click', function() {
+    var currentValue = parseInt(quantityInput.value);
+    if (currentValue > 1) {
+      quantityInput.value = currentValue - 1;
+    }
+  });
+
+  increaseButton.addEventListener('click', function() {
+    var currentValue = parseInt(quantityInput.value);
+    quantityInput.value = currentValue + 1;
+  });
+  
+  variantElements.forEach(function(element) {
+    element.addEventListener('change', updateVariantAndPrice);
+  });
+
+  quantityInput.addEventListener('input', updatePriceBasedOnQuantity);
+
+  function formatMoney(cents, currencySymbol) {
+    var value = (cents / 100.0).toFixed(2);
+    return currencySymbol + value;
+  }
+
+  function updateVariantAndPrice() {
+    var selectedOptions = Array.from(form.querySelectorAll('input[type="radio"]:checked')).map(input => input.value);
+    var variants = {{ product.variants | json }};
+    currentVariant = variants.find(variant => {
+      return selectedOptions.every(val => variant.options.includes(val));
+    });
+
+    updatePriceBasedOnQuantity();
+  }
+
+  function updatePriceBasedOnQuantity() {
+    if (currentVariant) {
+      var quantity = parseInt(quantityInput.value) || 1;
+      var totalPrice = currentVariant.price * quantity;
+      var totalCompareAtPrice = currentVariant.compare_at_price * quantity;
+
+      priceElement.innerHTML = formatMoney(totalPrice, '$');
+      if (currentVariant.compare_at_price > currentVariant.price) {
+        comparePriceElement.innerHTML = formatMoney(totalCompareAtPrice, '$');
+        comparePriceElement.style.display = 'block';
+      } else {
+        comparePriceElement.style.display = 'none';
+      }
+
+      form.querySelector('input[name="id"]').value = currentVariant.id;
+    }
+  }
+  
+document.querySelectorAll('.color-variant-option').forEach(el => {
+  const colorName = el.getAttribute('data-color');
+  const hexColor = colorMap[colorName];
+  if (hexColor) {
+    el.nextSibling.style.backgroundColor = hexColor;
+
+    // If the color is white, add a black thin border
+    if (colorName.toLowerCase() === 'white') {
+      el.nextSibling.style.border = '1px solid #000000';
+    }
+  }
+});
+
+  updateVariantAndPrice();
+});
+
+</script>
+                  
   <script>
 document.addEventListener('DOMContentLoaded', function() {
   const variantOptions = document.querySelectorAll('.variant-value');
