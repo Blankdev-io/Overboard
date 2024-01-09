@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const variantOptions = document.querySelectorAll('.variant-value');
   const productImage = document.querySelector('.product__media img'); // Update this selector as needed
   const productPrice = document.querySelector('.price-item'); // Update this selector as needed
-  const variantSelect = document.querySelector('select[name=id]'); // Shopify's variant selector
+  var variantSelect = document.querySelector('select[name=id]'); // Shopify's variant selector
 
   variantOptions.forEach(option => {
     const value = option.getAttribute('data-value');
