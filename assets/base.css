@@ -3808,8 +3808,10 @@ h1, .highrise {
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  font-family: Plus Jakarta Sans,sans-serif!important;
 }
 
 .product-description {
-    font-size: 16px;
+  font-size: 16px;
+  font-family: Plus Jakarta Sans,sans-serif!important;
 }
