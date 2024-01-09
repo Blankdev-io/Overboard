@@ -3807,5 +3807,5 @@ h1, .highrise {
 }
 
 .product-description {
-  /* Style the product description container */
+    font-size: 16px;
 }
