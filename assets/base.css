@@ -3793,3 +3793,18 @@ h1, .highrise {
   bottom: 0;
   background: linear-gradient(to top right, transparent 49%, grey 49%, grey 51%, transparent 51%);
 }
+
+.description-dropdown {
+  /* Add necessary styling for the dropdown container */
+}
+
+.description-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  /* Additional styling as needed */
+}
+
+.product-description {
+  /* Style the product description container */
+}
