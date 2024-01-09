@@ -204,192 +204,24 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 {% endfor %}
 
-{% for option in product.options_with_values %}
-  <div class="product-options">
-    <label>{{ option.name }}</label>
-    <div>
-      {% for value in option.values %}
-        {% assign input_id = option.name | append: '-' | append: value | handleize %}
-        {% if option.name == 'Size' %}
-          {% if first_size_checked == false %}
-            <input type="radio" name="options[{{ option.name }}]" value="{{ value | escape }}" id="{{ input_id }}" class="variant-option size-option" checked>
-            {% assign first_size_checked = true %}
-          {% else %}
-            <input type="radio" name="options[{{ option.name }}]" value="{{ value | escape }}" id="{{ input_id }}" class="variant-option size-option">
-          {% endif %}
-          <label for="{{ input_id }}" class="size-label">{{ value }}</label>
-        {% elsif option.name == 'Color' %}
-          {% assign color_name = value | split: ' / ' | last %}
-          {% if first_color_checked == false %}
-            <input type="radio" name="options[{{ option.name }}]" value="{{ value | escape }}" id="{{ input_id }}" class="color-variant-option{% if color_name == 'Black' %} black-color{% endif %}" data-color="{{ color_name }}" checked>
-            <label for="{{ input_id }}" class="color-label{% if color_name == 'White' %} white-color{% endif %}" style="background-color: {{ color_name }}"></label>
-            {% assign first_color_checked = true %}
-          {% else %}
-            <input type="radio" name="options[{{ option.name }}]" value="{{ value | escape }}" id="{{ input_id }}" class="color-variant-option{% if color_name == 'Black' %} black-color{% endif %}" data-color="{{ color_name }}">
-            <label for="{{ input_id }}" class="color-label{% if color_name == 'White' %} white-color{% endif %}" style="background-color: {{ color_name }}"></label>
-          {% endif %}
-        {% endif %}
-        <label for="{{ input_id }}">{% comment %}{{ value }}{% endcomment %}</label>
-      {% endfor %}
-    </div>
-  </div>
-{% endfor %}
-                  
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  var form = document.querySelector('form[action="/cart/add"]');
-  var priceElement = document.getElementById('price-item');
-  var variantElements = form.querySelectorAll('.variant-option');
-  var quantityInput = form.querySelector('input[name="quantity"]');
-  var decreaseButton = document.getElementById('decrease-quantity');
-  var increaseButton = document.getElementById('increase-quantity');
-  var quantityInput = document.getElementById('quantity-input');
-  var thumbnails = document.querySelectorAll('.thumbnail-image');
-  var currentVariant;
-
-  document.querySelectorAll('.thumbnail-image').forEach(function(thumbnail) {
-        thumbnail.addEventListener('click', function() {
-            var mainImage = document.getElementById('main-product-image');
-            mainImage.src = this.getAttribute('data-src');
-        });
-    });
-
-  thumbnails.forEach(function(thumbnail) {
-        thumbnail.addEventListener('click', function() {
-            var mainImage = document.getElementById('main-product-image');
-            mainImage.src = this.getAttribute('data-src');
-
-            // Update active class for thumbnails
-            thumbnails.forEach(function(img) {
-                img.classList.remove('active');
-            });
-            this.classList.add('active');
-        });
-    });
-
-    // Set the first thumbnail as active initially
-    if(thumbnails.length > 0) {
-        thumbnails[0].classList.add('active');
-    }
-  
-  decreaseButton.addEventListener('click', function() {
-    var currentValue = parseInt(quantityInput.value);
-    if (currentValue > 1) {
-      quantityInput.value = currentValue - 1;
-    }
-  });
-
-  increaseButton.addEventListener('click', function() {
-    var currentValue = parseInt(quantityInput.value);
-    quantityInput.value = currentValue + 1;
-  });
-  
-  variantElements.forEach(function(element) {
-    element.addEventListener('change', updateVariantAndPrice);
-  });
-
-  quantityInput.addEventListener('input', updatePriceBasedOnQuantity);
-
-  function formatMoney(cents, currencySymbol) {
-    var value = (cents / 100.0).toFixed(2);
-    return currencySymbol + value;
-  }
-
-  function updateVariantAndPrice() {
-    var selectedOptions = Array.from(form.querySelectorAll('input[type="radio"]:checked')).map(input => input.value);
-    var variants = {{ product.variants | json }};
-    currentVariant = variants.find(variant => {
-      return selectedOptions.every(val => variant.options.includes(val));
-    });
-
-    updatePriceBasedOnQuantity();
-  }
-
-  function updatePriceBasedOnQuantity() {
-    if (currentVariant) {
-      var quantity = parseInt(quantityInput.value) || 1;
-      var totalPrice = currentVariant.price * quantity;
-      var totalCompareAtPrice = currentVariant.compare_at_price * quantity;
-
-      priceElement.innerHTML = formatMoney(totalPrice, '$');
-      if (currentVariant.compare_at_price > currentVariant.price) {
-        comparePriceElement.innerHTML = formatMoney(totalCompareAtPrice, '$');
-        comparePriceElement.style.display = 'block';
-      } else {
-        comparePriceElement.style.display = 'none';
-      }
-
-      form.querySelector('input[name="id"]').value = currentVariant.id;
-    }
-  }
-  
-document.querySelectorAll('.color-variant-option').forEach(el => {
-  const colorName = el.getAttribute('data-color');
-  const hexColor = colorMap[colorName];
-  if (hexColor) {
-    el.nextSibling.style.backgroundColor = hexColor;
-
-    // If the color is white, add a black thin border
-    if (colorName.toLowerCase() === 'white') {
-      el.nextSibling.style.border = '1px solid #000000';
-    }
-  }
-});
-
-  updateVariantAndPrice();
-});
-
-</script>
-                  
   <script>
 document.addEventListener('DOMContentLoaded', function() {
   const variantOptions = document.querySelectorAll('.variant-value');
-  const productImage = document.querySelector('.product__media img');
-  const productPrice = document.querySelector('.price-item');
-  const variantSelect = document.querySelector('select[name=id]');
-  let selectedOptions = {};
-
-  function findMatchingVariant() {
-    const matchingVariants = Array.from(variantOptions).filter(variant => {
-      return selectedOptions['Color'] === variant.getAttribute('data-value') || 
-             selectedOptions['Size'] === variant.getAttribute('data-value');
-    });
-
-    for (const variant of matchingVariants) {
-      const variantId = variant.getAttribute('data-variant-id');
-      if (variantId) {
-        const variantPrice = variant.getAttribute('data-variant-price');
-        const variantImageSrc = variant.getAttribute('data-variant-image');
-        updateVariantSelection(variantId, variantPrice, variantImageSrc);
-        break; // Found a match, no need to check further
-      }
-    }
-  }
-
-  function updateVariantSelection(variantId, variantPrice, variantImageSrc) {
-    if (variantSelect) {
-      variantSelect.value = variantId;
-      variantSelect.dispatchEvent(new Event('change'));
-    }
-    if (productPrice && variantPrice) {
-      productPrice.textContent = variantPrice;
-    }
-    if (variantImageSrc && productImage) {
-      productImage.src = variantImageSrc;
-      productImage.srcset = variantImageSrc;
-    }
-  }
+  const productImage = document.querySelector('.product__media img'); // Update this selector as needed
+  const productPrice = document.querySelector('.price-item'); // Update this selector as needed
+  const variantSelect = document.querySelector('select[name=id]'); // Shopify's variant selector
 
   variantOptions.forEach(option => {
     const value = option.getAttribute('data-value');
     const optionType = option.getAttribute('data-option');
     const variantId = option.getAttribute('data-variant-id');
+    const variantPrice = option.getAttribute('data-variant-price');
+    const variantImageSrc = option.getAttribute('data-variant-image');
 
-    // Set up variant map for colors and sizes
+    // Set up the variant map
     if (variantMap.colors[value]) {
       option.style.backgroundColor = variantMap.colors[value];
-      option.classList.add('color-type');
     } else if (variantMap.sizes[value]) {
       option.textContent = variantMap.sizes[value];
       option.classList.add('text-type');
@@ -403,34 +235,38 @@ document.addEventListener('DOMContentLoaded', function() {
       option.classList.add('variant-unavailable');
       option.style.pointerEvents = 'none';
       option.style.opacity = '0.5';
-      if (option.classList.contains('color-type')) {
-        option.style.position = 'relative';
-        option.innerHTML = '<div class="unavailable-stripe"></div>';
-      }
     } else {
-      // Handle variant selection
       option.addEventListener('click', function() {
-        selectedOptions[optionType] = value;
-        findMatchingVariant();
-
-        // Update selected styling
-        document.querySelectorAll(`.variant-value[data-option="${optionType}"]`).forEach(opt => opt.classList.remove('selected'));
+        // Update selected variant
+        variantOptions.forEach(opt => opt.classList.remove('selected'));
         option.classList.add('selected');
+
+        // Update Shopify's variant selector
+        if (variantSelect) {
+          variantSelect.value = variantId;
+          variantSelect.dispatchEvent(new Event('change')); // Trigger the change event
+        }
+
+        // Update the price
+        if (productPrice && variantPrice) {
+          productPrice.textContent = variantPrice;
+        }
+
+        // Update the product image if available
+        if (variantImageSrc && productImage) {
+          productImage.src = variantImageSrc;
+          // Update srcset attribute if necessary
+          productImage.srcset = variantImageSrc;
+        }
       });
     }
   });
 
-  // Style for unavailable stripe
-  const style = document.createElement('style');
-  style.innerHTML = `
-    .unavailable-stripe {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(to top right, transparent 49%, grey 49%, grey 51%, transparent 51%);
-    }
-  `;
-  document.head.appendChild(style);
+  // Automatically select the first available variant
+  const firstAvailableVariant = document.querySelector('.variant-value:not(.variant-unavailable)');
+  if (firstAvailableVariant) {
+    firstAvailableVariant.click();
+  }
 });
 
   </script>
