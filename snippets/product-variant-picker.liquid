@@ -213,39 +213,29 @@ document.addEventListener('DOMContentLoaded', function() {
   const variantSelect = document.querySelector('select[name=id]');
   let selectedOptions = {};
 
-  function updateVariantSelection(variant) {
-    const variantId = variant.getAttribute('data-variant-id');
-    const variantPrice = variant.getAttribute('data-variant-price');
-    const variantImageSrc = variant.getAttribute('data-variant-image');
+  function findMatchingVariant() {
+    document.querySelectorAll('.product-single__variant').forEach(variant => {
+      const matches = Object.keys(selectedOptions).every(key => variant.getAttribute('data-'+key) === selectedOptions[key]);
+      if (matches) {
+        const variantId = variant.getAttribute('data-variant-id');
+        const variantPrice = variant.getAttribute('data-variant-price');
+        const variantImageSrc = variant.getAttribute('data-variant-image');
+        updateVariantSelection(variantId, variantPrice, variantImageSrc);
+      }
+    });
+  }
 
-    // Update Shopify's variant selector
+  function updateVariantSelection(variantId, variantPrice, variantImageSrc) {
     if (variantSelect) {
       variantSelect.value = variantId;
       variantSelect.dispatchEvent(new Event('change'));
     }
-
-    // Update the price
     if (productPrice && variantPrice) {
       productPrice.textContent = variantPrice;
     }
-
-    // Update the product image if available
     if (variantImageSrc && productImage) {
       productImage.src = variantImageSrc;
       productImage.srcset = variantImageSrc;
-    }
-  }
-
-  function findMatchingVariant() {
-    let allVariants = Array.from(document.querySelectorAll('.variant-value'));
-    let matchingVariant = allVariants.find(variant => {
-      return Object.keys(selectedOptions).every(optionType => {
-        return variant.getAttribute(`data-${optionType}`) === selectedOptions[optionType];
-      }) && variant.getAttribute('data-variant-id');
-    });
-
-    if (matchingVariant) {
-      updateVariantSelection(matchingVariant);
     }
   }
 
@@ -254,9 +244,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const optionType = option.getAttribute('data-option');
     const variantId = option.getAttribute('data-variant-id');
 
-    // Set up the variant map
     if (variantMap.colors[value]) {
       option.style.backgroundColor = variantMap.colors[value];
+      option.classList.add('color-type');
     } else if (variantMap.sizes[value]) {
       option.textContent = variantMap.sizes[value];
       option.classList.add('text-type');
@@ -265,24 +255,21 @@ document.addEventListener('DOMContentLoaded', function() {
       option.classList.add('text-type');
     }
 
-    // Handle variant selection
-    option.addEventListener('click', function() {
-      selectedOptions[optionType] = value;
-      findMatchingVariant();
-
-      // Update styling
-      document.querySelectorAll(`.variant-value[data-option="${optionType}"]`).forEach(opt => opt.classList.remove('selected'));
-      option.classList.add('selected');
-    });
-
-    // Handle unavailable variants
     if (!variantId) {
       option.classList.add('variant-unavailable');
       option.style.pointerEvents = 'none';
       option.style.opacity = '0.5';
-      if (!option.classList.contains('text-type')) {
-        option.style.backgroundImage = 'linear-gradient(to top right, transparent calc(50% - 1px), grey, transparent calc(50% + 1px))';
+      if (option.classList.contains('color-type')) {
+        option.style.position = 'relative';
+        option.innerHTML += '<div class="unavailable-strike"></div>';
       }
+    } else {
+      option.addEventListener('click', function() {
+        selectedOptions[optionType] = value;
+        findMatchingVariant();
+        document.querySelectorAll(`.variant-value[data-option="${optionType}"]`).forEach(opt => opt.classList.remove('selected'));
+        option.classList.add('selected');
+      });
     }
   });
 });
