@@ -194,6 +194,25 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
   {% endfor %}
 
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+  var variantSquares = document.querySelectorAll('.variant-square');
+
+  variantSquares.forEach(function(square) {
+    square.addEventListener('click', function() {
+      // Remove 'selected' class from all squares
+      variantSquares.forEach(function(sq) { sq.classList.remove('selected'); });
+
+      // Add 'selected' class to clicked square
+      this.classList.add('selected');
+
+      // Update selected variant
+      var variantId = this.getAttribute('data-variant-id');
+      document.querySelector('select[name=id]').value = variantId;
+    });
+  });
+});
+  </script>
                   
   {%- endif -%}
 {%- endunless -%}
