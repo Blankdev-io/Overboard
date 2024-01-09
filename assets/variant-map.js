@@ -6,6 +6,11 @@ const variantMap = {
     // Add other colors as needed
   },
   sizes: {
+    "Extra Small": "XS",
+    "Small": "S",
+    "Medium": "M",
+    "Large": "L",
+    "Extra Large": "XL",
     "Men's S": "S",
     "Men's M": "M",
     "Men's L": "L",
