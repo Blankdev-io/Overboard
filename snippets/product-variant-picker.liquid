@@ -92,7 +92,14 @@
           data-variant-price="{{ variant.price | money }}"
           data-variant-image="{{ variant.featured_image | default: product.featured_image | img_url: 'master' }}">
           {% for option in variant.options %}
-            <td>{{ option }}</td>
+            {% if option contains '-' %}
+              {% assign split_options = option | split: '-' %}
+              {% for split_option in split_options %}
+                <td>{{ split_option | strip }}</td>
+              {% endfor %}
+            {% else %}
+              <td>{{ option }}</td>
+            {% endif %}
           {% endfor %}
           <td>
             {% if variant.available %}
