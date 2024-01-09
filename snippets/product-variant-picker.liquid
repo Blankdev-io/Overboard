@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var productImage = document.querySelector('.product__media img');
   var productPrice = document.querySelector('.price-item');
 
-  //variantOptions.forEach(option => {
+  variantOptions.forEach(option => {
     var value = option.getAttribute('data-value');
     var optionType = option.getAttribute('data-option');
     var variantId = option.getAttribute('data-variant-id');
@@ -259,8 +259,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
     }
-  //}
-    );
+  });
 
   // Automatically select the first available variant
   const firstAvailableVariant = document.querySelector('.variant-value:not(.variant-unavailable)');
