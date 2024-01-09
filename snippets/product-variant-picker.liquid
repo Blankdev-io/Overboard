@@ -109,13 +109,6 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         }
 
-        // Update Shopify's variant selector (if used)
-        var variantSelect = document.querySelector('select[name=id]');
-        if (variantSelect) {
-          variantSelect.value = variantId;
-        }
-      });
-
       // Automatically select the first available variant
       if (!defaultSelected) {
         row.click();
