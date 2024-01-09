@@ -203,21 +203,22 @@
             {% render 'key-features' %}
 
             <script>
-              document.getElementById("descriptionToggle").addEventListener("click", function() {
-                var description = document.getElementById("productDescription");
-                var downIcon = document.getElementById("downIcon");
-                var upIcon = document.getElementById("upIcon");
-              
-                if (description.style.display === "none") {
-                  description.style.display = "block";
-                  downIcon.style.display = "none";
-                  upIcon.style.display = "block";
-                } else {
-                  description.style.display = "none";
-                  downIcon.style.display = "block";
-                  upIcon.style.display = "none";
-                }
-              });
+document.getElementById("descriptionToggle").addEventListener("click", function() {
+  var description = document.getElementById("productDescription");
+  var downArrow = document.getElementById("downArrow");
+  var upArrow = document.getElementById("upArrow");
+  
+  if (description.style.display === "none") {
+    description.style.display = "block";
+    downArrow.style.display = "none";
+    upArrow.style.display = "inline";
+  } else {
+    description.style.display = "none";
+    downArrow.style.display = "inline";
+    upArrow.style.display = "none";
+  }
+});
+
             </script>
             
             {%- when 'sku' -%}
