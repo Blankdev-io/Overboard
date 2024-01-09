@@ -174,8 +174,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
   {%- else -%}
 
-  
+  {{ 'variant-map.js' | asset_url | script_tag }}
 
+  {% for option in product.options_with_values %}
+    <div class="variant-option">
+      <p>{{ option.name }}</p>
+      <div class="variant-squares">
+        {% for value in option.values %}
+          <div class="variant-square" data-variant-id="{{ value | variant_id_from_option }}">
+            {% if option.name == 'Color' %}
+              <div class="color-square" style="background-color: {{ value | map_variant_color }}"></div>
+            {% else %}
+              <span class="size-square">{{ value | map_variant_size }}</span>
+            {% endif %}
+            <p class="variant-name">{{ value }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+
+                  
   {%- endif -%}
 {%- endunless -%}
 

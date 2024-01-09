@@ -3759,3 +3759,32 @@ h1, .highrise {
 .variant-row {
   cursor: pointer;
 }
+
+.variant-square {
+  border: 1px solid #ddd;
+  text-align: center;
+  padding: 10px;
+  margin: 5px;
+  display: inline-block;
+}
+
+.color-square {
+  width: 20px;
+  height: 20px;
+  margin: auto;
+}
+
+.size-square {
+  background-color: #eee;
+  color: black;
+}
+
+.variant-name {
+  font-size: small;
+}
+
+.variant-square.selected {
+  border: 2px solid black;
+  background-color: black;
+  color: white;
+}
