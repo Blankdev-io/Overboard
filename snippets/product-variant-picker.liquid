@@ -241,11 +241,12 @@ document.addEventListener('DOMContentLoaded', function() {
         variantOptions.forEach(opt => opt.classList.remove('selected'));
         option.classList.add('selected');
 
-        // Update Shopify's variant selector
+        // Update Shopify's variant selector (if used)
+        var variantSelect = document.querySelector('select[name=id]');
         if (variantSelect) {
           variantSelect.value = variantId;
-          variantSelect.dispatchEvent(new Event('change')); // Trigger the change event
         }
+      });
 
         // Update the price
         if (productPrice && variantPrice) {
@@ -268,7 +269,6 @@ document.addEventListener('DOMContentLoaded', function() {
     firstAvailableVariant.click();
   }
 });
-
   </script>
                   
   {%- endif -%}
