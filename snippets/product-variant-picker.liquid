@@ -193,75 +193,32 @@ document.addEventListener('DOMContentLoaded', function() {
   {% endfor %}
 
   <script>
-document.addEventListener('DOMContentLoaded', function() {
-  var variantElements = document.querySelectorAll('.variant-value');
-  var productImage = document.querySelector('.product__media img');
-  var productPrice = document.querySelector('.price-item'); // Ensure this is the correct selector for the price
-  var variantSelect = document.querySelector('select[name=id]'); // Shopify's variant dropdown selector, if used
-
-  function updateVariantDisplay() {
-    variantElements.forEach(function(el) {
-      el.classList.remove('selected');
-      if (el.classList.contains('text-type')) {
-        el.style.backgroundColor = '#f0f0f0'; // Default background for text type
-        el.style.color = 'black'; // Default text color
+  document.addEventListener('DOMContentLoaded', function() {
+    const variantOptions = document.querySelectorAll('.variant-value');
+  
+    variantOptions.forEach(option => {
+      const value = option.getAttribute('data-value');
+      const optionType = option.getAttribute('data-option');
+  
+      if (variantMap.colors[value]) {
+        option.style.backgroundColor = variantMap.colors[value];
+      } else if (variantMap.sizes[value]) {
+        option.textContent = variantMap.sizes[value];
+        option.classList.add('text-type');
       } else {
-        el.style.borderColor = '#ccc'; // Default border color for non-text types
+        option.textContent = value;
+        option.classList.add('text-type');
       }
-    });
-  }
-
-  variantElements.forEach(function(element) {
-    var variantId = element.getAttribute('data-variant-id');
-    var variantPrice = element.getAttribute('data-variant-price');
-    var variantImageSrc = element.getAttribute('data-variant-image');
-
-    if (variantId) {
-      element.addEventListener('click', function() {
-        // Update Shopify's variant selector
-        if (variantSelect) {
-          variantSelect.value = variantId;
-          variantSelect.dispatchEvent(new Event('change')); // Trigger the change event
-        }
-
-        // Update the price
-        if (productPrice && variantPrice) {
-          productPrice.textContent = variantPrice;
-        }
-
-        // Update the image if available
-        if (variantImageSrc && productImage) {
-          productImage.src = variantImageSrc;
-          // Update srcset attribute if necessary
-          productImage.srcset = variantImageSrc;
-        }
-
-        // Update styling for the selected variant
-        updateVariantDisplay();
-        element.classList.add('selected');
-        if (element.classList.contains('text-type')) {
-          element.style.backgroundColor = 'black';
-          element.style.color = 'white';
-        } else {
-          element.style.borderColor = 'black'; // Selected border color for non-text types
-        }
+  
+      option.addEventListener('click', function() {
+        // Handle variant selection
+        variantOptions.forEach(opt => opt.classList.remove('selected'));
+        option.classList.add('selected');
+  
+        // Update the product form (you'll need to add logic for this)
       });
-    } else {
-      // Disable unavailable variants
-      element.style.pointerEvents = 'none';
-      element.style.opacity = '0.5';
-    }
+    });
   });
-
-  // Set the first available variant as default if none is selected
-  if (!document.querySelector('.variant-value.selected')) {
-    var firstAvailable = document.querySelector('.variant-value[data-variant-id]');
-    if (firstAvailable) {
-      firstAvailable.click();
-    }
-  }
-});
-
   </script>
                   
   {%- endif -%}
