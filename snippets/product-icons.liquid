@@ -1,0 +1,62 @@
+    <div class="icon-section{% if desktop %} hide_on_mobile{% elsif mobile %} show_on_mobile{% endif %}">
+      <div class="icon-container">
+        <img src="{{ 'Vector.svg' | asset_url }}">
+        <p>FREE SHIPPING</p>
+      </div>
+      <div class="icon-container">
+        <img src="{{ 'Vector-1.svg' | asset_url }}">
+        <p>CLICK & COLLECT</p>
+      </div>
+      <div class="icon-container">
+        <img src="{{ 'Vector-2.svg' | asset_url }}">
+        <p>BUY NOW, PAY LATER</p>
+      </div>
+      <div class="icon-container">
+        <img src="{{ 'Vector-3.svg' | asset_url }}">
+        <p>SECURE PAYMENTS</p>
+      </div>
+      <div class="icon-container">
+        <img src="{{ 'Vector-4.svg' | asset_url }}">
+        <p>MEMBER BENEFITS</p>
+      </div>
+    </div>
+
+<style>
+.icon-section {
+  max-width: 738px;
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.icon-container {
+  width: 200px;
+  margin: 10px;
+}
+
+.icon-container svg {
+  width: 100%;
+  height: auto;
+  fill: white;
+}
+
+.icon-container p {
+  margin-top: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .icon-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .icon-container {
+    width: 100%;
+  }
+}
+</style>

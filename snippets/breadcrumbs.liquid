@@ -1,0 +1,47 @@
+<style>
+.breadcrumb ol {
+  list-style-type: none;
+  padding: 0; 
+  display: flex; 
+  align-items: center; 
+}
+
+.breadcrumb ol li {
+  margin-right: 10px; 
+}
+
+.breadcrumb ol li:not(:last-child)::after {
+  content: '>';
+  margin-left: 10px;
+}
+
+.breadcrumb ol li a {
+  text-decoration: none; /* Optional: Removes underline from links */
+}
+</style>
+
+<nav aria-label="Breadcrumb" class="breadcrumb">
+  <ol>
+    <li><a href="{{ shop.url }}">Home</a></li>
+
+    {% if template contains 'product' %}
+      
+      {% assign category_found = false %}
+      {% for tag in product.tags %}
+        {% if category_found == false %}
+          {% if tag == 'Boards' or tag == 'Clothing' or tag == 'Wetsuits' or tag == 'Accessories' %}
+            <li><a href="/collections/{{ tag | handleize }}">{{ tag }}</a></li>
+            {% assign category_found = true %}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+
+      <li>{{ product.title }}</li>
+
+    {% elsif template contains 'collection' %}
+
+      <li>{{ collection.title }}</li>
+
+    {% endif %}
+  </ol>
+</nav>

@@ -62,9 +62,15 @@
 
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
   <div class="page-width">
+
+    {% render 'breadcrumbs' %}
+    
     <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
     <div class="grid__item product__media-wrapper{% if section.settings.media_position == 'right' %} medium-hide large-up-hide{% endif %}">
       {% render 'product-media-gallery', variant_images: variant_images %}
+
+    {% render 'product-icons', desktop: true, mobile: false %}
+      
     </div>
     <div class="product__info-wrapper grid__item{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       <product-info
@@ -172,11 +178,49 @@
                 {%- endif -%}
               </p>
             {%- when 'description' -%}
-              {%- if product.description != blank -%}
-                <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
-                  {{ product.description }}
-                </div>
-              {%- endif -%}
+            {%- if product.description != blank -%}
+
+            <div class="description-dropdown">
+              <button id="descriptionToggle" class="description-toggle">
+                DESCRIPTION
+                <svg id="downArrow" width="22" height="14" viewBox="0 0 22 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: inline;">
+                  <path d="M19 3L11 11L3 3" stroke="#030000" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <svg id="upArrow" width="22" height="14" viewBox="0 0 22 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                  <path d="M3 11L11 3L19 11" stroke="#030000" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div id="productDescription" class="product-description" style="display: none;">
+                  <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
+                    {{ product.description }}
+                  </div>
+              </div>
+            </div>
+
+                          
+            {%- endif -%}
+
+            {% render 'key-features' %}
+
+            <script>
+document.getElementById("descriptionToggle").addEventListener("click", function() {
+  var description = document.getElementById("productDescription");
+  var downArrow = document.getElementById("downArrow");
+  var upArrow = document.getElementById("upArrow");
+  
+  if (description.style.display === "none") {
+    description.style.display = "block";
+    downArrow.style.display = "none";
+    upArrow.style.display = "inline";
+  } else {
+    description.style.display = "none";
+    downArrow.style.display = "inline";
+    upArrow.style.display = "none";
+  }
+});
+
+            </script>
+            
             {%- when 'sku' -%}
               <p
                 class="product__sku no-js-hidden{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}{% if product.selected_or_first_available_variant.sku.size == 0 %} visibility-hidden{% endif %}"
@@ -544,7 +588,7 @@
       {% comment %} Duplicate gallery to display after product content on tablet/desktop breakpoint {% endcomment %}
       <div class="grid__item product__media-wrapper small-hide">
         {% render 'product-media-gallery', variant_images: variant_images, is_duplicate: true %}
-      </div>
+      </div>                          
     {%- endif -%}
   </div>
 
@@ -668,6 +712,8 @@
     }
   </script>
   </div>
+
+  {% render 'product-icons', desktop: false, mobile: true %}
 </section>
 
 {% schema %}
@@ -812,6 +858,10 @@
             {
               "value": "button",
               "label": "t:sections.main-product.blocks.variant_picker.settings.picker_type.options__2.label"
+            },
+            {
+              "value": "list",
+              "label": "List"
             }
           ],
           "default": "button",

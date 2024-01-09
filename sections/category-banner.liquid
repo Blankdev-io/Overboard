@@ -1,0 +1,161 @@
+{% assign category_found = false %}
+
+{% if template contains 'product' %}
+  {% for tag in product.tags %}
+    {% if category_found == false %}
+      {% if tag == 'Boards' or tag == 'Clothing' or tag == 'Wetsuits' or tag == 'Accessories' %}
+        {% assign current_tag = tag | handleize %}
+        {% assign category_found = true %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+{% elsif template contains 'collection' %}
+  {% assign current_tag = collection.title | handleize %}
+{% endif %}
+
+<style>
+  .category-banner-container {
+    height: 179px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .category-header-text {
+    text-transform: uppercase;
+    font-size: 95px;
+    width: 1440px;
+    color: white;
+    margin-left: 85px;
+  }
+
+  .upper-svg{
+    position: absolute; 
+    right: 0; 
+    top: 11.75%;
+    width: 315px; 
+    height: auto; /* maintains the aspect ratio */
+    }
+
+  .bottom-svg{
+    position: absolute;
+    right: 0;
+    width: 315px; 
+    height: auto; /* maintains the aspect ratio */
+    }
+    
+    .upper-dif-svg{
+      position: absolute; 
+      right: 25px; 
+      top: 15.8%;
+      width: 210px;
+      height: auto; /* maintains the aspect ratio */
+      }
+  
+    .bottom-dif-svg{
+      position: absolute;
+      right: 25px; 
+      width: 210px; 
+      height: auto; /* maintains the aspect ratio */
+      }
+  @media (max-width: 768px) {
+    .category-banner-container {
+      height: 117px;
+    }
+
+    .category-header-text {
+      font-size: 5rem;
+      margin-left: 20px;
+    }
+    .upper-svg{
+        position: absolute; 
+        right: 0; 
+        top: 17.7%;
+        width: 165px; 
+        height: auto; /* maintains the aspect ratio */
+    }
+    
+    .bottom-svg{
+        position: absolute;
+        right: 0;
+        width: 165px; 
+        height: auto; /* maintains the aspect ratio */
+    }
+
+    .upper-dif-svg{
+        position: absolute; 
+        right: 0; 
+        top: 16.2%;
+        width: 165px; 
+        height: auto; /* maintains the aspect ratio */
+    }
+    
+    .bottom-dif-svg{
+        position: absolute;
+        right: 0;
+        width: 165px; 
+        height: auto; /* maintains the aspect ratio */
+    }
+  }
+</style>
+
+<div class="category-banner-container" 
+style="background-color: 
+  {% if current_tag == 'boards' %}{{ section.settings.background_color1 }};
+  {% elsif current_tag == 'clothing' %}{{ section.settings.background_color2 }};
+  {% elsif current_tag == 'wetsuits' %}{{ section.settings.background_color3 }};
+  {% elsif current_tag == 'accessories' %}{{ section.settings.background_color4 }};
+  {% else %}black;{% endif %}"> 
+  <h2 class="category-header category-header-text">{{ current_tag }}</h2>
+  {% if current_tag == 'boards' %}{% render 'boards-white-svg.liquid' %}
+  {% elsif current_tag == 'clothing' %}{% render 'clothing-white-svg.liquid' %}
+  {% elsif current_tag == 'wetsuits' %}{% render 'wetsuits-white-svg.liquid' %}
+  {% elsif current_tag == 'accessories' %}{% render 'accessories-white-svg.liquid' %}
+  {% else %}black;{% endif %}
+</div>
+
+{% if current_tag == 'boards' %}{% render 'boards-blue-svg.liquid' %}
+  {% elsif current_tag == 'clothing' %}{% render 'clothing-green-svg.liquid' %}
+  {% elsif current_tag == 'wetsuits' %}{% render 'wetsuits-red-svg.liquid' %}
+  {% elsif current_tag == 'accessories' %}{% render 'accessories-blue-svg.liquid' %}
+  {% else %}black;{% endif %}
+
+
+{% schema %}
+  {
+    "name": "Category Banner",
+    "settings": [
+      {
+        "type": "color",
+        "id": "background_color1",
+        "label": "Boards Background Color",
+        "default": "#aed7ea"
+      },
+      {
+        "type": "color",
+        "id": "background_color2",
+        "label": "Clothing Background Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "background_color3",
+        "label": "Wetsuits Background Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "background_color4",
+        "label": "Accessories Background Color",
+        "default": "#ffffff"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Category Banner"
+      }
+    ]
+  }
+  
+{% endschema %}

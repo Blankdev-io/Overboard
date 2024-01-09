@@ -11,6 +11,7 @@
 {% endcomment %}
 {%- unless product.has_only_default_variant -%}
   {%- if block.settings.picker_type == 'button' -%}
+    
     <variant-radios
       id="variant-radios-{{ section.id }}"
       class="no-js-hidden"
@@ -31,7 +32,9 @@
         {{ product.variants | json }}
       </script>
     </variant-radios>
-  {%- else -%}
+
+    {%- elsif block.settings.picker_type == 'dropdown' -%}
+    
     <variant-selects
       id="variant-selects-{{ section.id }}"
       class="no-js-hidden"
@@ -65,6 +68,226 @@
         {{ product.variants | json }}
       </script>
     </variant-selects>
+    
+    {%- elsif block.settings.picker_type == 'list' and product.tags contains 'Boards' -%}
+
+    <table class="variant-table">
+      <tr>
+        {% for option in product.options %}
+          {% if option contains '-' %}
+            {% assign split_options = option | split: '-' %}
+            {% for split_option in split_options %}
+              <td>{{ split_option | strip }}</td>
+            {% endfor %}
+          {% else %}
+            <td>{{ option }}</td>
+          {% endif %}
+        {% endfor %}
+        <th>In Stock</th>
+      </tr>
+  
+      {% for variant in product.variants %}
+        <tr class="variant-row{% if variant.available %}{% else %} variant-unavailable{% endif %}"
+          data-variant-id="{{ variant.id }}"
+          data-variant-price="{{ variant.price | money }}"
+          data-variant-image="{{ variant.featured_image | default: product.featured_image | img_url: 'master' }}">
+          {% for option in variant.options %}
+            {% if option contains '-' %}
+              {% assign split_options = option | split: '-' %}
+              {% for split_option in split_options %}
+                <td>{{ split_option | strip }}</td>
+              {% endfor %}
+            {% else %}
+              <td>{{ option }}</td>
+            {% endif %}
+          {% endfor %}
+          <td>
+            {% if variant.available %}
+              <span class="stock-pill available">
+                {% if variant.inventory_management == 'shopify' %}
+                  {{ variant.inventory_quantity }} in stock 
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 00-1.06-1.06L6 9.88 3.28 7.16a.75.75 0 10-1.06 1.06l3.25 3.25c.3.3.77.3 1.06 0l7.25-7.25z"/></svg>
+                {% else %}
+                  In stock
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 00-1.06-1.06L6 9.88 3.28 7.16a.75.75 0 10-1.06 1.06l3.25 3.25c.3.3.77.3 1.06 0l7.25-7.25z"/></svg>
+                {% endif %}
+              </span>
+            {% else %}
+              <span class="stock-pill unavailable">
+                Not in stock
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8.53 8l3.25-3.25a.75.75 0 00-1.06-1.06L7.47 6.94 4.22 3.69a.75.75 0 00-1.06 1.06L6.44 8l-3.25 3.25a.75.75 0 001.06 1.06L7.47 9.06l3.25 3.25a.75.75 0 001.06-1.06L8.53 8z"/></svg>
+              </span>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+                
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var variantRows = document.querySelectorAll('.variant-row');
+  var variantInput = document.querySelector('.product-variant-id');
+  var defaultSelected = false;
+
+  variantRows.forEach(function(row) {
+    var variantId = row.getAttribute('data-variant-id');
+
+    if (!row.classList.contains('variant-unavailable')) {
+      row.addEventListener('click', function() {
+        var variantId = this.getAttribute('data-variant-id');
+        if (variantInput) {
+          variantInput.value = variantId;
+        };
+        // Update all rows to default border style
+        variantRows.forEach(function(r) {
+          r.style.borderTop = 'none';
+          r.style.borderLeft = 'none';
+          r.style.borderRight = 'none';
+          r.style.borderBottom = '1px solid #ddd';
+        });
+
+        // Highlight the selected row
+        row.style.border = '2px solid black';
+
+        // Update the price
+        var price = row.getAttribute('data-variant-price');
+        document.querySelector('.price-item').textContent = price;
+
+        // Get variant data
+        var variantImageSrc = row.getAttribute('data-variant-image');
+  
+        // Update product image if variant has an image
+        if (variantImageSrc) {
+          var productImage = document.querySelector('.product__media img');
+          if (productImage) {
+            productImage.src = variantImageSrc;
+            // Update srcset attribute if necessary
+            productImage.srcset = variantImageSrc;
+          }
+        }
+
+        // Update Shopify's variant selector (if used)
+        var variantSelect = document.querySelector('select[name=id]');
+        if (variantSelect) {
+          variantSelect.value = variantId;
+        }
+      });
+
+      // Automatically select the first available variant
+      if (!defaultSelected) {
+        row.click();
+        defaultSelected = true;
+      }
+    } else {
+      row.style.pointerEvents = 'none';
+    }
+  });
+});
+
+</script>
+
+  {%- else -%}
+
+  {{ 'variant-map.js' | asset_url | script_tag }}
+
+{% for option in product.options_with_values %}
+  <div class="variant-option">
+    <h3>{{ option.name }}</h3>
+    <div class="variant-values">
+      {% for value in option.values %}
+        {% assign variant_found = false %}
+        {% for variant in product.variants %}
+          {% if variant.options contains value and variant.available %}
+            <div class="variant-value" data-value="{{ value }}" data-option="{{ option.name }}"
+              data-variant-id="{{ variant.id }}"
+              data-variant-price="{{ variant.price | money }}"
+              data-variant-image="{{ variant.featured_image | default: product.featured_image | img_url: 'master' }}">
+              <!-- Placeholder for the value, filled by JavaScript -->
+            </div>
+            {% assign variant_found = true %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+        {% unless variant_found %}
+          <div class="variant-value variant-unavailable" data-value="{{ value }}" data-option="{{ option.name }}">
+            <!-- Placeholder for the value, filled by JavaScript -->
+          </div>
+        {% endunless %}
+      {% endfor %}
+    </div>
+  </div>
+{% endfor %}
+
+
+  <script>
+document.addEventListener('DOMContentLoaded', function() {
+  var variantOptions = document.querySelectorAll('.variant-value');
+  var productImage = document.querySelector('.product__media img');
+  var productPrice = document.querySelector('.price-item');
+  var variantInput = document.querySelector('.product-variant-id');
+
+  variantOptions.forEach(option => {
+    var value = option.getAttribute('data-value');
+    var optionType = option.getAttribute('data-option');
+    var variantId = option.getAttribute('data-variant-id');
+    var variantPrice = option.getAttribute('data-variant-price');
+    var variantImageSrc = option.getAttribute('data-variant-image');
+
+    // Set up the variant map
+    if (variantMap.colors[value]) {
+      option.style.backgroundColor = variantMap.colors[value];
+    } else if (variantMap.sizes[value]) {
+      option.textContent = variantMap.sizes[value];
+      option.classList.add('text-type');
+    } else {
+      option.textContent = value;
+      option.classList.add('text-type');
+    }
+
+    // Handle unavailable variants
+    if (!variantId) {
+      option.classList.add('variant-unavailable');
+      option.style.pointerEvents = 'none';
+      option.style.opacity = '0.5';
+    } else {
+      option.addEventListener('click', function() {
+        // Update selected variant
+        variantOptions.forEach(opt => opt.classList.remove('selected'));
+        option.classList.add('selected');
+
+        if (variantInput) {
+          variantInput.value = variantId;
+        };
+        
+        // Update Shopify's variant selector
+        var variantSelect = document.querySelector('select[name=id]');
+        if (variantSelect) {
+          variantSelect.value = variantId;
+        }
+
+        // Update the price
+        if (productPrice && variantPrice) {
+          productPrice.textContent = variantPrice;
+        }
+
+        // Update the product image if available
+        if (variantImageSrc && productImage) {
+          productImage.src = variantImageSrc;
+          // Update srcset attribute if necessary
+          productImage.srcset = variantImageSrc;
+        }
+      });
+    }
+  });
+
+  // Automatically select the first available variant
+  const firstAvailableVariant = document.querySelector('.variant-value:not(.variant-unavailable)');
+  if (firstAvailableVariant) {
+    firstAvailableVariant.click();
+  }
+});
+  </script>
+                  
   {%- endif -%}
 {%- endunless -%}
 

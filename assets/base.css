@@ -3681,3 +3681,137 @@ h1, .highrise {
     text-decoration-thickness: 4px;
     text-underline-offset: 8px;
 }
+
+.variant-container {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px; 
+  margin-bottom: 0; 
+  border-bottom: 1px solid #ddd;
+  transition: border-color 0.3s ease;
+}
+
+.variant-container:last-child {
+  border-bottom: none;
+}
+
+.variant-container.selected {
+  border: 1px solid black;
+}
+
+.variant-container.variant-unavailable {
+  color: #999;
+}
+
+.stock-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  background-color: black;
+  color: white;
+  border-radius: 15px; 
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+
+.stock-pill svg {
+  width: 1em;
+  height: 1em;
+  margin-right: 5px;
+}
+
+.stock-pill.available svg {
+  fill: lightgreen;
+  margin-left: 5px;
+}
+
+.stock-pill.unavailable svg {
+  fill: red;
+  margin-left: 5px;
+}
+
+.variant-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.variant-table th, .variant-table td {
+  border: none; 
+  padding: 10px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.variant-table tr {
+  border-bottom: 1px solid #ddd; 
+  text-align: center;
+}
+
+.variant-table tr:last-child {
+  border-bottom: none;
+}
+
+.variant-row.variant-unavailable {
+  color: #999;
+}
+
+.variant-row {
+  cursor: pointer;
+}
+
+.variant-value {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #ccc;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.variant-value.selected {
+  border-color: black;
+}
+
+.variant-value.text-type {
+  background-color: #f0f0f0;
+  color: black;
+}
+
+.variant-value.text-type.selected {
+  background-color: black;
+  color: white;
+}
+
+.unavailable-strike {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to top right, transparent 49%, grey 49%, grey 51%, transparent 51%);
+}
+
+.description-dropdown {
+  /* Add necessary styling for the dropdown container */
+}
+
+.description-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 32px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-family: Plus Jakarta Sans,sans-serif!important;
+}
+
+.product-description {
+  font-size: 16px;
+  font-family: Plus Jakarta Sans,sans-serif!important;
+}

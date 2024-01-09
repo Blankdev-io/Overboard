@@ -1,0 +1,201 @@
+{% assign product_included = false %}
+{% assign current_product_gid = 'gid://shopify/Product/' | append: product.id %}
+
+{% for key_feature in shop.metaobjects.key_features.values %}
+
+  {% assign product_gids = key_feature.products | join: ',' %}
+  {% if product_gids contains current_product_gid %}
+    {% assign product_included = true %}
+  {% endif %}
+
+  {% if key_feature.collections and product_included == false %}
+    {% for key_collection in key_feature.collections %}
+      {% for collection in product.collections %}
+        {% if key_collection.id == collection.id %}
+          {% assign product_included = true %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+      {% if product_included %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+  {% if product_included %}
+    {% liquid
+        assign main_image = key_feature.main_image
+        assign heading_1 = key_feature.heading_1
+        assign subheading_1 = key_feature.subheading_1
+        assign description_1 = key_feature.description_1
+        assign table_1 = key_feature.table_1
+        assign image_1 = key_feature.image_1
+      
+        assign heading_2 = key_feature.heading_2
+        assign subheading_2 = key_feature.subheading_2
+        assign description_2 = key_feature.description_2
+        assign table_2 = key_feature.table_2
+        assign image_2 = key_feature.image_2
+      
+        assign heading_3 = key_feature.heading_3
+        assign subheading_3 = key_feature.subheading_3
+        assign description_3 = key_feature.description_3
+        assign table_3 = key_feature.table_3
+        assign image_3 = key_feature.image_3
+    %}
+  {% endif %}
+{% endfor %}
+
+{% if product_included %}
+
+<div class="description-dropdown">
+  <button id="descriptionToggle" class="description-toggle">
+    KEY FEATURES
+    <svg id="downArrow" width="22" height="14" viewBox="0 0 22 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: inline;">
+      <path d="M19 3L11 11L3 3" stroke="#030000" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <svg id="upArrow" width="22" height="14" viewBox="0 0 22 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+      <path d="M3 11L11 3L19 11" stroke="#030000" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <div id="productDescription" class="product-description" style="display: none;">
+      <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
+  
+  {% if main_image %}
+    {{ main_image | image_url: width: 500 | image_tag }}
+  {% endif %}
+
+  {% if heading_1 %}
+    <h2>{{ heading_1 }}</h2>
+  {% endif %}
+
+  {% if subheading_1 %}
+    <h3>{{ subheading_1 }}</h3>
+  {% endif %}
+
+  {% if description_1 %}
+    <p>{{ description_1 }}</p>
+  {% endif %}
+
+  {% if table_1 %}
+    {% assign table_items = table_1 | remove_first: '["' | remove_last: '"]' | split: '","' %}
+    {% assign total_items = table_items.size %}
+    {% assign half_size = total_items | divided_by: 2 %}
+    
+    <table>
+      <tr>
+        <td> <!-- Left Column for Odd Numbers -->
+          {% for i in (0..half_size) %}
+            {% assign index = i | times: 2 %}
+            {% if table_items[index] %}
+              <p>{{ table_items[index] }}</p>
+            {% endif %}
+          {% endfor %}
+        </td>
+        <td> <!-- Right Column for Even Numbers -->
+          {% for i in (0..half_size) %}
+            {% assign index = i | times: 2 | plus: 1 %}
+            {% if table_items[index] %}
+              <p>{{ table_items[index] }}</p>
+            {% endif %}
+          {% endfor %}
+        </td>
+      </tr>
+    </table>
+  {% endif %}
+
+  {% if image_1 %}
+    {{ image_1 | image_url: width: 500 | image_tag }}
+  {% endif %}
+
+  {% if heading_2 %}
+    <h2>{{ heading_2 }}</h2>
+  {% endif %}
+
+  {% if subheading_2 %}
+    <h3>{{ subheading_2 }}</h3>
+  {% endif %}
+
+  {% if description_2 %}
+    <p>{{ description_2 }}</p>
+  {% endif %}
+
+  {% if table_2 %}
+    {% assign table_items = table_2 | remove_first: '["' | remove_last: '"]' | split: '","' %}
+    {% assign total_items = table_items.size %}
+    {% assign half_size = total_items | divided_by: 2 %}
+    
+    <table>
+      <tr>
+        <td> <!-- Left Column for Odd Numbers -->
+          {% for i in (0..half_size) %}
+            {% assign index = i | times: 2 %}
+            {% if table_items[index] %}
+              <p>{{ table_items[index] }}</p>
+            {% endif %}
+          {% endfor %}
+        </td>
+        <td> <!-- Right Column for Even Numbers -->
+          {% for i in (0..half_size) %}
+            {% assign index = i | times: 2 | plus: 1 %}
+            {% if table_items[index] %}
+              <p>{{ table_items[index] }}</p>
+            {% endif %}
+          {% endfor %}
+        </td>
+      </tr>
+    </table>
+  {% endif %}
+
+  {% if image_2 %}
+    {{ image_2 | image_url: width: 500 | image_tag }}
+  {% endif %}
+
+  {% if heading_3 %}
+    <h2>{{ heading_3 }}</h2>
+  {% endif %}
+
+  {% if subheading_3 %}
+    <h3>{{ subheading_3 }}</h3>
+  {% endif %}
+
+  {% if description_3 %}
+    <p>{{ description_3 }}</p>
+  {% endif %}
+
+  {% if table_3 %}
+    {% assign table_items = table_3 | remove_first: '["' | remove_last: '"]' | split: '","' %}
+    {% assign total_items = table_items.size %}
+    {% assign half_size = total_items | divided_by: 2 %}
+    
+    <table>
+      <tr>
+        <td> <!-- Left Column for Odd Numbers -->
+          {% for i in (0..half_size) %}
+            {% assign index = i | times: 2 %}
+            {% if table_items[index] %}
+              <p>{{ table_items[index] }}</p>
+            {% endif %}
+          {% endfor %}
+        </td>
+        <td> <!-- Right Column for Even Numbers -->
+          {% for i in (0..half_size) %}
+            {% assign index = i | times: 2 | plus: 1 %}
+            {% if table_items[index] %}
+              <p>{{ table_items[index] }}</p>
+            {% endif %}
+          {% endfor %}
+        </td>
+      </tr>
+    </table>
+  {% endif %}
+
+  {% if image_3 %}
+    {{ image_3 | image_url: width: 500 | image_tag }}
+  {% endif %}
+
+    </div>
+  </div>
+</div>
+        
+{% endif %}
