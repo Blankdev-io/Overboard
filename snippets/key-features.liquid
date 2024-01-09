@@ -80,23 +80,30 @@
 {% if table_1 %}
   {% assign table_items = table_1 | remove_first: '["' | remove_last: '"]' | split: '","' %}
   {% assign total_items = table_items.size %}
-  {% assign half_size = total_items | divided_by: 2 %}
 
   <table>
-    {% for i in (0..half_size) %}
+    {% for i in (0..total_items) %}
       {% assign odd_index = i | times: 2 %}
       {% assign even_index = odd_index | plus: 1 %}
-      <tr>
-        {% if table_items[odd_index] %}
-          <td>{{ table_items[odd_index] }}</td>
-        {% endif %}
-        {% if table_items[even_index] %}
-          <td>{{ table_items[even_index] }}</td>
-        {% endif %}
-      </tr>
+
+      {% if table_items[odd_index] or table_items[even_index] %}
+        <tr>
+          {% if table_items[odd_index] %}
+            <td>{{ table_items[odd_index] }}</td>
+          {% endif %}
+          {% if table_items[even_index] %}
+            <td>{{ table_items[even_index] }}</td>
+          {% endif %}
+        </tr>
+      {% endif %}
+
+      {% if even_index >= total_items %}
+        {% break %}
+      {% endif %}
     {% endfor %}
   </table>
 {% endif %}
+
 
 
 
