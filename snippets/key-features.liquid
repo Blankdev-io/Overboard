@@ -77,54 +77,8 @@
     <p>{{ description_1 }}</p>
   {% endif %}
 
-{% if table_1 %}
-  {% assign table_items = table_1 | remove_first: '["' | remove_last: '"]' | split: '","' %}
-  {% assign total_items = table_items.size %}
-  {% assign half_size = total_items | divided_by: 2 %}
-
-  <div class="container">
-    <div class="odd-container"> <!-- Container for Odd Elements -->
-      {% for i in (0..half_size) %}
-        {% assign index = i | times: 2 %}
-        {% if table_items[index] %}
-          <p>{{ table_items[index] }}</p>
-        {% endif %}
-      {% endfor %}
-    </div>
-
-    <div class="even-container"> <!-- Container for Even Elements -->
-      {% for i in (0..half_size) %}
-        {% assign index = i | times: 2 | plus: 1 %}
-        {% if table_items[index] %}
-          <p>{{ table_items[index] }}</p>
-        {% endif %}
-      {% endfor %}
-    </div>
-  </div>
-{% endif %}
-
-
-
-
-
-  {% if image_1 %}
-    {{ image_1 | image_url: width: 500 | image_tag }}
-  {% endif %}
-
-  {% if heading_2 %}
-    <h2>{{ heading_2 }}</h2>
-  {% endif %}
-
-  {% if subheading_2 %}
-    <h3>{{ subheading_2 }}</h3>
-  {% endif %}
-
-  {% if description_2 %}
-    <p>{{ description_2 }}</p>
-  {% endif %}
-
-  {% if table_2 %}
-    {% assign table_items = table_2 | remove_first: '["' | remove_last: '"]' | split: '","' %}
+  {% if table_1 %}
+    {% assign table_items = table_1 | remove_first: '["' | remove_last: '"]' | split: '","' %}
     {% assign total_items = table_items.size %}
     {% assign half_size = total_items | divided_by: 2 %}
     
@@ -149,6 +103,48 @@
       </tr>
     </table>
   {% endif %}
+
+  {% if image_1 %}
+    {{ image_1 | image_url: width: 500 | image_tag }}
+  {% endif %}
+
+  {% if heading_2 %}
+    <h2>{{ heading_2 }}</h2>
+  {% endif %}
+
+  {% if subheading_2 %}
+    <h3>{{ subheading_2 }}</h3>
+  {% endif %}
+
+  {% if description_2 %}
+    <p>{{ description_2 }}</p>
+  {% endif %}
+
+{% if table_2 %}
+  {% assign table_items = table_2 | remove_first: '["' | remove_last: '"]' | split: '","' %}
+  {% assign total_items = table_items.size %}
+  {% assign half_size = total_items | divided_by: 2 %}
+
+  <table>
+    {% for i in (0..half_size) %}
+      <tr>
+        {% assign odd_index = i | times: 2 %}
+        {% assign even_index = odd_index | plus: 1 %}
+        <td> <!-- Cell for Odd Number -->
+          {% if table_items[odd_index] %}
+            {{ table_items[odd_index] }}
+          {% endif %}
+        </td>
+        <td> <!-- Cell for Even Number -->
+          {% if table_items[even_index] %}
+            {{ table_items[even_index] }}
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endif %}
+
 
   {% if image_2 %}
     {{ image_2 | image_url: width: 500 | image_tag }}
