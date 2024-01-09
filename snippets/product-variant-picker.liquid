@@ -213,34 +213,39 @@ document.addEventListener('DOMContentLoaded', function() {
   const variantSelect = document.querySelector('select[name=id]');
   let selectedOptions = {};
 
-  function findMatchingVariant() {
-    const matchingVariants = Array.from(variantOptions).filter(variant => {
-      return selectedOptions['Color'] === variant.getAttribute('data-value') || 
-             selectedOptions['Size'] === variant.getAttribute('data-value');
-    });
+  function updateVariantSelection(variant) {
+    const variantId = variant.getAttribute('data-variant-id');
+    const variantPrice = variant.getAttribute('data-variant-price');
+    const variantImageSrc = variant.getAttribute('data-variant-image');
 
-    for (const variant of matchingVariants) {
-      const variantId = variant.getAttribute('data-variant-id');
-      if (variantId) {
-        const variantPrice = variant.getAttribute('data-variant-price');
-        const variantImageSrc = variant.getAttribute('data-variant-image');
-        updateVariantSelection(variantId, variantPrice, variantImageSrc);
-        break; // Found a match, no need to check further
-      }
-    }
-  }
-
-  function updateVariantSelection(variantId, variantPrice, variantImageSrc) {
+    // Update Shopify's variant selector
     if (variantSelect) {
       variantSelect.value = variantId;
       variantSelect.dispatchEvent(new Event('change'));
     }
+
+    // Update the price
     if (productPrice && variantPrice) {
       productPrice.textContent = variantPrice;
     }
+
+    // Update the product image if available
     if (variantImageSrc && productImage) {
       productImage.src = variantImageSrc;
       productImage.srcset = variantImageSrc;
+    }
+  }
+
+  function findMatchingVariant() {
+    let allVariants = Array.from(document.querySelectorAll('.variant-value'));
+    let matchingVariant = allVariants.find(variant => {
+      return Object.keys(selectedOptions).every(optionType => {
+        return variant.getAttribute(`data-${optionType}`) === selectedOptions[optionType];
+      }) && variant.getAttribute('data-variant-id');
+    });
+
+    if (matchingVariant) {
+      updateVariantSelection(matchingVariant);
     }
   }
 
@@ -249,10 +254,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const optionType = option.getAttribute('data-option');
     const variantId = option.getAttribute('data-variant-id');
 
-    // Set up variant map for colors and sizes
+    // Set up the variant map
     if (variantMap.colors[value]) {
       option.style.backgroundColor = variantMap.colors[value];
-      option.classList.add('color-type');
     } else if (variantMap.sizes[value]) {
       option.textContent = variantMap.sizes[value];
       option.classList.add('text-type');
@@ -261,39 +265,26 @@ document.addEventListener('DOMContentLoaded', function() {
       option.classList.add('text-type');
     }
 
+    // Handle variant selection
+    option.addEventListener('click', function() {
+      selectedOptions[optionType] = value;
+      findMatchingVariant();
+
+      // Update styling
+      document.querySelectorAll(`.variant-value[data-option="${optionType}"]`).forEach(opt => opt.classList.remove('selected'));
+      option.classList.add('selected');
+    });
+
     // Handle unavailable variants
     if (!variantId) {
       option.classList.add('variant-unavailable');
       option.style.pointerEvents = 'none';
       option.style.opacity = '0.5';
-      if (option.classList.contains('color-type')) {
-        option.style.position = 'relative';
-        option.innerHTML = '<div class="unavailable-stripe"></div>';
+      if (!option.classList.contains('text-type')) {
+        option.style.backgroundImage = 'linear-gradient(to top right, transparent calc(50% - 1px), grey, transparent calc(50% + 1px))';
       }
-    } else {
-      // Handle variant selection
-      option.addEventListener('click', function() {
-        selectedOptions[optionType] = value;
-        findMatchingVariant();
-
-        // Update selected styling
-        document.querySelectorAll(`.variant-value[data-option="${optionType}"]`).forEach(opt => opt.classList.remove('selected'));
-        option.classList.add('selected');
-      });
     }
   });
-
-  // Style for unavailable stripe
-  const style = document.createElement('style');
-  style.innerHTML = `
-    .unavailable-stripe {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(to top right, transparent 49%, grey 49%, grey 51%, transparent 51%);
-    }
-  `;
-  document.head.appendChild(style);
 });
 
   </script>
