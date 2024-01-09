@@ -208,69 +208,64 @@ document.addEventListener('DOMContentLoaded', function() {
   <script>
 document.addEventListener('DOMContentLoaded', function() {
   const variantOptions = document.querySelectorAll('.variant-value');
-  const productImage = document.querySelector('.product__media img');
-  const productPrice = document.querySelector('.price-item');
-  const variantSelect = document.querySelector('select[name=id]');
-  let selectedOptions = {};
-
-  function updateVariantSelection() {
-    const matchingVariant = findMatchingVariant(selectedOptions);
-    if (matchingVariant) {
-      // Update Shopify's variant selector
-      variantSelect.value = matchingVariant.id;
-      variantSelect.dispatchEvent(new Event('change'));
-
-      // Update the price
-      productPrice.textContent = matchingVariant.price;
-
-      // Update the product image if available
-      if (matchingVariant.image && productImage) {
-        productImage.src = matchingVariant.image;
-        productImage.srcset = matchingVariant.image;
-      }
-    }
-  }
-
-  function findMatchingVariant(selectedOptions) {
-    return Array.from(variantSelect.options).find(option => {
-      let variantData = JSON.parse(option.getAttribute('data-json'));
-      return Object.entries(selectedOptions).every(([key, value]) => 
-        variantData[key] === value);
-    });
-  }
+  const productImage = document.querySelector('.product__media img'); // Update this selector as needed
+  const productPrice = document.querySelector('.price-item'); // Update this selector as needed
+  const variantSelect = document.querySelector('select[name=id]'); // Shopify's variant selector
 
   variantOptions.forEach(option => {
-    option.addEventListener('click', function() {
-      const optionType = option.getAttribute('data-option');
-      const value = option.getAttribute('data-value');
+    const value = option.getAttribute('data-value');
+    const optionType = option.getAttribute('data-option');
+    const variantId = option.getAttribute('data-variant-id');
+    const variantPrice = option.getAttribute('data-variant-price');
+    const variantImageSrc = option.getAttribute('data-variant-image');
 
-      // Update selected options
-      selectedOptions[optionType] = value;
+    // Set up the variant map
+    if (variantMap.colors[value]) {
+      option.style.backgroundColor = variantMap.colors[value];
+    } else if (variantMap.sizes[value]) {
+      option.textContent = variantMap.sizes[value];
+      option.classList.add('text-type');
+    } else {
+      option.textContent = value;
+      option.classList.add('text-type');
+    }
 
-      // Highlight the selected option
-      variantOptions.forEach(opt => {
-        if (opt.getAttribute('data-option') === optionType) {
-          opt.classList.remove('selected');
+    // Handle unavailable variants
+    if (!variantId) {
+      option.classList.add('variant-unavailable');
+      option.style.pointerEvents = 'none';
+      option.style.opacity = '0.5';
+    } else {
+      option.addEventListener('click', function() {
+        // Update selected variant
+        variantOptions.forEach(opt => opt.classList.remove('selected'));
+        option.classList.add('selected');
+
+        // Update Shopify's variant selector
+        if (variantSelect) {
+          variantSelect.value = variantId;
+          variantSelect.dispatchEvent(new Event('change')); // Trigger the change event
+        }
+
+        // Update the price
+        if (productPrice && variantPrice) {
+          productPrice.textContent = variantPrice;
+        }
+
+        // Update the product image if available
+        if (variantImageSrc && productImage) {
+          productImage.src = variantImageSrc;
+          // Update srcset attribute if necessary
+          productImage.srcset = variantImageSrc;
         }
       });
-      option.classList.add('selected');
-
-      // Update variant selection based on chosen options
-      updateVariantSelection();
-    });
+    }
   });
 
-  // Initialize with the first available variant
-  if (variantSelect.options.length > 0) {
-    let initialVariantData = JSON.parse(variantSelect.options[0].getAttribute('data-json'));
-    Object.keys(initialVariantData).forEach(key => {
-      selectedOptions[key] = initialVariantData[key];
-      let initialOption = Array.from(variantOptions).find(opt => 
-        opt.getAttribute('data-option') === key && opt.getAttribute('data-value') === initialVariantData[key]);
-      if (initialOption) {
-        initialOption.click();
-      }
-    });
+  // Automatically select the first available variant
+  const firstAvailableVariant = document.querySelector('.variant-value:not(.variant-unavailable)');
+  if (firstAvailableVariant) {
+    firstAvailableVariant.click();
   }
 });
 
