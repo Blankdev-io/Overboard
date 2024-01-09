@@ -11,6 +11,7 @@
 {% endcomment %}
 {%- unless product.has_only_default_variant -%}
   {%- if block.settings.picker_type == 'button' -%}
+    
     <variant-radios
       id="variant-radios-{{ section.id }}"
       class="no-js-hidden"
@@ -31,49 +32,82 @@
         {{ product.variants | json }}
       </script>
     </variant-radios>
+
+    {%- elsif block.settings.picker_type == 'dropdown' -%}
     
-  {%- elsif block.settings.picker_type == 'list' and product.tags contains 'Boards' -%}
+    <variant-selects
+      id="variant-selects-{{ section.id }}"
+      class="no-js-hidden"
+      data-section="{{ section.id }}"
+      data-url="{{ product.url }}"
+      {% if update_url == false %}
+        data-update-url="false"
+      {% endif %}
+      {{ block.shopify_attributes }}
+    >
+      {%- for option in product.options_with_values -%}
+        <div class="product-form__input product-form__input--dropdown">
+          <label class="form__label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
+            {{ option.name }}
+          </label>
+          <div class="select">
+            <select
+              id="Option-{{ section.id }}-{{ forloop.index0 }}"
+              class="select__select"
+              name="options[{{ option.name | escape }}]"
+              form="{{ product_form_id }}"
+            >
+              {% render 'product-variant-options', product: product, option: option, block: block %}
+            </select>
+            {% render 'icon-caret' %}
+          </div>
+        </div>
+      {%- endfor -%}
 
-{% if product.variants.size > 0 %}
-  <table class="variant-table">
-    <tr>
-      {% for option in product.options %}
-        <th>{{ option }}</th>
-      {% endfor %}
-      <th>In Stock</th>
-    </tr>
+      <script type="application/json">
+        {{ product.variants | json }}
+      </script>
+    </variant-selects>
+    
+    {%- elsif block.settings.picker_type == 'list' and product.tags contains 'Boards' -%}
 
-    {% for variant in product.variants %}
-      <tr class="variant-row{% if variant.available %}{% else %} variant-unavailable{% endif %}"
-        data-variant-id="{{ variant.id }}"
-        data-variant-price="{{ variant.price | money }}"
-        data-variant-image="{{ variant.featured_image | default: product.featured_image | img_url: 'master' }}">
-        {% for option in variant.options %}
-          <td>{{ option }}</td>
+    <table class="variant-table">
+      <tr>
+        {% for option in product.options %}
+          <th>{{ option }}</th>
         {% endfor %}
-        <td>
-          {% if variant.available %}
-            <span class="stock-pill available">
-              {% if variant.inventory_management == 'shopify' %}
-                {{ variant.inventory_quantity }} in stock 
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 00-1.06-1.06L6 9.88 3.28 7.16a.75.75 0 10-1.06 1.06l3.25 3.25c.3.3.77.3 1.06 0l7.25-7.25z"/></svg>
-              {% else %}
-                In stock
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 00-1.06-1.06L6 9.88 3.28 7.16a.75.75 0 10-1.06 1.06l3.25 3.25c.3.3.77.3 1.06 0l7.25-7.25z"/></svg>
-              {% endif %}
-            </span>
-          {% else %}
-            <span class="stock-pill unavailable">
-              Not in stock
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8.53 8l3.25-3.25a.75.75 0 00-1.06-1.06L7.47 6.94 4.22 3.69a.75.75 0 00-1.06 1.06L6.44 8l-3.25 3.25a.75.75 0 001.06 1.06L7.47 9.06l3.25 3.25a.75.75 0 001.06-1.06L8.53 8z"/></svg>
-            </span>
-          {% endif %}
-        </td>
+        <th>In Stock</th>
       </tr>
-    {% endfor %}
-  </table>
-                
-{% endif %}
+  
+      {% for variant in product.variants %}
+        <tr class="variant-row{% if variant.available %}{% else %} variant-unavailable{% endif %}"
+          data-variant-id="{{ variant.id }}"
+          data-variant-price="{{ variant.price | money }}"
+          data-variant-image="{{ variant.featured_image | default: product.featured_image | img_url: 'master' }}">
+          {% for option in variant.options %}
+            <td>{{ option }}</td>
+          {% endfor %}
+          <td>
+            {% if variant.available %}
+              <span class="stock-pill available">
+                {% if variant.inventory_management == 'shopify' %}
+                  {{ variant.inventory_quantity }} in stock 
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 00-1.06-1.06L6 9.88 3.28 7.16a.75.75 0 10-1.06 1.06l3.25 3.25c.3.3.77.3 1.06 0l7.25-7.25z"/></svg>
+                {% else %}
+                  In stock
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 00-1.06-1.06L6 9.88 3.28 7.16a.75.75 0 10-1.06 1.06l3.25 3.25c.3.3.77.3 1.06 0l7.25-7.25z"/></svg>
+                {% endif %}
+              </span>
+            {% else %}
+              <span class="stock-pill unavailable">
+                Not in stock
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8.53 8l3.25-3.25a.75.75 0 00-1.06-1.06L7.47 6.94 4.22 3.69a.75.75 0 00-1.06 1.06L6.44 8l-3.25 3.25a.75.75 0 001.06 1.06L7.47 9.06l3.25 3.25a.75.75 0 001.06-1.06L8.53 8z"/></svg>
+              </span>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
                 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -139,39 +173,9 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
   {%- else -%}
-    <variant-selects
-      id="variant-selects-{{ section.id }}"
-      class="no-js-hidden"
-      data-section="{{ section.id }}"
-      data-url="{{ product.url }}"
-      {% if update_url == false %}
-        data-update-url="false"
-      {% endif %}
-      {{ block.shopify_attributes }}
-    >
-      {%- for option in product.options_with_values -%}
-        <div class="product-form__input product-form__input--dropdown">
-          <label class="form__label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
-            {{ option.name }}
-          </label>
-          <div class="select">
-            <select
-              id="Option-{{ section.id }}-{{ forloop.index0 }}"
-              class="select__select"
-              name="options[{{ option.name | escape }}]"
-              form="{{ product_form_id }}"
-            >
-              {% render 'product-variant-options', product: product, option: option, block: block %}
-            </select>
-            {% render 'icon-caret' %}
-          </div>
-        </div>
-      {%- endfor -%}
 
-      <script type="application/json">
-        {{ product.variants | json }}
-      </script>
-    </variant-selects>
+  
+
   {%- endif -%}
 {%- endunless -%}
 
