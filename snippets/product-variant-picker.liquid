@@ -181,7 +181,10 @@ document.addEventListener('DOMContentLoaded', function() {
       <h3>{{ option.name }}</h3>
       <div class="variant-values">
         {% for value in option.values %}
-          <div class="variant-value" data-value="{{ value }}" data-option="{{ option.name }}">
+          <div class="variant-value" data-value="{{ value }}" data-option="{{ option.name }}"
+          data-variant-id="{{ variant.id }}"
+          data-variant-price="{{ variant.price | money }}"
+          data-variant-image="{{ variant.featured_image | default: product.featured_image | img_url: 'master' }}">
             <!-- Placeholder for the value, filled by JavaScript -->
           </div>
         {% endfor %}
@@ -190,32 +193,64 @@ document.addEventListener('DOMContentLoaded', function() {
   {% endfor %}
 
   <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const variantOptions = document.querySelectorAll('.variant-value');
-  
-    variantOptions.forEach(option => {
-      const value = option.getAttribute('data-value');
-      const optionType = option.getAttribute('data-option');
-  
-      if (variantMap.colors[value]) {
-        option.style.backgroundColor = variantMap.colors[value];
-      } else if (variantMap.sizes[value]) {
-        option.textContent = variantMap.sizes[value];
-        option.classList.add('text-type');
-      } else {
-        option.textContent = value;
-        option.classList.add('text-type');
-      }
-  
-      option.addEventListener('click', function() {
-        // Handle variant selection
-        variantOptions.forEach(opt => opt.classList.remove('selected'));
-        option.classList.add('selected');
-  
-        // Update the product form (you'll need to add logic for this)
+document.addEventListener('DOMContentLoaded', function() {
+  var variantElements = document.querySelectorAll('.variant-value');
+  var productImage = document.querySelector('.product__media img');
+  var productPrice = document.querySelector('.price-item'); // Update selector as needed
+  var variantSelect = document.querySelector('select[name=id]'); // Shopify's variant selector
+
+  variantElements.forEach(function(element) {
+    var variantId = element.getAttribute('data-variant-id');
+    var variantPrice = element.getAttribute('data-variant-price');
+    var variantImageSrc = element.getAttribute('data-variant-image');
+
+    // Check if the variant is available
+    if (variantId) {
+      element.addEventListener('click', function() {
+        // Update Shopify's variant selector
+        if (variantSelect) {
+          variantSelect.value = variantId;
+        }
+
+        // Update the price
+        if (productPrice) {
+          productPrice.textContent = variantPrice;
+        }
+
+        // Update the image if available
+        if (variantImageSrc && productImage) {
+          productImage.src = variantImageSrc;
+          // Update srcset attribute if necessary
+          productImage.srcset = variantImageSrc;
+        }
+
+        // Update the styling for the selected variant
+        variantElements.forEach(function(el) {
+          el.classList.remove('selected');
+          if (el.classList.contains('text-type')) {
+            el.style.backgroundColor = '#f0f0f0';
+            el.style.color = 'black';
+          }
+        });
+        element.classList.add('selected');
+        if (element.classList.contains('text-type')) {
+          element.style.backgroundColor = 'black';
+          element.style.color = 'white';
+        }
       });
-    });
+
+      // Set the first available variant as default
+      if (!variantElements[0].classList.contains('selected')) {
+        variantElements[0].click();
+      }
+    } else {
+      // Disable unavailable variants
+      element.style.pointerEvents = 'none';
+      element.style.opacity = '0.5';
+    }
   });
+});
+
   </script>
                   
   {%- endif -%}
