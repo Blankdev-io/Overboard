@@ -72,6 +72,15 @@
       </tr>
     {% endfor %}
   </table>
+
+<div class="custom-variant-selector">
+  {% for variant in product.variants %}
+    <div class="variant-option" data-variant-id="{{ variant.id }}">
+      {{ variant.title }}
+    </div>
+  {% endfor %}
+</div>
+                
 {% endif %}
                 
 <script>
