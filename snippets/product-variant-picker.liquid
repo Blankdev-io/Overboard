@@ -44,13 +44,9 @@
     </tr>
 
     {% for variant in product.variants %}
-
-      <input type="radio" name="options[{{ option.name }}]" value="{{ value | escape }}" id="{{ input_id }}" class="variant-option size-option">
-      
-    
         <tr class="variant-row{% if variant.available %}{% else %} variant-unavailable{% endif %}" data-variant-id="{{ variant.id }}">
         {% for option in variant.options %}
-          <td><label for="{{ input_id }}" class="size-label">{{ value }}</label></td>
+          <td>{{ option }}</td>
         {% endfor %}
         <td>
           {% if variant.available %}
