@@ -124,31 +124,27 @@
   {% assign table_items = table_2 | remove_first: '["' | remove_last: '"]' | split: '","' %}
   {% assign total_items = table_items.size %}
   {% assign half_size = total_items | divided_by: 2 %}
-  {% if total_items | modulo: 2 != 0 %}
-    {% assign half_size = half_size | plus: 1 %}
-  {% endif %}
 
   <table>
     {% for i in (0..half_size) %}
-      {% assign odd_index = i | times: 2 %}
-      {% assign even_index = odd_index | plus: 1 %}
-      {% if table_items[odd_index] or table_items[even_index] %}
-        <tr>
-          <td>
-            {% if table_items[odd_index] %}
-              {{ table_items[odd_index] }}
-            {% endif %}
-          </td>
-          <td>
-            {% if table_items[even_index] %}
-              {{ table_items[even_index] }}
-            {% endif %}
-          </td>
-        </tr>
-      {% endif %}
+      <tr>
+        {% assign odd_index = i | times: 2 %}
+        {% assign even_index = odd_index | plus: 1 %}
+        <td> <!-- Cell for Odd Number -->
+          {% if table_items[odd_index] %}
+            {{ table_items[odd_index] }}
+          {% endif %}
+        </td>
+        <td> <!-- Cell for Even Number -->
+          {% if table_items[even_index] %}
+            {{ table_items[even_index] }}
+          {% endif %}
+        </td>
+      </tr>
     {% endfor %}
   </table>
 {% endif %}
+
 
   {% if image_2 %}
     {{ image_2 | image_url: width: 500 | image_tag }}
