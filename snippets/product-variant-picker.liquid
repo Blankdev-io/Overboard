@@ -208,43 +208,27 @@ document.addEventListener('DOMContentLoaded', function() {
   <script>
 document.addEventListener('DOMContentLoaded', function() {
   const variantOptions = document.querySelectorAll('.variant-value');
-  const productImage = document.querySelector('.product__media img');
-  const productPrice = document.querySelector('.price-item');
-  const variantSelect = document.querySelector('select[name=id]');
+  const productImage = document.querySelector('.product__media img'); // Update selector as needed
+  const productPrice = document.querySelector('.price-item'); // Update selector as needed
+  const variantSelect = document.querySelector('select[name=id]'); // Shopify's variant selector
   let selectedOptions = {};
 
-  function updateVariantAvailability() {
-    variantOptions.forEach(optionElement => {
-      const optionValue = optionElement.getAttribute('data-value');
-      const optionType = optionElement.getAttribute('data-option');
-
-      let isOptionAvailable = false;
-      variantSelect.querySelectorAll('option').forEach(variantOption => {
-        if (variantOption.textContent.includes(selectedOptions['Color']) && 
-            variantOption.textContent.includes(selectedOptions['Size']) && 
-            !variantOption.disabled) {
-          isOptionAvailable = true;
-        }
-      });
-
-      if (!isOptionAvailable && selectedOptions[optionType] === optionValue) {
-        optionElement.classList.add('variant-unavailable');
-        optionElement.style.pointerEvents = 'none';
-      } else {
-        optionElement.classList.remove('variant-unavailable');
-        optionElement.style.pointerEvents = 'auto';
-      }
+  function findMatchingVariant() {
+    const optionsArray = Object.entries(selectedOptions);
+    return Array.from(variantSelect.options).find(option => {
+      return optionsArray.every(([key, value]) => option.textContent.includes(value));
     });
   }
 
-  function updateProductDetails(variantId) {
-    const variantOption = variantSelect.querySelector(`option[value="${variantId}"]`);
-    if (variantOption) {
-      variantSelect.value = variantId;
-      variantSelect.dispatchEvent(new Event('change'));
+  function updateVariantSelection() {
+    const matchingVariant = findMatchingVariant();
+    if (matchingVariant && !matchingVariant.disabled) {
+      variantSelect.value = matchingVariant.value;
+      variantSelect.dispatchEvent(new Event('change')); // Trigger the change event
 
-      productPrice.textContent = variantOption.getAttribute('data-variant-price');
-      const variantImageSrc = variantOption.getAttribute('data-variant-image');
+      // Update price and image
+      productPrice.textContent = matchingVariant.getAttribute('data-variant-price');
+      const variantImageSrc = matchingVariant.getAttribute('data-variant-image');
       if (variantImageSrc) {
         productImage.src = variantImageSrc;
         productImage.srcset = variantImageSrc;
@@ -252,25 +236,46 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  function updateUnavailableVariants() {
+    variantOptions.forEach(variant => {
+      const optionType = variant.getAttribute('data-option');
+      const optionValue = variant.getAttribute('data-value');
+      const isOptionAvailable = Array.from(variantSelect.options).some(option => {
+        return option.textContent.includes(optionValue) && !option.disabled;
+      });
+
+      if (!isOptionAvailable && selectedOptions[optionType] !== optionValue) {
+        variant.classList.add('variant-unavailable');
+        variant.style.pointerEvents = 'none';
+      } else {
+        variant.classList.remove('variant-unavailable');
+        variant.style.pointerEvents = 'auto';
+      }
+    });
+  }
+
   variantOptions.forEach(option => {
+    const value = option.getAttribute('data-value');
+    const optionType = option.getAttribute('data-option');
+
+    if (variantMap.colors[value]) {
+      option.style.backgroundColor = variantMap.colors[value];
+    } else if (variantMap.sizes[value]) {
+      option.textContent = variantMap.sizes[value];
+      option.classList.add('text-type');
+    } else {
+      option.textContent = value;
+      option.classList.add('text-type');
+    }
+
     option.addEventListener('click', function() {
       if (!this.classList.contains('variant-unavailable')) {
-        const optionValue = this.getAttribute('data-value');
-        const optionType = this.getAttribute('data-option');
-        selectedOptions[optionType] = optionValue;
-
         variantOptions.forEach(opt => opt.classList.remove('selected'));
         this.classList.add('selected');
+        selectedOptions[optionType] = value;
 
-        updateVariantAvailability();
-
-        variantSelect.querySelectorAll('option').forEach(variantOption => {
-          if (variantOption.textContent.includes(selectedOptions['Color']) && 
-              variantOption.textContent.includes(selectedOptions['Size']) && 
-              !variantOption.disabled) {
-            updateProductDetails(variantOption.value);
-          }
-        });
+        updateVariantSelection();
+        updateUnavailableVariants();
       }
     });
   });
@@ -278,7 +283,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialize with the first available variant
   const firstAvailableVariant = variantSelect.querySelector('option:not([disabled])');
   if (firstAvailableVariant) {
-    updateProductDetails(firstAvailableVariant.value);
+    firstAvailableVariant.selected = true;
+    updateVariantSelection();
+    updateUnavailableVariants();
   }
 });
 
