@@ -80,27 +80,27 @@
 {% if table_1 %}
   {% assign table_items = table_1 | remove_first: '["' | remove_last: '"]' | split: '","' %}
   {% assign total_items = table_items.size %}
-  {% assign half_size = total_items | divided_by: 2 %}
 
   <table>
-    {% for i in (0..half_size) %}
-      <tr>
-        {% assign odd_index = i | times: 2 %}
-        {% assign even_index = odd_index | plus: 1 %}
-        <td> <!-- Cell for Odd Number -->
-          {% if table_items[odd_index] %}
-            {{ table_items[odd_index] }}
-          {% endif %}
-        </td>
-        <td> <!-- Cell for Even Number -->
-          {% if table_items[even_index] %}
-            {{ table_items[even_index] }}
-          {% endif %}
-        </td>
-      </tr>
+    {% for i in (0..total_items) %}
+      {% if forloop.index0 | divided_by: 2 == forloop.index0 %}
+        <tr>
+          <td> <!-- Cell for Odd Number (or single item in the last row if total is odd) -->
+            {% if table_items[forloop.index0] %}
+              {{ table_items[forloop.index0] }}
+            {% endif %}
+          </td>
+          <td> <!-- Cell for Even Number -->
+            {% if table_items[forloop.index0 | plus: 1] %}
+              {{ table_items[forloop.index0 | plus: 1] }}
+            {% endif %}
+          </td>
+        </tr>
+      {% endif %}
     {% endfor %}
   </table>
 {% endif %}
+
 
 
   {% if image_1 %}
