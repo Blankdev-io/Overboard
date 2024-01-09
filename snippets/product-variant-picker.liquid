@@ -210,24 +210,40 @@ document.addEventListener('DOMContentLoaded', function() {
   var variantOptions = document.querySelectorAll('.variant-value');
   var productImage = document.querySelector('.product__media img');
   var productPrice = document.querySelector('.price-item');
-  var variantSelect = document.querySelector('select[name=id]'); // Shopify's variant selector
-  var variantInput = document.querySelector('.product-variant-id'); // Hidden input for selected variant ID
 
   variantOptions.forEach(option => {
+    var value = option.getAttribute('data-value');
+    var optionType = option.getAttribute('data-option');
     var variantId = option.getAttribute('data-variant-id');
     var variantPrice = option.getAttribute('data-variant-price');
     var variantImageSrc = option.getAttribute('data-variant-image');
 
-    if (variantId) {
+    // Set up the variant map
+    if (variantMap.colors[value]) {
+      option.style.backgroundColor = variantMap.colors[value];
+    } else if (variantMap.sizes[value]) {
+      option.textContent = variantMap.sizes[value];
+      option.classList.add('text-type');
+    } else {
+      option.textContent = value;
+      option.classList.add('text-type');
+    }
+
+    // Handle unavailable variants
+    if (!variantId) {
+      option.classList.add('variant-unavailable');
+      option.style.pointerEvents = 'none';
+      option.style.opacity = '0.5';
+    } else {
       option.addEventListener('click', function() {
+        // Update selected variant
         variantOptions.forEach(opt => opt.classList.remove('selected'));
         option.classList.add('selected');
 
-        // Update Shopify's variant selector and hidden input field
-        if (variantSelect && variantInput) {
+        // Update Shopify's variant selector
+        var variantSelect = document.querySelector('select[name=id]');
+        if (variantSelect) {
           variantSelect.value = variantId;
-          variantInput.value = variantId; // Update the hidden input field
-          variantSelect.dispatchEvent(new Event('change')); // Trigger change event if needed
         }
 
         // Update the price
@@ -238,23 +254,19 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update the product image if available
         if (variantImageSrc && productImage) {
           productImage.src = variantImageSrc;
-          productImage.srcset = variantImageSrc; // Adjust if different image sizes are used
+          // Update srcset attribute if necessary
+          productImage.srcset = variantImageSrc;
         }
       });
-    } else {
-      option.classList.add('variant-unavailable');
-      option.style.pointerEvents = 'none';
-      option.style.opacity = '0.5';
     }
   });
 
-  // Select the first available variant by default
+  // Automatically select the first available variant
   const firstAvailableVariant = document.querySelector('.variant-value:not(.variant-unavailable)');
   if (firstAvailableVariant) {
     firstAvailableVariant.click();
   }
 });
-
   </script>
                   
   {%- endif -%}
