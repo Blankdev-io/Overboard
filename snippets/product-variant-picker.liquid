@@ -135,6 +135,27 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+  var variantOptions = document.querySelectorAll('.custom-variant-selector .variant-option');
+
+  variantOptions.forEach(function(option) {
+    option.addEventListener('click', function() {
+      var variantId = this.getAttribute('data-variant-id');
+      
+      // Update Shopify's variant selector
+      var variantSelect = document.querySelector('select[name=id]');
+      if (variantSelect) {
+        variantSelect.value = variantId;
+        variantSelect.dispatchEvent(new Event('change')); // Trigger the change event
+      }
+
+      // Additional code to handle the UI changes for selected variant
+      // e.g., updating the price, image, etc.
+    });
+  });
+});
+
+  
 </script>
 
   {%- else -%}
