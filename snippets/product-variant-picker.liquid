@@ -208,56 +208,18 @@ document.addEventListener('DOMContentLoaded', function() {
   <script>
 document.addEventListener('DOMContentLoaded', function() {
   const variantOptions = document.querySelectorAll('.variant-value');
-  const productImage = document.querySelector('.product__media img'); // Update selector as needed
-  const productPrice = document.querySelector('.price-item'); // Update selector as needed
+  const productImage = document.querySelector('.product__media img'); // Update this selector as needed
+  const productPrice = document.querySelector('.price-item'); // Update this selector as needed
   const variantSelect = document.querySelector('select[name=id]'); // Shopify's variant selector
-  let selectedOptions = {};
-
-  function findMatchingVariant() {
-    const optionsArray = Object.entries(selectedOptions);
-    return Array.from(variantSelect.options).find(option => {
-      return optionsArray.every(([key, value]) => option.textContent.includes(value));
-    });
-  }
-
-  function updateVariantSelection() {
-    const matchingVariant = findMatchingVariant();
-    if (matchingVariant && !matchingVariant.disabled) {
-      variantSelect.value = matchingVariant.value;
-      variantSelect.dispatchEvent(new Event('change')); // Trigger the change event
-
-      // Update price and image
-      productPrice.textContent = matchingVariant.getAttribute('data-variant-price');
-      const variantImageSrc = matchingVariant.getAttribute('data-variant-image');
-      if (variantImageSrc) {
-        productImage.src = variantImageSrc;
-        productImage.srcset = variantImageSrc;
-      }
-    }
-  }
-
-  function updateUnavailableVariants() {
-    variantOptions.forEach(variant => {
-      const optionType = variant.getAttribute('data-option');
-      const optionValue = variant.getAttribute('data-value');
-      const isOptionAvailable = Array.from(variantSelect.options).some(option => {
-        return option.textContent.includes(optionValue) && !option.disabled;
-      });
-
-      if (!isOptionAvailable && selectedOptions[optionType] !== optionValue) {
-        variant.classList.add('variant-unavailable');
-        variant.style.pointerEvents = 'none';
-      } else {
-        variant.classList.remove('variant-unavailable');
-        variant.style.pointerEvents = 'auto';
-      }
-    });
-  }
 
   variantOptions.forEach(option => {
     const value = option.getAttribute('data-value');
     const optionType = option.getAttribute('data-option');
+    const variantId = option.getAttribute('data-variant-id');
+    const variantPrice = option.getAttribute('data-variant-price');
+    const variantImageSrc = option.getAttribute('data-variant-image');
 
+    // Set up the variant map
     if (variantMap.colors[value]) {
       option.style.backgroundColor = variantMap.colors[value];
     } else if (variantMap.sizes[value]) {
@@ -268,24 +230,42 @@ document.addEventListener('DOMContentLoaded', function() {
       option.classList.add('text-type');
     }
 
-    option.addEventListener('click', function() {
-      if (!this.classList.contains('variant-unavailable')) {
+    // Handle unavailable variants
+    if (!variantId) {
+      option.classList.add('variant-unavailable');
+      option.style.pointerEvents = 'none';
+      option.style.opacity = '0.5';
+    } else {
+      option.addEventListener('click', function() {
+        // Update selected variant
         variantOptions.forEach(opt => opt.classList.remove('selected'));
-        this.classList.add('selected');
-        selectedOptions[optionType] = value;
+        option.classList.add('selected');
 
-        updateVariantSelection();
-        updateUnavailableVariants();
-      }
-    });
+        // Update Shopify's variant selector
+        if (variantSelect) {
+          variantSelect.value = variantId;
+          variantSelect.dispatchEvent(new Event('change')); // Trigger the change event
+        }
+
+        // Update the price
+        if (productPrice && variantPrice) {
+          productPrice.textContent = variantPrice;
+        }
+
+        // Update the product image if available
+        if (variantImageSrc && productImage) {
+          productImage.src = variantImageSrc;
+          // Update srcset attribute if necessary
+          productImage.srcset = variantImageSrc;
+        }
+      });
+    }
   });
 
-  // Initialize with the first available variant
-  const firstAvailableVariant = variantSelect.querySelector('option:not([disabled])');
+  // Automatically select the first available variant
+  const firstAvailableVariant = document.querySelector('.variant-value:not(.variant-unavailable)');
   if (firstAvailableVariant) {
-    firstAvailableVariant.selected = true;
-    updateVariantSelection();
-    updateUnavailableVariants();
+    firstAvailableVariant.click();
   }
 });
 
