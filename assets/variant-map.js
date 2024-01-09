@@ -1,8 +1,8 @@
 const variantMap = {
   colors: {
-    'Red': '#FF0000',
-    'Blue': '#0000FF',
-    'Green': '#008000',
+    "Red": '#FF0000',
+    "Blue": '#0000FF',
+    "Green": '#008000',
     // Add other colors as needed
   },
   sizes: {
