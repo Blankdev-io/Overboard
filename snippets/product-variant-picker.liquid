@@ -47,7 +47,7 @@
       <tr class="variant-row{% if variant.available %}{% else %} variant-unavailable{% endif %}"
         data-variant-id="{{ variant.id }}"
         data-variant-price="{{ variant.price | money }}"
-        data-variant-image="{{ variant.featured_image.src | img_url: 'master' }}">
+        data-variant-image="{{ variant.featured_image | default: product.featured_image | image_url: 'master' }}">
         {% for option in variant.options %}
           <td>{{ option }}</td>
         {% endfor %}
