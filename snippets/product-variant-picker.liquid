@@ -44,7 +44,10 @@
     </tr>
 
     {% for variant in product.variants %}
-        <tr class="variant-row{% if variant.available %}{% else %} variant-unavailable{% endif %}" data-variant-id="{{ variant.id }}" data-variant-price="{{ variant.price }}" data-variant-image="{{ variant.featured_image }}">
+      <tr class="variant-row{% if variant.available %}{% else %} variant-unavailable{% endif %}"
+        data-variant-id="{{ variant.id }}"
+        data-variant-price="{{ variant.price | money }}"
+        data-variant-image="{{ variant.featured_image.src | image_url: 'large' }}">
         {% for option in variant.options %}
           <td>{{ option }}</td>
         {% endfor %}
