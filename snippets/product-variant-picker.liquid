@@ -210,6 +210,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var variantOptions = document.querySelectorAll('.variant-value');
   var productImage = document.querySelector('.product__media img');
   var productPrice = document.querySelector('.price-item');
+  var variantInput = document.querySelector('.product-variant-id');
 
   variantOptions.forEach(option => {
     var value = option.getAttribute('data-value');
@@ -240,6 +241,10 @@ document.addEventListener('DOMContentLoaded', function() {
         variantOptions.forEach(opt => opt.classList.remove('selected'));
         option.classList.add('selected');
 
+        if (variantInput) {
+          variantInput.value = variantId;
+        };
+        
         // Update Shopify's variant selector
         var variantSelect = document.querySelector('select[name=id]');
         if (variantSelect) {
