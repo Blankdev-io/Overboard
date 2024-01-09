@@ -1,4 +1,4 @@
-    <div class="icon-section">
+    <div class="icon-section{% if desktop %} hide_on_mobile{% elsif mobile %} show_on_mobile{% endif %}">
       <div class="icon-container">
         <img src="{{ 'Vector.svg' | asset_url }}">
         <p>FREE SHIPPING</p>
