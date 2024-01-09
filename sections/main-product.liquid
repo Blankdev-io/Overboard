@@ -178,11 +178,21 @@
                 {%- endif -%}
               </p>
             {%- when 'description' -%}
-              {%- if product.description != blank -%}
-                <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
-                  {{ product.description }}
+            {%- if product.description != blank -%}
+              <div class="description-dropdown">
+                <button id="descriptionToggle" class="description-toggle">
+                  DESCRIPTION <span id="toggleSymbol">\/</span>
+                </button>
+                <div id="productDescription" class="product-description" style="display: none;">
+                  <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
+                    {{ product.description }}
+                  </div>
                 </div>
-              {%- endif -%}
+              </div>
+            {%- endif -%}
+
+            {% render 'key-features' %}
+            
             {%- when 'sku' -%}
               <p
                 class="product__sku no-js-hidden{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}{% if product.selected_or_first_available_variant.sku.size == 0 %} visibility-hidden{% endif %}"
@@ -676,8 +686,6 @@
   </div>
 
   {% render 'product-icons', desktop: false, mobile: true %}
-
-                          {% render 'key-features' %}
 </section>
 
 {% schema %}
