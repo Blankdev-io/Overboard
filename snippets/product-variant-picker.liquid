@@ -80,7 +80,15 @@
     </div>
   {% endfor %}
 </div>
-               
+
+<form action="/cart/add" method="post" enctype="multipart/form-data">
+  <select name="id" id="ProductSelect" class="product-single__variants" style="display:none;">
+    {% for variant in product.variants %}
+      <option value="{{ variant.id }}">{{ variant.title }}</option>
+    {% endfor %}
+  </select>
+</form>
+                
 {% endif %}
                 
 <script>
@@ -118,10 +126,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Update Shopify's variant selector (if used)
-        var variantSelect = document.querySelector('select[name=id]');
-        if (variantSelect) {
-          variantSelect.value = variantId;
-        }
+        // Update Shopify's variant selector
+var variantSelect = document.querySelector('select[name=id]');
+if (variantSelect) {
+  variantSelect.value = variantId;
+}
+
       });
 
       // Automatically select the first available variant
