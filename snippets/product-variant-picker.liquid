@@ -78,6 +78,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   var variantRows = document.querySelectorAll('.variant-row');
+  var variantInput = document.querySelector('.product-variant-id');
   var defaultSelected = false;
 
   variantRows.forEach(function(row) {
@@ -85,6 +86,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (!row.classList.contains('variant-unavailable')) {
       row.addEventListener('click', function() {
+        var variantId = this.getAttribute('data-variant-id');
+        if (variantInput) {
+          variantInput.value = variantId;
+        };
         // Update all rows to default border style
         variantRows.forEach(function(r) {
           r.style.borderTop = 'none';
@@ -108,6 +113,13 @@ document.addEventListener('DOMContentLoaded', function() {
             productImage.src = imageUrl;
           }
         }
+
+        // Update Shopify's variant selector (if used)
+        var variantSelect = document.querySelector('select[name=id]');
+        if (variantSelect) {
+          variantSelect.value = variantId;
+        }
+      });
 
       // Automatically select the first available variant
       if (!defaultSelected) {
