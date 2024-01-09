@@ -80,15 +80,15 @@ style="background-color:
   <h2 class="category-header category-header-text">{{ current_tag }}</h2>
   {% if current_tag == 'boards' %}{% render 'boards-white-svg.liquid' %}
   {% elsif current_tag == 'clothing' %}{% render 'clothing-white-svg.liquid' %}
-  {% elsif current_tag == 'wetsuits' %}{{ section.settings.background_color3 }};
-  {% elsif current_tag == 'accessories' %}{{ section.settings.background_color4 }};
+  {% elsif current_tag == 'wetsuits' %}{% render 'wetsuits-white-svg.liquid' %}
+  {% elsif current_tag == 'accessories' %}{% render 'accessories-white-svg.liquid' %}
   {% else %}black;{% endif %}
 </div>
 
 {% if current_tag == 'boards' %}{% render 'boards-blue-svg.liquid' %}
   {% elsif current_tag == 'clothing' %}{% render 'clothing-green-svg.liquid' %}
-  {% elsif current_tag == 'wetsuits' %}{{ section.settings.background_color3 }};
-  {% elsif current_tag == 'accessories' %}{{ section.settings.background_color4 }};
+  {% elsif current_tag == 'wetsuits' %}{% render 'wetsuits-red-svg.liquid' %}
+  {% elsif current_tag == 'accessories' %}{% render 'accessories-blue-svg.liquid' %}
   {% else %}black;{% endif %}
 
 
