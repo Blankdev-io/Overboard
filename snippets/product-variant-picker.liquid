@@ -178,16 +178,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
   {% for option in product.options_with_values %}
     <div class="variant-option">
-      <p>{{ option.name }}</p>
-      <div class="variant-squares">
+      <h3>{{ option.name }}</h3>
+      <div class="variant-values">
         {% for value in option.values %}
-          <div class="variant-square" data-variant-id="{{ value | variant_id_from_option }}">
-            {% if option.name == 'Color' %}
-              <div class="color-square" style="background-color: {{ value | map_variant_color }}"></div>
-            {% else %}
-              <span class="size-square">{{ value | map_variant_size }}</span>
-            {% endif %}
-            <p class="variant-name">{{ value }}</p>
+          <div class="variant-value" data-value="{{ value }}" data-option="{{ option.name }}">
+            <!-- Placeholder for the value, filled by JavaScript -->
           </div>
         {% endfor %}
       </div>
@@ -195,23 +190,32 @@ document.addEventListener('DOMContentLoaded', function() {
   {% endfor %}
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-  var variantSquares = document.querySelectorAll('.variant-square');
-
-  variantSquares.forEach(function(square) {
-    square.addEventListener('click', function() {
-      // Remove 'selected' class from all squares
-      variantSquares.forEach(function(sq) { sq.classList.remove('selected'); });
-
-      // Add 'selected' class to clicked square
-      this.classList.add('selected');
-
-      // Update selected variant
-      var variantId = this.getAttribute('data-variant-id');
-      document.querySelector('select[name=id]').value = variantId;
+  document.addEventListener('DOMContentLoaded', function() {
+    const variantOptions = document.querySelectorAll('.variant-value');
+  
+    variantOptions.forEach(option => {
+      const value = option.getAttribute('data-value');
+      const optionType = option.getAttribute('data-option');
+  
+      if (variantMap.colors[value]) {
+        option.style.backgroundColor = variantMap.colors[value];
+      } else if (variantMap.sizes[value]) {
+        option.textContent = variantMap.sizes[value];
+        option.classList.add('text-type');
+      } else {
+        option.textContent = value;
+        option.classList.add('text-type');
+      }
+  
+      option.addEventListener('click', function() {
+        // Handle variant selection
+        variantOptions.forEach(opt => opt.classList.remove('selected'));
+        option.classList.add('selected');
+  
+        // Update the product form (you'll need to add logic for this)
+      });
     });
   });
-});
   </script>
                   
   {%- endif -%}
