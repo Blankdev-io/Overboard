@@ -83,35 +83,22 @@
 
   <table>
     {% for i in (0..total_items) %}
-      {% assign current_index = forloop.index0 %}
-      {% assign next_index = current_index | plus: 1 %}
-
-      <!-- Start a new row for even indices (including 0) -->
-      {% if current_index == 0 or current_index | divided_by: 2 == 0 %}
+      {% if forloop.index0 == 0 or forloop.index0 == 1 %}
         <tr>
       {% endif %}
 
-      <!-- Cell for current item -->
-      {% if table_items[current_index] %}
-        <td>
-          {{ table_items[current_index] }}
-        </td>
-      {% endif %}
+      <td> <!-- Cell for item -->
+        {% if table_items[forloop.index0] %}
+          {{ table_items[forloop.index0] }}
+        {% endif %}
+      </td>
 
-      <!-- Cell for next item; end the row after this cell -->
-      {% if table_items[next_index] %}
-        <td>
-          {{ table_items[next_index] }}
-        </td>
+      {% if forloop.index0 != 0 and forloop.index0 | modulo: 2 != 0 %}
         </tr>
       {% endif %}
-
-      <!-- Increment the loop counter to skip the next index -->
-      {% assign i = next_index %}
     {% endfor %}
   </table>
 {% endif %}
-
 
   {% if image_1 %}
     {{ image_1 | image_url: width: 500 | image_tag }}
