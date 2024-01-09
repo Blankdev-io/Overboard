@@ -177,27 +177,26 @@ document.addEventListener('DOMContentLoaded', function() {
   {{ 'variant-map.js' | asset_url | script_tag }}
 
 {% for option in product.options_with_values %}
-  <div class="variant-option" data-option-name="{{ option.name }}">
+  <div class="variant-option">
     <h3>{{ option.name }}</h3>
     <div class="variant-values">
       {% for value in option.values %}
-        {% assign variant_match_found = false %}
+        {% assign variant_found = false %}
         {% for variant in product.variants %}
-          {% if variant.options contains value %}
+          {% if variant.options contains value and variant.available %}
             <div class="variant-value" data-value="{{ value }}" data-option="{{ option.name }}"
               data-variant-id="{{ variant.id }}"
               data-variant-price="{{ variant.price | money }}"
-              data-variant-image="{{ variant.featured_image | img_url: 'master' }}"
-              data-available="{{ variant.available }}">
+              data-variant-image="{{ variant.featured_image | default: product.featured_image | img_url: 'master' }}">
               <!-- Placeholder for the value, filled by JavaScript -->
             </div>
-            {% assign variant_match_found = true %}
+            {% assign variant_found = true %}
             {% break %}
           {% endif %}
         {% endfor %}
-        {% unless variant_match_found %}
+        {% unless variant_found %}
           <div class="variant-value variant-unavailable" data-value="{{ value }}" data-option="{{ option.name }}">
-            <!-- Placeholder for value -->
+            <!-- Placeholder for the value, filled by JavaScript -->
           </div>
         {% endunless %}
       {% endfor %}
@@ -206,46 +205,54 @@ document.addEventListener('DOMContentLoaded', function() {
 {% endfor %}
 
 
-
   <script>
 document.addEventListener('DOMContentLoaded', function() {
-  const variantOptions = document.querySelectorAll('.variant-option');
+  const variantOptions = document.querySelectorAll('.variant-value');
+  const productImage = document.querySelector('.product__media img');
+  const productPrice = document.querySelector('.price-item');
+  const variantSelect = document.querySelector('select[name=id]');
   let selectedOptions = {};
 
   function updateVariantSelection() {
-    // Find the variant that matches the selected options
-    let matchingVariant = product.variants.find(variant => {
-      return Object.entries(selectedOptions).every(([optionName, value]) => {
-        return variant[optionName] === value;
-      });
-    });
+    product.variants.forEach(variant => {
+      if (variant.available && variant.options.every((option, index) => 
+          selectedOptions[product.options[index].name] === option)) {
+        // Update Shopify's variant selector
+        if (variantSelect) {
+          variantSelect.value = variant.id;
+          variantSelect.dispatchEvent(new Event('change'));
+        }
 
-    if (matchingVariant) {
-      // Update price and image
-      document.querySelector('.price-item').textContent = matchingVariant.price;
-      if (matchingVariant.featured_image) {
-        document.querySelector('.product__media img').src = matchingVariant.featured_image.src;
+        // Update the price
+        if (productPrice) {
+          productPrice.textContent = variant.price;
+        }
+
+        // Update the product image if available
+        if (variant.featured_image && productImage) {
+          productImage.src = variant.featured_image.src;
+          productImage.srcset = variant.featured_image.src;
+        }
       }
-
-      // Update Shopify's variant selector
-      document.querySelector('select[name=id]').value = matchingVariant.id;
-    }
+    });
   }
 
   variantOptions.forEach(option => {
-    option.querySelectorAll('.variant-value').forEach(valueElement => {
-      valueElement.addEventListener('click', function() {
-        if (!this.classList.contains('variant-unavailable')) {
-          // Update selected state
-          option.querySelectorAll('.variant-value').forEach(el => el.classList.remove('selected'));
-          this.classList.add('selected');
+    option.addEventListener('click', function() {
+      const optionType = this.getAttribute('data-option');
+      const value = this.getAttribute('data-value');
 
-          // Update selected options
-          selectedOptions[option.getAttribute('data-option-name')] = this.getAttribute('data-value');
+      // Update selected options
+      selectedOptions[optionType] = value;
 
-          updateVariantSelection();
-        }
+      // Highlight selected option
+      document.querySelectorAll(`.variant-value[data-option="${optionType}"]`).forEach(opt => {
+        opt.classList.remove('selected');
       });
+      this.classList.add('selected');
+
+      // Check and update variant selection
+      updateVariantSelection();
     });
   });
 });
