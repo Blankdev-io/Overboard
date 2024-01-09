@@ -208,16 +208,51 @@ document.addEventListener('DOMContentLoaded', function() {
   <script>
 document.addEventListener('DOMContentLoaded', function() {
   const variantOptions = document.querySelectorAll('.variant-value');
-  const productImage = document.querySelector('.product__media img'); // Update this selector as needed
-  const productPrice = document.querySelector('.price-item'); // Update this selector as needed
-  const variantSelect = document.querySelector('select[name=id]'); // Shopify's variant selector
+  const productImage = document.querySelector('.product__media img');
+  const productPrice = document.querySelector('.price-item');
+  const variantSelect = document.querySelector('select[name=id]');
+  let selectedOptions = {};
+
+  function updateVariantSelection(variantId, variantPrice, variantImageSrc) {
+    // Update Shopify's variant selector
+    if (variantSelect) {
+      variantSelect.value = variantId;
+      variantSelect.dispatchEvent(new Event('change'));
+    }
+
+    // Update the price
+    if (productPrice && variantPrice) {
+      productPrice.textContent = variantPrice;
+    }
+
+    // Update the product image if available
+    if (variantImageSrc && productImage) {
+      productImage.src = variantImageSrc;
+      productImage.srcset = variantImageSrc;
+    }
+  }
+
+  function findMatchingVariant() {
+    variantOptions.forEach(variant => {
+      const optionValue = variant.getAttribute('data-value');
+      const optionType = variant.getAttribute('data-option');
+
+      if (selectedOptions[optionType] === optionValue) {
+        const variantId = variant.getAttribute('data-variant-id');
+        const variantPrice = variant.getAttribute('data-variant-price');
+        const variantImageSrc = variant.getAttribute('data-variant-image');
+
+        if (variantId) {
+          updateVariantSelection(variantId, variantPrice, variantImageSrc);
+        }
+      }
+    });
+  }
 
   variantOptions.forEach(option => {
     const value = option.getAttribute('data-value');
     const optionType = option.getAttribute('data-option');
     const variantId = option.getAttribute('data-variant-id');
-    const variantPrice = option.getAttribute('data-variant-price');
-    const variantImageSrc = option.getAttribute('data-variant-image');
 
     // Set up the variant map
     if (variantMap.colors[value]) {
@@ -230,43 +265,23 @@ document.addEventListener('DOMContentLoaded', function() {
       option.classList.add('text-type');
     }
 
+    // Handle variant selection
+    option.addEventListener('click', function() {
+      selectedOptions[optionType] = value;
+      findMatchingVariant();
+
+      // Update styling
+      document.querySelectorAll(`.variant-value[data-option="${optionType}"]`).forEach(opt => opt.classList.remove('selected'));
+      option.classList.add('selected');
+    });
+
     // Handle unavailable variants
     if (!variantId) {
       option.classList.add('variant-unavailable');
       option.style.pointerEvents = 'none';
       option.style.opacity = '0.5';
-    } else {
-      option.addEventListener('click', function() {
-        // Update selected variant
-        variantOptions.forEach(opt => opt.classList.remove('selected'));
-        option.classList.add('selected');
-
-        // Update Shopify's variant selector
-        if (variantSelect) {
-          variantSelect.value = variantId;
-          variantSelect.dispatchEvent(new Event('change')); // Trigger the change event
-        }
-
-        // Update the price
-        if (productPrice && variantPrice) {
-          productPrice.textContent = variantPrice;
-        }
-
-        // Update the product image if available
-        if (variantImageSrc && productImage) {
-          productImage.src = variantImageSrc;
-          // Update srcset attribute if necessary
-          productImage.srcset = variantImageSrc;
-        }
-      });
     }
   });
-
-  // Automatically select the first available variant
-  const firstAvailableVariant = document.querySelector('.variant-value:not(.variant-unavailable)');
-  if (firstAvailableVariant) {
-    firstAvailableVariant.click();
-  }
 });
 
   </script>
