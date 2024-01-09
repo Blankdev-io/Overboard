@@ -207,16 +207,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   <script>
 document.addEventListener('DOMContentLoaded', function() {
-  const variantOptions = document.querySelectorAll('.variant-value');
-  const productImage = document.querySelector('.product__media img');
-  const productPrice = document.querySelector('.price-item');
+  var variantOptions = document.querySelectorAll('.variant-value');
+  var productImage = document.querySelector('.product__media img');
+  var productPrice = document.querySelector('.price-item');
 
   variantOptions.forEach(option => {
-    const value = option.getAttribute('data-value');
-    const optionType = option.getAttribute('data-option');
-    const variantId = option.getAttribute('data-variant-id');
-    const variantPrice = option.getAttribute('data-variant-price');
-    const variantImageSrc = option.getAttribute('data-variant-image');
+    var value = option.getAttribute('data-value');
+    var optionType = option.getAttribute('data-option');
+    var variantId = option.getAttribute('data-variant-id');
+    var variantPrice = option.getAttribute('data-variant-price');
+    var variantImageSrc = option.getAttribute('data-variant-image');
 
     // Set up the variant map
     if (variantMap.colors[value]) {
