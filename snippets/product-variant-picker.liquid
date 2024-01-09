@@ -208,9 +208,8 @@ document.addEventListener('DOMContentLoaded', function() {
   <script>
 document.addEventListener('DOMContentLoaded', function() {
   const variantOptions = document.querySelectorAll('.variant-value');
-  const productImage = document.querySelector('.product__media img'); // Update this selector as needed
-  const productPrice = document.querySelector('.price-item'); // Update this selector as needed
-  var variantSelect = document.querySelector('select[name=id]'); // Shopify's variant selector
+  const productImage = document.querySelector('.product__media img');
+  const productPrice = document.querySelector('.price-item');
 
   variantOptions.forEach(option => {
     const value = option.getAttribute('data-value');
@@ -242,6 +241,7 @@ document.addEventListener('DOMContentLoaded', function() {
         option.classList.add('selected');
 
         // Update Shopify's variant selector
+        var variantSelect = document.querySelector('select[name=id]');
         if (variantSelect) {
           variantSelect.value = variantId;
         }
