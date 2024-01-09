@@ -6,9 +6,12 @@ const variantMap = {
     // Add other colors as needed
   },
   sizes: {
-    'Small': 'S',
-    'Medium': 'M',
-    'X-Small': 'XS',
+    "Men's S": 'S',
+    "Men's M": 'M',
+    "Men's L": 'L',
+    "Men's XL": 'XL',
+    "Men's XXL": 'XXL',
+    "Men's XXXL": 'XXXL',
     // Add other sizes as needed
   }
 };
