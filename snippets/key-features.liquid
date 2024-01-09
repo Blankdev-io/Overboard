@@ -127,23 +127,26 @@
 
   <table>
     {% for i in (0..half_size) %}
-      <tr>
-        {% assign odd_index = i | times: 2 %}
-        {% assign even_index = odd_index | plus: 1 %}
-        <td> <!-- Cell for Odd Number -->
-          {% if table_items[odd_index] %}
-            {{ table_items[odd_index] }}
-          {% endif %}
-        </td>
-        <td> <!-- Cell for Even Number -->
-          {% if table_items[even_index] %}
-            {{ table_items[even_index] }}
-          {% endif %}
-        </td>
-      </tr>
+      {% assign odd_index = i | times: 2 %}
+      {% assign even_index = odd_index | plus: 1 %}
+      {% if table_items[odd_index] or table_items[even_index] %}
+        <tr>
+          <td>
+            {% if table_items[odd_index] %}
+              {{ table_items[odd_index] }}
+            {% endif %}
+          </td>
+          <td>
+            {% if table_items[even_index] %}
+              {{ table_items[even_index] }}
+            {% endif %}
+          </td>
+        </tr>
+      {% endif %}
     {% endfor %}
   </table>
 {% endif %}
+
 
 
   {% if image_2 %}
