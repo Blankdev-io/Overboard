@@ -83,25 +83,22 @@
 
   <table>
     {% for i in (0..total_items) %}
-      {% if forloop.index0 | divided_by: 2 == forloop.index0 %}
+      {% if forloop.index0 == 0 or forloop.index0 == 1 %}
         <tr>
-          <td> <!-- Cell for Odd Number (or single item in the last row if total is odd) -->
-            {% if table_items[forloop.index0] %}
-              {{ table_items[forloop.index0] }}
-            {% endif %}
-          </td>
-          <td> <!-- Cell for Even Number -->
-            {% if table_items[forloop.index0 | plus: 1] %}
-              {{ table_items[forloop.index0 | plus: 1] }}
-            {% endif %}
-          </td>
+      {% endif %}
+
+      <td> <!-- Cell for item -->
+        {% if table_items[forloop.index0] %}
+          {{ table_items[forloop.index0] }}
+        {% endif %}
+      </td>
+
+      {% if forloop.index0 != 0 and forloop.index0 | modulo: 2 != 0 %}
         </tr>
       {% endif %}
     {% endfor %}
   </table>
 {% endif %}
-
-
 
   {% if image_1 %}
     {{ image_1 | image_url: width: 500 | image_tag }}
