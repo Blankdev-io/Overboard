@@ -30,14 +30,42 @@
     margin-left: 85px;
   }
 
+  .upper-svg{
+    position: absolute; 
+    right: 0; 
+    top: 12%;
+    width: 315px; 
+    height: auto; /* maintains the aspect ratio */
+    }
+
+  .bottom-svg{
+    position: absolute;
+    right: 0;
+    width: 315px; 
+    height: auto; /* maintains the aspect ratio */
+    }
   @media (max-width: 768px) {
     .category-banner-container {
       height: 117px;
     }
 
     .category-header-text {
-      font-size: 76px;
+      font-size: 60px;
       margin-left: 20px;
+    }
+    .upper-svg{
+        position: absolute; 
+        right: 0; 
+        top: 17.62%;
+        width: 165px; 
+        height: auto; /* maintains the aspect ratio */
+    }
+    
+    .bottom-svg{
+        position: absolute;
+        right: 0;
+        width: 165px; 
+        height: auto; /* maintains the aspect ratio */
     }
   }
 </style>
@@ -48,9 +76,21 @@ style="background-color:
   {% elsif current_tag == 'clothing' %}{{ section.settings.background_color2 }};
   {% elsif current_tag == 'wetsuits' %}{{ section.settings.background_color3 }};
   {% elsif current_tag == 'accessories' %}{{ section.settings.background_color4 }};
-  {% else %}black;{% endif %}">
+  {% else %}black;{% endif %}"> 
   <h2 class="category-header category-header-text">{{ current_tag }}</h2>
+  {% if current_tag == 'boards' %}{% render 'boards-white-svg.liquid' %}
+  {% elsif current_tag == 'clothing' %}{{ section.settings.background_color2 }};
+  {% elsif current_tag == 'wetsuits' %}{{ section.settings.background_color3 }};
+  {% elsif current_tag == 'accessories' %}{{ section.settings.background_color4 }};
+  {% else %}black;{% endif %}
 </div>
+
+{% if current_tag == 'boards' %}{% render 'boards-blue-svg.liquid' %}
+  {% elsif current_tag == 'clothing' %}{{ section.settings.background_color2 }};
+  {% elsif current_tag == 'wetsuits' %}{{ section.settings.background_color3 }};
+  {% elsif current_tag == 'accessories' %}{{ section.settings.background_color4 }};
+  {% else %}black;{% endif %}
+
 
 {% schema %}
   {
@@ -60,7 +100,7 @@ style="background-color:
         "type": "color",
         "id": "background_color1",
         "label": "Boards Background Color",
-        "default": "#ffffff"
+        "default": "#aed7ea"
       },
       {
         "type": "color",
