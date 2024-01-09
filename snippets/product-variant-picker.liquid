@@ -73,9 +73,16 @@
 
     <table class="variant-table">
       <tr>
-        {% for option in product.options %}
-          <th>{{ option }}</th>
-        {% endfor %}
+        {% for option in variant.options %}
+            {% if option contains '-' %}
+              {% assign split_options = option | split: '-' %}
+              {% for split_option in split_options %}
+                <td>{{ split_option | strip }}</td>
+              {% endfor %}
+            {% else %}
+              <td>{{ option }}</td>
+            {% endif %}
+          {% endfor %}
         <th>In Stock</th>
       </tr>
   
