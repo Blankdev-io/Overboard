@@ -3802,7 +3802,8 @@ h1, .highrise {
   background: none;
   border: none;
   cursor: pointer;
-  /* Additional styling as needed */
+  font-size: 32px;
+  font-weight: bold;
 }
 
 .product-description {
