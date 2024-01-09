@@ -73,14 +73,6 @@
     {% endfor %}
   </table>
 
-<div class="custom-variant-selector">
-  {% for variant in product.variants %}
-    <div class="variant-option" data-variant-id="{{ variant.id }}">
-      {{ variant.title }}
-    </div>
-  {% endfor %}
-</div>
-
 <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" class="product-variant-id">
                 
 {% endif %}
