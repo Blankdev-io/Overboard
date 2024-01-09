@@ -84,23 +84,20 @@
 
   <table>
     {% for i in (0..half_size) %}
+      {% assign odd_index = i | times: 2 %}
+      {% assign even_index = odd_index | plus: 1 %}
       <tr>
-        {% assign odd_index = i | times: 2 %}
-        {% assign even_index = odd_index | plus: 1 %}
-        <td> <!-- Cell for Odd Number -->
-          {% if table_items[odd_index] %}
-            {{ table_items[odd_index] }}
-          {% endif %}
-        </td>
-        <td> <!-- Cell for Even Number -->
-          {% if table_items[even_index] %}
-            {{ table_items[even_index] }}
-          {% endif %}
-        </td>
+        {% if table_items[odd_index] %}
+          <td>{{ table_items[odd_index] }}</td>
+        {% endif %}
+        {% if table_items[even_index] %}
+          <td>{{ table_items[even_index] }}</td>
+        {% endif %}
       </tr>
     {% endfor %}
   </table>
 {% endif %}
+
 
 
   {% if image_1 %}
