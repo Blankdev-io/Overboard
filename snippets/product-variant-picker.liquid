@@ -104,28 +104,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
-
-document.querySelectorAll('.variant-row').forEach(function(row) {
-    row.addEventListener('click', function() {
-        var variantId = this.getAttribute('data-variant-id');
-        updateProductPage(variantId);
-    });
-});
-
-function updateProductPage(variantId) {
-    var variant = productVariants[variantId];
-
-    // Update the price
-    document.querySelector('.price-item').textContent = '$' + variant.price;
-
-    // Update the main image (if applicable)
-    if (variant.featured_image) {
-        document.querySelector('.image-magnify-lightbox').src = variant.featured_image.src;
-    }
-
-    // Additional updates (SKU, availability, etc.) can be added here
-}
-
 </script>
 
   {%- else -%}
