@@ -18,6 +18,17 @@ const variantMap = {
     "Men's 33": "33",
     "Men's 34": "34",
     "Men's 35": "35",
+    "Men's 36": "36",
+    "Men's 37": "37",
+    "Men's 38": "38",
+    "Men's 39": "39",
+    "Men's 40": "40",
+    "Men's 41": "41",
+    "Men's 42": "42",
+    "Men's 43": "43",
+    "Men's 44": "44",
+    "Men's 45": "45",
+    "Men's 46": "46",
     // Add other sizes as needed
   }
 };
