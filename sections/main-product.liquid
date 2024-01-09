@@ -68,6 +68,70 @@
     <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
     <div class="grid__item product__media-wrapper{% if section.settings.media_position == 'right' %} medium-hide large-up-hide{% endif %}">
       {% render 'product-media-gallery', variant_images: variant_images %}
+          <div class="icon-section">
+      <div class="icon-container">
+          <svg><!-- SVG for FREE SHIPPING --></svg>
+          <p>FREE SHIPPING</p>
+      </div>
+      <div class="icon-container">
+          <svg><!-- SVG for CLICK & COLLECT --></svg>
+          <p>CLICK & COLLECT</p>
+      </div>
+      <div class="icon-container">
+          <svg><!-- SVG for BUY NOW, PAY LATER --></svg>
+          <p>BUY NOW, PAY LATER</p>
+      </div>
+      <div class="icon-container">
+          <svg><!-- SVG for SECURE PAYMENTS --></svg>
+          <p>SECURE PAYMENTS</p>
+      </div>
+      <div class="icon-container">
+          <svg><!-- SVG for MEMBER BENEFITS --></svg>
+          <p>MEMBER BENEFITS</p>
+      </div>
+    </div>
+
+    <style>
+
+      .icon-section {
+    max-width: 738px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.icon-container {
+    width: 200px;
+    margin: 10px;
+}
+
+.icon-container svg {
+    width: 100%;
+    height: auto;
+    fill: white; /* Assuming SVGs are mono-color */
+}
+
+.icon-container p {
+    margin-top: 10px;
+}
+
+/* Responsive design for smaller screens */
+@media screen and (max-width: 768px) {
+    .icon-section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .icon-container {
+        width: 100%;
+    }
+}
+      
+    </style>
     </div>
     <div class="product__info-wrapper grid__item{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       <product-info
@@ -547,73 +611,7 @@
       {% comment %} Duplicate gallery to display after product content on tablet/desktop breakpoint {% endcomment %}
       <div class="grid__item product__media-wrapper small-hide">
         {% render 'product-media-gallery', variant_images: variant_images, is_duplicate: true %}
-      </div>
-
-    <div class="icon-section">
-      <div class="icon-container">
-          <svg><!-- SVG for FREE SHIPPING --></svg>
-          <p>FREE SHIPPING</p>
-      </div>
-      <div class="icon-container">
-          <svg><!-- SVG for CLICK & COLLECT --></svg>
-          <p>CLICK & COLLECT</p>
-      </div>
-      <div class="icon-container">
-          <svg><!-- SVG for BUY NOW, PAY LATER --></svg>
-          <p>BUY NOW, PAY LATER</p>
-      </div>
-      <div class="icon-container">
-          <svg><!-- SVG for SECURE PAYMENTS --></svg>
-          <p>SECURE PAYMENTS</p>
-      </div>
-      <div class="icon-container">
-          <svg><!-- SVG for MEMBER BENEFITS --></svg>
-          <p>MEMBER BENEFITS</p>
-      </div>
-    </div>
-
-    <style>
-
-      .icon-section {
-    max-width: 738px;
-    background-color: black;
-    color: white;
-    text-align: center;
-    padding: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.icon-container {
-    width: 200px;
-    margin: 10px;
-}
-
-.icon-container svg {
-    width: 100%;
-    height: auto;
-    fill: white; /* Assuming SVGs are mono-color */
-}
-
-.icon-container p {
-    margin-top: 10px;
-}
-
-/* Responsive design for smaller screens */
-@media screen and (max-width: 768px) {
-    .icon-section {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .icon-container {
-        width: 100%;
-    }
-}
-      
-    </style>
-                          
+      </div>                          
     {%- endif -%}
   </div>
 
