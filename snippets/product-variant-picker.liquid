@@ -196,24 +196,36 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
   var variantElements = document.querySelectorAll('.variant-value');
   var productImage = document.querySelector('.product__media img');
-  var productPrice = document.querySelector('.price-item'); // Update selector as needed
-  var variantSelect = document.querySelector('select[name=id]'); // Shopify's variant selector
+  var productPrice = document.querySelector('.price-item'); // Ensure this is the correct selector for the price
+  var variantSelect = document.querySelector('select[name=id]'); // Shopify's variant dropdown selector, if used
+
+  function updateVariantDisplay() {
+    variantElements.forEach(function(el) {
+      el.classList.remove('selected');
+      if (el.classList.contains('text-type')) {
+        el.style.backgroundColor = '#f0f0f0'; // Default background for text type
+        el.style.color = 'black'; // Default text color
+      } else {
+        el.style.borderColor = '#ccc'; // Default border color for non-text types
+      }
+    });
+  }
 
   variantElements.forEach(function(element) {
     var variantId = element.getAttribute('data-variant-id');
     var variantPrice = element.getAttribute('data-variant-price');
     var variantImageSrc = element.getAttribute('data-variant-image');
 
-    // Check if the variant is available
     if (variantId) {
       element.addEventListener('click', function() {
         // Update Shopify's variant selector
         if (variantSelect) {
           variantSelect.value = variantId;
+          variantSelect.dispatchEvent(new Event('change')); // Trigger the change event
         }
 
         // Update the price
-        if (productPrice) {
+        if (productPrice && variantPrice) {
           productPrice.textContent = variantPrice;
         }
 
@@ -224,31 +236,30 @@ document.addEventListener('DOMContentLoaded', function() {
           productImage.srcset = variantImageSrc;
         }
 
-        // Update the styling for the selected variant
-        variantElements.forEach(function(el) {
-          el.classList.remove('selected');
-          if (el.classList.contains('text-type')) {
-            el.style.backgroundColor = '#f0f0f0';
-            el.style.color = 'black';
-          }
-        });
+        // Update styling for the selected variant
+        updateVariantDisplay();
         element.classList.add('selected');
         if (element.classList.contains('text-type')) {
           element.style.backgroundColor = 'black';
           element.style.color = 'white';
+        } else {
+          element.style.borderColor = 'black'; // Selected border color for non-text types
         }
       });
-
-      // Set the first available variant as default
-      if (!variantElements[0].classList.contains('selected')) {
-        variantElements[0].click();
-      }
     } else {
       // Disable unavailable variants
       element.style.pointerEvents = 'none';
       element.style.opacity = '0.5';
     }
   });
+
+  // Set the first available variant as default if none is selected
+  if (!document.querySelector('.variant-value.selected')) {
+    var firstAvailable = document.querySelector('.variant-value[data-variant-id]');
+    if (firstAvailable) {
+      firstAvailable.click();
+    }
+  }
 });
 
   </script>
