@@ -105,12 +105,16 @@ document.addEventListener('DOMContentLoaded', function() {
         var price = row.getAttribute('data-variant-price');
         document.querySelector('.price-item').textContent = price;
 
-        // Update the image
-        var imageUrl = row.getAttribute('data-variant-image');
-        if (imageUrl) {
+        // Get variant data
+        var variantImageSrc = row.getAttribute('data-variant-image');
+  
+        // Update product image if variant has an image
+        if (variantImageSrc) {
           var productImage = document.querySelector('.product__media img');
           if (productImage) {
-            productImage.src = imageUrl;
+            productImage.src = variantImageSrc;
+            // Update srcset attribute if necessary
+            productImage.srcset = variantImageSrc;
           }
         }
 
