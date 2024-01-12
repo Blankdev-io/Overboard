@@ -156,30 +156,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Get variant data
         var variantImageSrc = row.getAttribute('data-variant-image');
-console.log(variantImageSrc)
+
         // Update product image if variant has an image
         if (variantImageSrc) {
           var productImage = document.querySelector('.product__media img');
           if (productImage) {
             productImage.src = variantImageSrc;
-            // Update srcset attribute if necessary
             productImage.srcset = variantImageSrc;
+
+            // Update thumbnails
+            updateThumbnails(variantImageSrc);
+
+            // Update list items
+            updateListItems(variantImageSrc);
           }
-
-          // Search and update thumbnails
-          var thumbnails = document.querySelectorAll('.thumbnail img');
-          thumbnails.forEach(function(thumbnail) {
-            var thumbnailSrc = thumbnail.getAttribute('src');
-            if (thumbnailSrc && thumbnailSrc.includes(variantImageSrc)) {
-              // Remove aria-current from all thumbnails
-              document.querySelectorAll('.thumbnail[aria-current="true"]').forEach(function(thumb) {
-                thumb.removeAttribute('aria-current');
-              });
-
-              // Set aria-current on the matched thumbnail
-              thumbnail.closest('.thumbnail').setAttribute('aria-current', 'true');
-            }
-          });
         }
 
         // Update Shopify's variant selector (if used)
@@ -198,8 +188,35 @@ console.log(variantImageSrc)
       row.style.pointerEvents = 'none';
     }
   });
+
+  function updateThumbnails(variantImageSrc) {
+    var thumbnails = document.querySelectorAll('.thumbnail img');
+    thumbnails.forEach(function(thumbnail) {
+      var thumbnailSrc = thumbnail.getAttribute('src');
+      if (thumbnailSrc && thumbnailSrc.includes(variantImageSrc)) {
+        document.querySelectorAll('.thumbnail[aria-current="true"]').forEach(function(thumb) {
+          thumb.removeAttribute('aria-current');
+        });
+        thumbnail.closest('.thumbnail').setAttribute('aria-current', 'true');
+      }
+    });
+  }
+
+  function updateListItems(variantImageSrc) {
+    var listItems = document.querySelectorAll('ul[role="list"] li');
+    listItems.forEach(function(li) {
+      var img = li.querySelector('.product__media img');
+      if (img && img.src.includes(variantImageSrc)) {
+        listItems.forEach(function(otherLi) {
+          otherLi.classList.remove('is-active');
+        });
+        li.classList.add('is-active');
+      }
+    });
+  }
 });
 </script>
+
 
 
   {%- else -%}
