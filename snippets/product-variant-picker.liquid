@@ -282,30 +282,20 @@ document.addEventListener('DOMContentLoaded', function() {
 {% endfor %}
 
 
-  <script>
+<script>
 document.addEventListener('DOMContentLoaded', function() {
   var variantOptions = document.querySelectorAll('.variant-value');
-  var productImage = document.querySelector('.product__media img');
   var productPrice = document.querySelector('.price-item');
   var variantInput = document.querySelector('.product-variant-id');
 
+  function normalizeUrl(url) {
+    return url.replace(/^https?:/, '');
+  }
+
   variantOptions.forEach(option => {
-    var value = option.getAttribute('data-value');
-    var optionType = option.getAttribute('data-option');
     var variantId = option.getAttribute('data-variant-id');
     var variantPrice = option.getAttribute('data-variant-price');
     var variantImageSrc = option.getAttribute('data-variant-image');
-
-    // Set up the variant map
-    if (variantMap.colors[value]) {
-      option.style.backgroundColor = variantMap.colors[value];
-    } else if (variantMap.sizes[value]) {
-      option.textContent = variantMap.sizes[value];
-      option.classList.add('text-type');
-    } else {
-      option.textContent = value;
-      option.classList.add('text-type');
-    }
 
     // Handle unavailable variants
     if (!variantId) {
@@ -321,7 +311,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (variantInput) {
           variantInput.value = variantId;
         };
-        
+
         // Update Shopify's variant selector
         var variantSelect = document.querySelector('select[name=id]');
         if (variantSelect) {
@@ -333,12 +323,28 @@ document.addEventListener('DOMContentLoaded', function() {
           productPrice.textContent = variantPrice;
         }
 
-        // Update the product image if available
-        if (variantImageSrc && productImage) {
-          productImage.src = variantImageSrc;
-          // Update srcset attribute if necessary
-          productImage.srcset = variantImageSrc;
-        }
+        // Normalize URL for comparison
+        var normalizedVariantImageSrc = normalizeUrl(variantImageSrc);
+
+        // Iterate over <li> elements within .product__media-list
+        var listItems = document.querySelectorAll('.product__media-list li');
+        listItems.forEach(function(li) {
+          var img = li.querySelector('.product__media img');
+          if (img && normalizeUrl(img.getAttribute('src')).includes(normalizedVariantImageSrc)) {
+            listItems.forEach(item => item.classList.remove('is-active'));
+            li.classList.add('is-active');
+          }
+        });
+
+        // Update thumbnails
+        var thumbnails = document.querySelectorAll('.thumbnail img');
+        thumbnails.forEach(function(thumbnail) {
+          var thumbnailSrc = thumbnail.getAttribute('src');
+          if (thumbnailSrc && thumbnailSrc.includes(normalizedVariantImageSrc)) {
+            document.querySelectorAll('.thumbnail[aria-current="true"]').forEach(thumb => thumb.removeAttribute('aria-current'));
+            thumbnail.closest('.thumbnail').setAttribute('aria-current', 'true');
+          }
+        });
       });
     }
   });
@@ -349,7 +355,8 @@ document.addEventListener('DOMContentLoaded', function() {
     firstAvailableVariant.click();
   }
 });
-  </script>
+</script>
+
                   
   {%- endif -%}
 {%- endunless -%}
