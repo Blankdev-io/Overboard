@@ -157,6 +157,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get variant data
         var variantImageSrc = row.getAttribute('data-variant-image');
 
+        // Normalize the variantImageSrc to absolute URL
+        var normalizedVariantImageSrc = new URL(variantImageSrc, window.location.origin).href;
+
         // Update product image if variant has an image
         if (variantImageSrc) {
           var productImage = document.querySelector('.product__media img');
@@ -165,10 +168,10 @@ document.addEventListener('DOMContentLoaded', function() {
             productImage.srcset = variantImageSrc;
 
             // Update thumbnails
-            updateThumbnails(variantImageSrc);
+            updateThumbnails(normalizedVariantImageSrc);
 
             // Update list items
-            updateListItems(variantImageSrc);
+            updateListItems(normalizedVariantImageSrc);
           }
         }
 
@@ -189,11 +192,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  function updateThumbnails(variantImageSrc) {
+  function updateThumbnails(normalizedVariantImageSrc) {
     var thumbnails = document.querySelectorAll('.thumbnail img');
     thumbnails.forEach(function(thumbnail) {
       var thumbnailSrc = thumbnail.getAttribute('src');
-      if (thumbnailSrc && thumbnailSrc.includes(variantImageSrc)) {
+      if (thumbnailSrc && thumbnailSrc.includes(normalizedVariantImageSrc)) {
         document.querySelectorAll('.thumbnail[aria-current="true"]').forEach(function(thumb) {
           thumb.removeAttribute('aria-current');
         });
@@ -202,11 +205,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  function updateListItems(variantImageSrc) {
+  function updateListItems(normalizedVariantImageSrc) {
     var listItems = document.querySelectorAll('ul[role="list"] li');
     listItems.forEach(function(li) {
       var img = li.querySelector('.product__media img');
-      if (img && img.src.includes(variantImageSrc)) {
+      if (img && img.src.includes(normalizedVariantImageSrc)) {
         listItems.forEach(function(otherLi) {
           otherLi.classList.remove('is-active');
         });
@@ -216,7 +219,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
-
 
 
   {%- else -%}
