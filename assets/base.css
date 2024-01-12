@@ -136,8 +136,6 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
     padding: 0 0 0 15px;
   }
 
-  
-
   .header.page-width,
   .utility-bar__grid.page-width {
     padding-left: 3.2rem;
@@ -3814,4 +3812,10 @@ h1, .highrise {
 .product-description {
   font-size: 16px;
   font-family: Plus Jakarta Sans,sans-serif!important;
+}
+
+@media screen and (max-width: 750px) {
+  .variant-table th, .variant-table td {
+    padding: 0;
+  }
 }
