@@ -163,16 +163,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Iterate over <li> elements to find and update the matching image
         var listItems = document.querySelectorAll('ul[role="list"] li');
+        console.log("List Items Found:", listItems.length);
+
         listItems.forEach(function(li) {
           var img = li.querySelector('.product__media img');
-          if (img && normalizeUrl(img.getAttribute('src')).includes(variantImageSrc)) {
-            // Remove 'is-active' class from all <li> elements
-            listItems.forEach(function(item) {
-              item.classList.remove('is-active');
-            });
+          if (img) {
+            var imgSrc = normalizeUrl(img.getAttribute('src'));
+            console.log("Comparing:", imgSrc, "with", variantImageSrc);
 
-            // Add 'is-active' class to the matching <li>
-            li.classList.add('is-active');
+            if (imgSrc.includes(variantImageSrc)) {
+              console.log("Match Found. Updating classes.");
+              
+              // Remove 'is-active' class from all <li> elements
+              listItems.forEach(function(item) {
+                item.classList.remove('is-active');
+              });
+
+              // Add 'is-active' class to the matching <li>
+              li.classList.add('is-active');
+            }
           }
         });
 
