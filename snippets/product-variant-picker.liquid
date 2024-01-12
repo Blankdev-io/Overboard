@@ -157,14 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get variant data
         var variantImageSrc = row.getAttribute('data-variant-image');
 
-        // Update product image if variant has an image
-        if (variantImageSrc) {
-          var productImage = document.querySelector('.product__media img');
-          if (productImage) {
-            productImage.src = variantImageSrc;
-            // Update srcset attribute if necessary
-            productImage.srcset = variantImageSrc;
-          }
+
 
           // Search and update thumbnails
           var thumbnails = document.querySelectorAll('.thumbnail img');
