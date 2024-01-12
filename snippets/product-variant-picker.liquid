@@ -71,6 +71,15 @@
     
     {%- elsif block.settings.picker_type == 'list' and product.tags contains 'Boards' -%}
 
+    <style>
+      @media only screen and (max-width: 768px) { 
+          body:after {
+              content: 'mobile';
+              display: none;
+          }
+      }
+    </style>
+
     <table class="variant-table">
       <tr>
         {% for option in product.options %}
