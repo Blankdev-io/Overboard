@@ -129,6 +129,10 @@ document.addEventListener('DOMContentLoaded', function() {
   var variantInput = document.querySelector('.product-variant-id');
   var defaultSelected = false;
 
+  function normalizeUrl(url) {
+    return url.replace(/^https?:/, '');
+  }
+
   variantRows.forEach(function(row) {
     var variantId = row.getAttribute('data-variant-id');
 
@@ -154,26 +158,23 @@ document.addEventListener('DOMContentLoaded', function() {
         var price = row.getAttribute('data-variant-price');
         document.querySelector('.price-item').textContent = price;
 
-        // Get variant data
-        var variantImageSrc = row.getAttribute('data-variant-image');
+        // Get variant data and normalize URL
+        var variantImageSrc = normalizeUrl(row.getAttribute('data-variant-image'));
 
-        // Normalize the variantImageSrc to absolute URL
-        var normalizedVariantImageSrc = new URL(variantImageSrc, window.location.origin).href;
+        // Iterate over <li> elements to find and update the matching image
+        var listItems = document.querySelectorAll('ul[role="list"] li');
+        listItems.forEach(function(li) {
+          var img = li.querySelector('.product__media img');
+          if (img && normalizeUrl(img.getAttribute('src')).includes(variantImageSrc)) {
+            // Remove 'is-active' class from all <li> elements
+            listItems.forEach(function(item) {
+              item.classList.remove('is-active');
+            });
 
-        // Update product image if variant has an image
-        if (variantImageSrc) {
-          var productImage = document.querySelector('.product__media img');
-          if (productImage) {
-            productImage.src = variantImageSrc;
-            productImage.srcset = variantImageSrc;
-
-            // Update thumbnails
-            updateThumbnails(normalizedVariantImageSrc);
-
-            // Update list items
-            updateListItems(normalizedVariantImageSrc);
+            // Add 'is-active' class to the matching <li>
+            li.classList.add('is-active');
           }
-        }
+        });
 
         // Update Shopify's variant selector (if used)
         var variantSelect = document.querySelector('select[name=id]');
@@ -191,32 +192,6 @@ document.addEventListener('DOMContentLoaded', function() {
       row.style.pointerEvents = 'none';
     }
   });
-
-  function updateThumbnails(normalizedVariantImageSrc) {
-    var thumbnails = document.querySelectorAll('.thumbnail img');
-    thumbnails.forEach(function(thumbnail) {
-      var thumbnailSrc = thumbnail.getAttribute('src');
-      if (thumbnailSrc && thumbnailSrc.includes(normalizedVariantImageSrc)) {
-        document.querySelectorAll('.thumbnail[aria-current="true"]').forEach(function(thumb) {
-          thumb.removeAttribute('aria-current');
-        });
-        thumbnail.closest('.thumbnail').setAttribute('aria-current', 'true');
-      }
-    });
-  }
-
-  function updateListItems(normalizedVariantImageSrc) {
-    var listItems = document.querySelectorAll('ul[role="list"] li');
-    listItems.forEach(function(li) {
-      var img = li.querySelector('.product__media img');
-      if (img && img.src.includes(normalizedVariantImageSrc)) {
-        listItems.forEach(function(otherLi) {
-          otherLi.classList.remove('is-active');
-        });
-        li.classList.add('is-active');
-      }
-    });
-  }
 });
 </script>
 
