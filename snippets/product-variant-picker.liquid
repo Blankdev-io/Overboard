@@ -138,6 +138,11 @@ document.addEventListener('DOMContentLoaded', function() {
   var variantInput = document.querySelector('.product-variant-id');
   var defaultSelected = false;
 
+  function isMobile() {
+    var content = window.getComputedStyle(document.body, ':after').getPropertyValue('content');
+    return content === '"mobile"'; // Note: The extra quotes are necessary due to how content values are returned
+  }
+  
   function normalizeUrl(url) {
     return url.replace(/^https?:/, '');
   }
