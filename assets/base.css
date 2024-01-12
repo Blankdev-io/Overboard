@@ -3792,10 +3792,6 @@ h1, .highrise {
   background: linear-gradient(to top right, transparent 49%, grey 49%, grey 51%, transparent 51%);
 }
 
-.description-dropdown {
-  /* Add necessary styling for the dropdown container */
-}
-
 .description-toggle {
   background: none;
   border: none;
@@ -3812,6 +3808,10 @@ h1, .highrise {
 .product-description {
   font-size: 16px;
   font-family: Plus Jakarta Sans,sans-serif!important;
+}
+
+.grid--1-col .grid__item.grid-overflow-hidden {
+  overflow: hidden;
 }
 
 @media screen and (max-width: 750px) {
