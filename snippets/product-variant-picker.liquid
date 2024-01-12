@@ -163,17 +163,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Iterate over <li> elements within .product__media-list
         var listItems = document.querySelectorAll('.product__media-list li');
-        console.log("List Items Found in .product__media-list:", listItems.length);
+        var thumbnails = document.querySelectorAll('.thumbnail img');
+        var matchFound = false;
 
         listItems.forEach(function(li) {
           var img = li.querySelector('.product__media img');
           if (img) {
             var imgSrc = normalizeUrl(img.getAttribute('src'));
-            console.log("Comparing:", imgSrc, "with", variantImageSrc);
 
             if (imgSrc.includes(variantImageSrc)) {
-              console.log("Match Found. Updating classes.");
-              
+              matchFound = true;
+
               // Remove 'is-active' class from all <li> elements
               listItems.forEach(function(item) {
                 item.classList.remove('is-active');
@@ -184,6 +184,22 @@ document.addEventListener('DOMContentLoaded', function() {
             }
           }
         });
+
+        // Update thumbnails
+        if (matchFound) {
+          thumbnails.forEach(function(thumbnail) {
+            var thumbnailSrc = thumbnail.getAttribute('src');
+            if (thumbnailSrc && thumbnailSrc.includes(variantImageSrc)) {
+              // Remove aria-current from all thumbnails
+              document.querySelectorAll('.thumbnail[aria-current="true"]').forEach(function(thumb) {
+                thumb.removeAttribute('aria-current');
+              });
+
+              // Set aria-current on the matched thumbnail
+              thumbnail.closest('.thumbnail').setAttribute('aria-current', 'true');
+            }
+          });
+        }
 
         // Update Shopify's variant selector (if used)
         var variantSelect = document.querySelector('select[name=id]');
@@ -203,6 +219,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+
 
 
   {%- else -%}
