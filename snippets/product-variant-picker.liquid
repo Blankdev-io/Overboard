@@ -74,7 +74,7 @@
     <style>
       @media only screen and (max-width: 768px) { 
           body:after {
-              content: 'mobile';
+              content: 'mobile' !important;
               display: none;
           }
       }
@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', function() {
           });
         }
 
-        // update thumbnails on mobile
+        // Update thumbnails on mobile
         if (isMobile()) {
           var activeLi = document.querySelector('.product__media-list li.is-active');
           if (activeLi) {
