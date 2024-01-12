@@ -20,6 +20,7 @@
     align-items: center;
     width: 100%;
     justify-content: center;
+    position: relative;
   }
 
   .category-header-text {
@@ -59,6 +60,14 @@
       width: 210px; 
       height: auto; /* maintains the aspect ratio */
       }
+
+    .category-banner-container svg {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%, 50%);
+    }
+    
   @media (max-width: 768px) {
     .category-banner-container {
       height: 117px;
