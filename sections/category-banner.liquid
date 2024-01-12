@@ -112,14 +112,10 @@ style="background-color:
   {% elsif current_tag == 'clothing' %}{% render 'clothing-white-svg.liquid' %}
   {% elsif current_tag == 'wetsuits' %}{% render 'wetsuits-white-svg.liquid' %}
   {% elsif current_tag == 'accessories' %}{% render 'accessories-white-svg.liquid' %}
-  {% else %}black;{% endif %}
+  {% endif %}
 </div>
 
-{% if current_tag == 'boards' %}{% render 'boards-blue-svg.liquid' %}
-  {% elsif current_tag == 'clothing' %}{% render 'clothing-green-svg.liquid' %}
-  {% elsif current_tag == 'wetsuits' %}{% render 'wetsuits-red-svg.liquid' %}
-  {% elsif current_tag == 'accessories' %}{% render 'accessories-blue-svg.liquid' %}
-  {% else %}black;{% endif %}
+
 
 
 {% schema %}
