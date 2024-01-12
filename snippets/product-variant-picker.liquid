@@ -332,13 +332,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (productPrice && variantPrice) {
           productPrice.textContent = variantPrice;
         }
-
-        // Update the product image if available
-        if (variantImageSrc && productImage) {
-          productImage.src = variantImageSrc;
-          // Update srcset attribute if necessary
-          productImage.srcset = variantImageSrc;
-        }
       });
     }
   });
