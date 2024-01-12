@@ -161,9 +161,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get variant data and normalize URL
         var variantImageSrc = normalizeUrl(row.getAttribute('data-variant-image'));
 
-        // Iterate over <li> elements to find and update the matching image
-        var listItems = document.querySelectorAll('ul[role="list"] li');
-        console.log("List Items Found:", listItems.length);
+        // Iterate over <li> elements within .product__media-list
+        var listItems = document.querySelectorAll('.product__media-list li');
+        console.log("List Items Found in .product__media-list:", listItems.length);
 
         listItems.forEach(function(li) {
           var img = li.querySelector('.product__media img');
