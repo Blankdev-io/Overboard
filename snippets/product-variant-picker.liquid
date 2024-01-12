@@ -215,6 +215,19 @@ document.addEventListener('DOMContentLoaded', function() {
           });
         }
 
+        // update thumbnails on mobile
+        if (isMobile()) {
+          var activeLi = document.querySelector('.product__media-list li.is-active');
+          if (activeLi) {
+            var img = activeLi.querySelector('.product__media img');
+            if (img) {
+              img.src = variantImageSrc;
+              // Optionally, update srcset as well if you use it
+              img.srcset = variantImageSrc;
+            }
+          }
+        }
+
         // Update Shopify's variant selector (if used)
         var variantSelect = document.querySelector('select[name=id]');
         if (variantSelect) {
