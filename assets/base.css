@@ -3810,12 +3810,12 @@ h1, .highrise {
   font-family: Plus Jakarta Sans,sans-serif!important;
 }
 
-.grid--1-col .grid__item.grid-overflow-hidden {
-  overflow: hidden;
-}
-
 @media screen and (max-width: 750px) {
   .variant-table th, .variant-table td {
     padding: 5px 0;
+  }
+
+  .grid--1-col .grid__item.grid-overflow-hidden {
+    overflow: hidden;
   }
 }
