@@ -3810,6 +3810,14 @@ h1, .highrise {
   font-family: Plus Jakarta Sans,sans-serif!important;
 }
 
+.product-form__submit.overboard-buy-button {
+    background-color: black !important;
+    color: white !important;
+    height: 40px !important;
+    border-radius: 50px !important;
+    border: none !important;
+}
+
 @media screen and (max-width: 750px) {
   .variant-table th, .variant-table td {
     padding: 5px 0;
