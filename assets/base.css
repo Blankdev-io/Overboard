@@ -3833,7 +3833,7 @@ h1, .highrise {
 }
 
 .product-page-price {
-  font-size: 34px;
+  font-size: 34px !important;
   font-family: Plus Jakarta Sans,sans-serif!important;
 }
 
