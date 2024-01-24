@@ -3834,7 +3834,8 @@ h1, .highrise {
 
 @media screen and (max-width: 750px) {
   .product__title h1 {
-  font-size: 76px !important;
+    margin-top: 20px !important;
+    font-size: 76px !important;
   }
   
   .variant-table th, .variant-table td {
