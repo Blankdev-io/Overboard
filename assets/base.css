@@ -3822,7 +3822,15 @@ h1, .highrise {
   border-radius: 50px !important;
 }
 
+.product__title {
+  font-size: 95px;
+}
+
 @media screen and (max-width: 750px) {
+  .product__title {
+  font-size: 76px;
+  }
+  
   .variant-table th, .variant-table td {
     padding: 5px 0;
   }
@@ -3831,3 +3839,4 @@ h1, .highrise {
     overflow: hidden;
   }
 }
+
