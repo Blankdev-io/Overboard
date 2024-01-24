@@ -3822,6 +3822,10 @@ h1, .highrise {
   border-radius: 50px !important;
 }
 
+.product-info-container {
+  max-width: 1440px;
+}
+
 .product__title h1 {
   font-size: 95px !important;
   line-height: 0.5 !important;
