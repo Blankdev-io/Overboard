@@ -36,7 +36,7 @@
       height: 250px;
       position: absolute;
       right: 0;
-      bottom: 13px;
+      bottom: {% if current_tag == 'accessories' %}16.5px;{% else %}13px{% endif %};
       transform: translateY(50%);
     }
     
