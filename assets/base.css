@@ -3823,12 +3823,12 @@ h1, .highrise {
 }
 
 .product__title {
-  font-size: 95px;
+  font-size: 95px !important;
 }
 
 @media screen and (max-width: 750px) {
   .product__title {
-  font-size: 76px;
+  font-size: 76px !important;
   }
   
   .variant-table th, .variant-table td {
