@@ -3826,6 +3826,11 @@ h1, .highrise {
   font-size: 95px !important;
 }
 
+.price-item.price-item--regular {
+  font-size: 34px;
+  font-family: Plus Jakarta Sans,sans-serif!important;
+}
+
 @media screen and (max-width: 750px) {
   .product__title h1 {
   font-size: 76px !important;
