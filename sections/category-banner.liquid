@@ -36,7 +36,7 @@
       height: 250px;
       position: absolute;
       right: 0;
-      bottom: {% if current_tag == 'accessories' %}16.5px;{% else %}13px{% endif %};
+      bottom: {% if current_tag == 'accessories' %}16.5px;{% else %}13px;{% endif %}
       transform: translateY(50%);
     }
     
@@ -53,7 +53,7 @@
     .category-banner-container svg {
       width: 100px;
       height: 100px;
-      bottom: 5px;
+      bottom: {% if current_tag == 'accessories' %}7.8px;{% else %}5px;{% endif %}
   }
 </style>
 
