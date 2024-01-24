@@ -3824,6 +3824,7 @@ h1, .highrise {
 
 .product-info-container {
   max-width: 95vw;
+  margin: auto;
 }
 
 .product__title h1 {
