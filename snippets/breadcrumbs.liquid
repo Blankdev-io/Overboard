@@ -22,7 +22,14 @@
 }
 
 .breadcrumb ol li a {
-  text-decoration: none; /* Optional: Removes underline from links */
+  text-decoration: none;
+}
+
+.breadcrumb ol li a:link,
+.breadcrumb ol li a:visited,
+.breadcrumb ol li a:hover,
+.breadcrumb ol li a:active {
+    color: inherit;
 }
 
 @media screen and (max-width: 750px) {
