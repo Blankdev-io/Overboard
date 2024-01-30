@@ -3851,6 +3851,7 @@ h1, .highrise {
   
   .variant-table th, .variant-table td {
     padding: 5px 0;
+    font-size: 12px;
   }
 
   .grid--1-col .grid__item.grid-overflow-hidden {
