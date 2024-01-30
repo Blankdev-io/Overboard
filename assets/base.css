@@ -3825,10 +3825,8 @@ h1, .highrise {
   height: 40px !important;
   border: none !important;
   text-transform: uppercase;
-}
-
-.shopify-cleanslate div {
-  border-radius: 50px !important;
+  font-family: Plus Jakarta Sans,sans-serif!important;
+  font-size: 16px;
 }
 
 .product-info-container {
