@@ -3771,7 +3771,7 @@ h1, .highrise {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  margin: 5px;
+  margin: 5px 5px 5px 0;
   cursor: pointer;
   font-family: Plus Jakarta Sans,sans-serif !important;
   font-size: 19px;
@@ -3843,6 +3843,10 @@ h1, .highrise {
 .product-page-price {
   font-size: 34px !important;
   font-family: Plus Jakarta Sans,sans-serif!important;
+}
+
+.variant-option h3 {
+  margin-bottom: 5px !important;
 }
 
 @media screen and (max-width: 750px) {
