@@ -3773,6 +3773,9 @@ h1, .highrise {
   align-items: center;
   margin: 5px;
   cursor: pointer;
+  font-family: Plus Jakarta Sans,sans-serif !important;
+  font-size: 19px;
+  border-radius: 10px;
 }
 
 .variant-value.selected {
