@@ -3735,10 +3735,15 @@ h1, .highrise {
 }
 
 .variant-table th, .variant-table td {
+  font-weight: bold;
+}
+
+.variant-table th, .variant-table td {
   border: none; 
   padding: 10px;
   text-align: center;
   text-transform: uppercase;
+  font-family: Plus Jakarta Sans,sans-serif!important;
 }
 
 .variant-table tr {
