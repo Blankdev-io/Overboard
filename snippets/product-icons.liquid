@@ -40,25 +40,25 @@
 }
 </style>
     
-    <div class="icon-section{% if desktop %} hide_on_mobile{% elsif mobile %} show_on_mobile{% endif %}">
-      <div class="icon-container">
-        <img src="{{ 'Vector.svg' | asset_url }}">
-        <p>FREE SHIPPING</p>
-      </div>
-      <div class="icon-container">
-        <img src="{{ 'Vector-1.svg' | asset_url }}">
-        <p>CLICK & COLLECT</p>
-      </div>
-      <div class="icon-container">
-        <img src="{{ 'Vector-2.svg' | asset_url }}">
-        <p>BUY NOW, PAY LATER</p>
-      </div>
-      <div class="icon-container">
-        <img src="{{ 'Vector-3.svg' | asset_url }}">
-        <p>SECURE PAYMENTS</p>
-      </div>
-      <div class="icon-container">
-        <img src="{{ 'Vector-4.svg' | asset_url }}">
-        <p>MEMBER BENEFITS</p>
-      </div>
-    </div>
+<div class="icon-section{% if desktop %} hide_on_mobile{% elsif mobile %} show_on_mobile{% endif %}">
+  <div class="icon-container">
+    {% render 'Vector.svg' %}
+    <p>FREE SHIPPING</p>
+  </div>
+  <div class="icon-container">
+    {% render 'Vector-1.svg' %}
+    <p>CLICK & COLLECT</p>
+  </div>
+  <div class="icon-container">
+    {% render 'Vector-2.svg' %}
+    <p>BUY NOW, PAY LATER</p>
+  </div>
+  <div class="icon-container">
+    {% render 'Vector-3.svg' %}
+    <p>SECURE PAYMENTS</p>
+  </div>
+  <div class="icon-container">
+    {% render 'Vector-4.svg' %}
+    <p>MEMBER BENEFITS</p>
+  </div>
+</div>
