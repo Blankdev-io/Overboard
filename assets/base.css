@@ -3814,7 +3814,7 @@ h1, .highrise {
   font-family: Plus Jakarta Sans,sans-serif!important;
 }
 
-.product-description {
+.product-description, .share-button__button {
   font-size: 16px;
   font-family: Plus Jakarta Sans,sans-serif!important;
 }
