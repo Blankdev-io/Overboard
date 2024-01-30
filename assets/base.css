@@ -3836,6 +3836,7 @@ h1, .highrise {
 .product__title h1 {
   font-size: 95px !important;
   line-height: 0.8 !important;
+  font-weight: bold;
 }
 
 .product-page-price {
