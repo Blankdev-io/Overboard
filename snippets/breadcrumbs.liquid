@@ -9,11 +9,16 @@
 
 .breadcrumb ol li {
   margin-right: 10px; 
+  color: black;
 }
 
 .breadcrumb ol li:not(:last-child)::after {
   content: '>';
   margin-left: 10px;
+}
+
+.breadcrumb ol li:last-child {
+  text-decoration: underline;
 }
 
 .breadcrumb ol li a {
