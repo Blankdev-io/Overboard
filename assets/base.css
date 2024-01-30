@@ -3823,8 +3823,8 @@ h1, .highrise {
   background-color: black !important;
   color: white !important;
   height: 40px !important;
-  border-radius: 50px !important;
   border: none !important;
+  text-transform: uppercase;
 }
 
 .shopify-cleanslate div {
