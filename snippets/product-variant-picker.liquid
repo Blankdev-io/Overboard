@@ -157,12 +157,9 @@ document.addEventListener('DOMContentLoaded', function() {
           variantInput.value = variantId;
         };
 
-        // Update all rows to default border style
+        // Update all rows to default style
         variantRows.forEach(function(r) {
-          r.style.borderTop = 'none';
-          r.style.borderLeft = 'none';
-          r.style.borderRight = 'none';
-          r.style.borderBottom = '1px solid #ddd';
+          row.style.backgroundColor = 'none';
         });
 
         // Highlight the selected row
