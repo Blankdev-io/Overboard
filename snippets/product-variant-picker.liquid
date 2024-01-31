@@ -258,7 +258,7 @@ document.addEventListener('DOMContentLoaded', function() {
         {% assign sorted_variants = product.variants | sort: 'title' %}
         {% for variant in sorted_variants %}
           {% if variant.available %}
-            <div class="variant-option" 
+            <div class="variant-value" 
                  data-variant-id="{{ variant.id }}" 
                  data-variant-price="{{ variant.price | money }}"
                  data-variant-image="{{ variant.featured_image | img_url: 'master' }}"
