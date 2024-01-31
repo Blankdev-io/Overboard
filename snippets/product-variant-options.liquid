@@ -86,30 +86,25 @@
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     const variantElements = document.querySelectorAll('.js-variant-display');
-    const variantColorElements = document.querySelectorAll('.js-variant-color');
   
-    variantElements.forEach((el, index) => {
+    variantElements.forEach(el => {
       const originalValue = el.getAttribute('data-variant-value');
       const type = determineType(originalValue); // Implement this function based on your requirements
       const mappedValue = variantMap[type] && variantMap[type][originalValue];
   
-      if (mappedValue) {
-        el.textContent = mappedValue;
-  
-        // If it's a color, set the background color
-        if (type === 'colors') {
-          variantColorElements[index].style.backgroundColor = mappedValue;
-          variantColorElements[index].style.display = 'inline-block';
-        }
-      } else {
+      if (type === 'colors' && mappedValue) {
+        // Set the background color to the hex code and display the color's name
+        el.closest('.variant-value').style.backgroundColor = mappedValue;
         el.textContent = originalValue;
+      } else {
+        // For non-color types, display the mapped value or the original value
+        el.textContent = mappedValue || originalValue;
       }
     });
   });
   
   function determineType(value) {
     // Implement the logic to determine if the value is a color, size, etc.
-    // This is an example. You will need to adapt it to your specific scenario.
     if (variantMap.colors[value]) {
       return 'colors';
     } else if (variantMap.sizes[value]) {
