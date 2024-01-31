@@ -67,7 +67,6 @@
     <span class="js-variant-color" style="display: none;"></span>
       <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
     </label>
-    <span class="js-full-variant-name" style="display: none;">{{ value }}</span>
   {%- elsif block.settings.picker_type == 'dropdown' -%}
     <option
       value="{{ value | escape }}"
@@ -87,34 +86,31 @@
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     const variantElements = document.querySelectorAll('.js-variant-display');
-    const fullVariantNames = document.querySelectorAll('.js-full-variant-name');
   
-    variantElements.forEach((el, index) => {
+    variantElements.forEach(el => {
       const originalValue = el.getAttribute('data-variant-value');
       const type = determineType(originalValue); // Implement this function based on your requirements
       const mappedValue = variantMap[type] && variantMap[type][originalValue];
-      const fullVariantNameElement = fullVariantNames[index];
   
-      // Display the full original variant name for all types
-      if (mappedValue && fullVariantNameElement) {
-        fullVariantNameElement.style.display = 'block';
-        fullVariantNameElement.textContent = originalValue;
-      }
-  
-      // Remove color-specific background setting
       if (type === 'colors' && mappedValue) {
+        // Set the background color to the hex code and display the color's name
         el.closest('.variant-value').style.backgroundColor = mappedValue;
+        el.textContent = originalValue;
+      } else {
+        // For non-color types, display the mapped value or the original value
+        el.textContent = mappedValue || originalValue;
       }
     });
   });
   
   function determineType(value) {
+    // Implement the logic to determine if the value is a color, size, etc.
     if (variantMap.colors[value]) {
       return 'colors';
     } else if (variantMap.sizes[value]) {
       return 'sizes';
     } else {
-      return 'other';
+      return 'other'; // Default or other types
     }
-  }
-  </script>  
+  }  
+  </script>
