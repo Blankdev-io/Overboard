@@ -86,28 +86,26 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    const variantElements = document.querySelectorAll('.js-variant-display');
+    const variantDisplays = document.querySelectorAll('.js-variant-display');
+    const fullVariantNames = document.querySelectorAll('.js-full-variant-name');
   
-    variantElements.forEach(el => {
+    variantDisplays.forEach((el, index) => {
       const originalValue = el.getAttribute('data-variant-value');
       const type = determineType(originalValue);
       const mappedValue = variantMap[type] && variantMap[type][originalValue];
-      const parentElement = el.closest('.variant-value'); // Find the common parent element
+      const fullVariantNameElement = fullVariantNames[index]; // Match by index
   
       if (type === 'colors' && mappedValue) {
-        parentElement.style.backgroundColor = mappedValue;
+        el.closest('.variant-value').style.backgroundColor = mappedValue;
         el.textContent = originalValue;
       } else {
         el.textContent = mappedValue || originalValue;
       }
   
-      // Find the .js-full-variant-name element within the parent and update it
-      if (type === 'sizes' && mappedValue) {
-        const fullVariantNameElement = document.querySelector('.js-full-variant-name');
-        if (fullVariantNameElement) {
-          fullVariantNameElement.style.display = 'block';
-          fullVariantNameElement.textContent = originalValue;
-        }
+      // Update the full variant name if it's a size
+      if (type === 'sizes' && mappedValue && fullVariantNameElement) {
+        fullVariantNameElement.style.display = 'block';
+        fullVariantNameElement.textContent = originalValue;
       }
     });
   });
