@@ -3827,6 +3827,7 @@ h1, .highrise {
   text-transform: uppercase;
   font-family: Plus Jakarta Sans,sans-serif!important;
   font-size: 16px;
+  border-radius: 40px;
 }
 
 .product-info-container {
