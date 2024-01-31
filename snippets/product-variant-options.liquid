@@ -65,7 +65,7 @@
     style="border-radius: 10px; padding: 0; display: inline-flex; text-transform: uppercase;">
     <span class="js-variant-display" data-variant-value="{{ value | escape }}"></span>
     <span class="js-variant-color" style="display: none;"></span>
-      <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
+    <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
     </label>
     <span class="js-full-variant-name" style="display: none;"></span>
   {%- elsif block.settings.picker_type == 'dropdown' -%}
