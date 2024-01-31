@@ -23,6 +23,8 @@
   assign product_form_id = 'product-form-' | append: section.id
 -%}
 
+{{ 'variant-map.js' | asset_url | script_tag }}
+
 {%- for value in option.values -%}
   {%- liquid
     assign option_disabled = true
@@ -61,7 +63,7 @@
     >
     <label class="variant-value" for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
     style="border-radius: 10px; padding: 0; display: inline-flex; text-transform: uppercase;">
-      {{ value -}}
+    <span class="js-variant-display" data-variant-value="{{ value | escape }}"></span>
       <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
     </label>
   {%- elsif block.settings.picker_type == 'dropdown' -%}
@@ -79,3 +81,22 @@
     </option>
   {%- endif -%}
 {%- endfor -%}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const variantElements = document.querySelectorAll('.js-variant-display');
+  
+    variantElements.forEach(el => {
+      const originalValue = el.getAttribute('data-variant-value');
+      // Assuming you have a way to determine whether it's a color or size
+      const type = determineType(originalValue); // Implement this function based on your requirements
+      const mappedValue = variantMap[type][originalValue];
+  
+      if (mappedValue) {
+        el.textContent = mappedValue;
+      } else {
+        el.textContent = originalValue;
+      }
+    });
+  });
+  </script>
