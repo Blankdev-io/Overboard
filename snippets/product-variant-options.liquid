@@ -67,6 +67,7 @@
     <span class="js-variant-color" style="display: none;"></span>
     <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
     </label>
+    <span class="js-full-variant-name" style="display: none;"></span>
   {%- elsif block.settings.picker_type == 'dropdown' -%}
     <option
       value="{{ value | escape }}"
@@ -91,19 +92,22 @@
       const originalValue = el.getAttribute('data-variant-value');
       const type = determineType(originalValue);
       const mappedValue = variantMap[type] && variantMap[type][originalValue];
+      const parentElement = el.closest('.variant-value'); // Find the common parent element
   
       if (type === 'colors' && mappedValue) {
-        el.closest('.variant-value').style.backgroundColor = mappedValue;
+        parentElement.style.backgroundColor = mappedValue;
         el.textContent = originalValue;
       } else {
         el.textContent = mappedValue || originalValue;
       }
   
-      // Display the full original variant name for sizes
+      // Find the .js-full-variant-name element within the parent and update it
       if (type === 'sizes' && mappedValue) {
-        const fullVariantNameElement = el.nextElementSibling; // Assuming it's the next sibling
-        fullVariantNameElement.style.display = 'block';
-        fullVariantNameElement.textContent = originalValue;
+        const fullVariantNameElement = parentElement.querySelector('.js-full-variant-name');
+        if (fullVariantNameElement) {
+          fullVariantNameElement.style.display = 'block';
+          fullVariantNameElement.textContent = originalValue;
+        }
       }
     });
   });
