@@ -103,7 +103,7 @@
   
       // Find the .js-full-variant-name element within the parent and update it
       if (type === 'sizes' && mappedValue) {
-        const fullVariantNameElement = parentElement.querySelector('.js-full-variant-name');
+        const fullVariantNameElement = document.querySelector('.js-full-variant-name');
         if (fullVariantNameElement) {
           fullVariantNameElement.style.display = 'block';
           fullVariantNameElement.textContent = originalValue;
