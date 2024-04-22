@@ -84,6 +84,11 @@ document.addEventListener("DOMContentLoaded", function() {
   
   .swiper-wrapper {
   align-items: center;
+  cursor: grab; /* Cursor shows 'grab' when hover but not yet dragging */
+  }
+
+    .swiper-wrapper:active {
+    cursor: grabbing; /* Cursor changes to 'grabbing' when the user clicks and holds to drag */
   }
   
   .brand-carousel-container {
@@ -106,6 +111,9 @@ document.addEventListener("DOMContentLoaded", function() {
   .swiper-slide img {
     max-width: 90%;
     height: 61px;
+  }
+    .swiper-button-prev, .swiper-button-next {
+    cursor: pointer; /* Ensure cursor is pointer type for navigation buttons */
   }
 
   @media (max-width: 768px) {
