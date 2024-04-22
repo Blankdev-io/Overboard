@@ -328,6 +328,9 @@
     },
     "eebbe087-efad-4081-a61b-bdace783286f": {
       "type": "custom-liquid",
+      "custom_css": [
+        ".Header__WidgetTitle-sc-17gc7x6-2.igfMeX {font-family: Plus Jakarta Sans, sans-serif !important; color: #000000; font-size: 23px !important;}"
+      ],
       "settings": {
         "custom_liquid": "<div class=\"elfsight-sapp-560f20ea-c955-451b-8ad0-4560d0a3bd9b\"><\/div>",
         "color_scheme": "",
