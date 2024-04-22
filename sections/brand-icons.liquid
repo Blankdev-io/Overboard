@@ -1,23 +1,30 @@
+<!-- templates/sections/brand-carousel.liquid -->
 <div class="brand-carousel-container">
   <div class="swiper brand-carousel">
     <div class="swiper-wrapper">
       {% for block in section.blocks %}
         <div class="swiper-slide">
-        {% assign svg_filename = block.settings.image %}
-        {% assign svg_file = svg_filename | append: '.svg' %}
-        {% if block.settings.url != blank %}
-          <a href="{{ block.settings.url }}">
-        {% endif %}
-            <img src="{{ svg_file | asset_url }}" alt="{{ block.settings.text }}" title="{{ block.settings.text }}">
-        {% if block.settings.url != blank %}
-          </a>
-        {% endif %}
+          {% assign svg_filename = block.settings.image %}
+          {% assign svg_file = svg_filename | append: '.svg' %}
+          {% if block.settings.url != blank %}
+            <a href="{{ block.settings.url }}">
+              <img src="{{ svg_file | asset_url }}" alt="{{ block.settings.alttext }}" title="{{ block.settings.text }}">
+            </a>
+          {% else %}
+            <img src="{{ svg_file | asset_url }}" alt="{{ block.settings.alttext }}" title="{{ block.settings.text }}">
+          {% endif %}
         </div>
       {% endfor %}
     </div>
+    <!-- Navigation arrows -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+    <!-- Pagination -->
+    <div class="swiper-pagination"></div>
   </div>
 </div>
   
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
   new Swiper('.brand-carousel', {
@@ -27,6 +34,14 @@ document.addEventListener("DOMContentLoaded", function() {
     autoplay: {
       delay: 2500,
       disableOnInteraction: false,
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
     },
     breakpoints: {
       320: {
@@ -68,6 +83,7 @@ document.addEventListener("DOMContentLoaded", function() {
   }
   
   .brand-carousel-container {
+    margin: 0 auto;
     text-align: center;
     margin-top: {{ section.settings.margintop }}px !important;
     margin-bottom: {{ section.settings.marginbot }}px !important;
