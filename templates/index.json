@@ -326,6 +326,15 @@
         "padding_bottom": 36
       }
     },
+    "eebbe087-efad-4081-a61b-bdace783286f": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<div class=\"elfsight-sapp-560f20ea-c955-451b-8ad0-4560d0a3bd9b\"><\/div>",
+        "color_scheme": "",
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
     "16b76912-c1ba-497b-b47c-d17629b5a064": {
       "type": "instagram",
       "blocks": {
@@ -442,15 +451,6 @@
       ],
       "settings": {
       }
-    },
-    "eebbe087-efad-4081-a61b-bdace783286f": {
-      "type": "custom-liquid",
-      "settings": {
-        "custom_liquid": "<div class=\"elfsight-sapp-560f20ea-c955-451b-8ad0-4560d0a3bd9b\"><\/div>",
-        "color_scheme": "",
-        "padding_top": 40,
-        "padding_bottom": 52
-      }
     }
   },
   "order": [
@@ -460,7 +460,7 @@
     "151614d1-d5c0-4006-bb31-3638c6e51111",
     "24b56190-cee8-4490-89c3-37f560101186",
     "39740940-dacf-4570-b5bd-7f0f7fd943fc",
-    "16b76912-c1ba-497b-b47c-d17629b5a064",
-    "eebbe087-efad-4081-a61b-bdace783286f"
+    "eebbe087-efad-4081-a61b-bdace783286f",
+    "16b76912-c1ba-497b-b47c-d17629b5a064"
   ]
 }
