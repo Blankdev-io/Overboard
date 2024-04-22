@@ -7,7 +7,7 @@
           {% assign svg_filename = block.settings.image %}
           {% assign svg_file = svg_filename | append: '.svg' %}
           {% if block.settings.url != blank %}
-            <a href="{{ block.settings.url }}">
+            <a style="cursor:unset" href="{{ block.settings.url }}">
               <img src="{{ svg_file | asset_url }}" alt="{{ block.settings.alttext }}" title="{{ block.settings.text }}">
             </a>
           {% else %}
