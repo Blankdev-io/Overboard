@@ -84,16 +84,19 @@ document.addEventListener("DOMContentLoaded", function() {
   
   .swiper-wrapper {
   align-items: center;
-  cursor: grab; /* Cursor shows 'grab' when hover but not yet dragging */
   }
 
-    .swiper-wrapper:active {
-    cursor: grabbing; /* Cursor changes to 'grabbing' when the user clicks and holds to drag */
-  }
   
   .brand-carousel-container {
     margin: 0 6vw;
-    cursor: grab;
+      cursor: grab; /* Cursor shows 'grab' when hover but not yet dragging */
+
+  }
+
+
+  
+    .brand-carousel-container:active {
+    cursor: grabbing; /* Cursor changes to 'grabbing' when the user clicks and holds to drag */
   }
   
   .brand-carousel-container {
