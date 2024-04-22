@@ -152,9 +152,9 @@
               {% endif %}
               class="full-unstyled-link {% if new_design %}size32px bold white center{% endif %}">
               {%- if card_collection.title != blank -%}
-                {% if new_design %}SHOP {% endif %}{{- card_collection.title | escape -}}
+                {% if new_design %}{% endif %}{{- card_collection.title | escape -}}
               {%- else -%}
-                {% if new_design %}SHOP {% endif %}{{ 'onboarding.collection_title' | t }}
+                {% if new_design %}{% endif %}{{ 'onboarding.collection_title' | t }}
               {%- endif -%}
               {%- if card_collection.featured_image or card_collection.description == blank -%}
                 {% if new_design != true %}<span class="icon-wrap">{% render 'icon-arrow' %}</span>{% endif %}
