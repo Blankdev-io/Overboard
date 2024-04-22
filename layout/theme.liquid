@@ -287,25 +287,33 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <script defer src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Anton">
-      <script>
+    <script>
       document.addEventListener('DOMContentLoaded', function() {
         var originalTitle = document.title;
+        console.log("Original title on load:", originalTitle); // Log the initial title
+
         var messages = ["Don't leave Overboard hanging", "Use code TAKE10 for $10 off"];
         var messageIndex = 0;
         var changeTitleInterval;
 
         function changeTitle() {
           document.title = messages[messageIndex];
+          console.log("Changed title to:", document.title); // Log which title is displayed
           messageIndex = (messageIndex + 1) % messages.length;
         }
 
         document.addEventListener('visibilitychange', function() {
+          console.log("Document hidden status:", document.hidden); // Log visibility status
           if (document.hidden) {
             changeTitle();
             changeTitleInterval = setInterval(changeTitle, 10000);
+            console.log("Interval set to change titles every 10 seconds");
           } else {
             clearInterval(changeTitleInterval);
-            document.title = originalTitle; 
+            console.log("Interval cleared, resetting title");
+            document.title = originalTitle; // Reset to the original structured title
+            console.log("Title reset to original:", document.title);
+          }
         });
       });
     </script>
