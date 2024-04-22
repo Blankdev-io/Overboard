@@ -8,9 +8,9 @@
         "announcement-bar-0": {
           "type": "announcement",
           "settings": {
-            "text1": "Free Shipping",
-            "text2": "On All Orders",
-            "text3": "Over $80 Including All Boards",
+            "text1": "Free Shipping over $100",
+            "text2": "",
+            "text3": "",
             "link": ""
           }
         }
@@ -28,7 +28,7 @@
         "enable_language_selector": false,
         "announcement_bg_color": "#7e8d79",
         "announcement_text_color": "#ffffff",
-        "announcement_text_color1": "#fff"
+        "announcement_text_color1": "#ffffff"
       }
     },
     "header": {
