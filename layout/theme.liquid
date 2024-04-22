@@ -252,28 +252,7 @@
       }
     {% endstyle %}
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        var originalTitle = document.title;
-        var messages = ["Don't leave Overboard hanging", "Use code TAKE10 for $10 off"];
-        var messageIndex = 0;
-        var changeTitleInterval;
 
-        function changeTitle() {
-          document.title = messages[messageIndex];
-          messageIndex = (messageIndex + 1) % messages.length;
-        }
-
-        document.addEventListener('visibilitychange', function() {
-          if (document.hidden) {
-            changeTitle();
-            changeTitleInterval = setInterval(changeTitle, 10000);
-          } else {
-            clearInterval(changeTitleInterval);
-            document.title = originalTitle; 
-        });
-      });
-    </script>
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
 
@@ -308,7 +287,28 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <script defer src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Anton">
-  
+      <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var originalTitle = document.title;
+        var messages = ["Don't leave Overboard hanging", "Use code TAKE10 for $10 off"];
+        var messageIndex = 0;
+        var changeTitleInterval;
+
+        function changeTitle() {
+          document.title = messages[messageIndex];
+          messageIndex = (messageIndex + 1) % messages.length;
+        }
+
+        document.addEventListener('visibilitychange', function() {
+          if (document.hidden) {
+            changeTitle();
+            changeTitleInterval = setInterval(changeTitle, 10000);
+          } else {
+            clearInterval(changeTitleInterval);
+            document.title = originalTitle; 
+        });
+      });
+    </script>
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
