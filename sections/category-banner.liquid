@@ -24,7 +24,7 @@
     position: -webkit-sticky; /* Safari */
     position: sticky;
     top: 0; /* Sets the top of the sticky header */
-    z-index: 1000; /* Ensures it stays on top of other content */
+  z-index: 1000; /* Ensures it stays on top of other content */
   }
 
   .category-header-text {
@@ -36,7 +36,7 @@
   }  
 
     .category-banner-container svg {
-width: 260px;
+    width: 260px;
     height: 188px;
       position: absolute;
       right: 0;
@@ -59,9 +59,10 @@ width: 260px;
       height: 100px;
       bottom: {% if current_tag == 'accessories' %}7.8px;{% else %}5px;{% endif %}
   }
+  }
 </style>
 
-<div class="category-banner-container" 
+<div class="category-banner-container shopify-section shopify-section-group-header-group" 
 style="background-color: 
   {% if current_tag == 'boards' %}{{ section.settings.background_color1 }};
   {% elsif current_tag == 'clothing' %}{{ section.settings.background_color2 }};
