@@ -30,7 +30,7 @@
           "type": "text",
           "settings": {
             "heading": "Shop Opening Hours",
-            "subtext": "<p><strong>Monday to Friday<\/strong> 9am - 5.30pm<br\/><strong>Saturday <\/strong>9am - 4pm<br\/><strong>Sunday <\/strong>10am - 4pm<\/p>"
+            "subtext": "<p>Monday to Friday 9am - 5.30pm<br\/>Saturday 9am - 4pm<br\/>Sunday 10am - 4pm<\/p>"
           }
         }
       },
