@@ -387,6 +387,7 @@ a.product__text {
 }
 
 .product .price__container {
+  color: #aed7ea;
   margin-bottom: 0.5rem;
 }
 
