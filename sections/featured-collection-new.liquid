@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function() {
           {% assign total_svgs_mobile = products_to_display %}
       
       {%- if show_mobile_slider or show_desktop_slider -%}
-        <div class="slider-buttons no-js-hidden">
+       {% comment %} <div class="slider-buttons no-js-hidden">
           <button
             type="button"
             class="slider-button slider-button--prev featured-button--prev {% if total_svgs <= 1 %}pagi-mobile{% endif %}"
@@ -254,6 +254,7 @@ document.addEventListener('DOMContentLoaded', function() {
             {% render 'icon-caret' %} 
           </button>
         </div>
+      {% endcomment %}
       {%- endif -%}
     </slider-component> 
   </div>
