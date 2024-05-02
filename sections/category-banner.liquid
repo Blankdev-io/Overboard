@@ -21,6 +21,10 @@
     width: 100%;
     justify-content: center;
     position: relative;
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0; /* Sets the top of the sticky header */
+    z-index: 1000; /* Ensures it stays on top of other content */
   }
 
   .category-header-text {
