@@ -1,1 +1,62 @@
-{"name":"t:sections.footer.name","type":"footer","sections":{"footer":{"type":"footer","blocks":{"412cfac8-dd95-4a44-adc3-755064949c22":{"type":"link_list","settings":{"heading":"Shop","menu":"shop"}},"8fb2f515-e4af-4586-90d3-f810abc51f2f":{"type":"link_list","settings":{"heading":"Company","menu":"company"}},"f8335e6e-4c4b-43ad-9a55-37e8528819ee":{"type":"link_list","settings":{"heading":"Account","menu":"account"}}},"block_order":["412cfac8-dd95-4a44-adc3-755064949c22","8fb2f515-e4af-4586-90d3-f810abc51f2f","f8335e6e-4c4b-43ad-9a55-37e8528819ee"],"settings":{"newsletter_enable":true,"newsletter_heading":"Stay In The Loop For Updates","newsletter_subheading":"Get the latest Overboard news, promotions and events straight to your inbox with our newsletter.","enable_follow_on_shop":false,"show_social":false,"enable_country_selector":false,"enable_language_selector":false,"payment_enable":false,"show_policy":false,"margin_top":0,"padding_top":36,"padding_bottom":36}}},"order":["footer"]}
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "412cfac8-dd95-4a44-adc3-755064949c22": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Shop",
+            "menu": "shop"
+          }
+        },
+        "8fb2f515-e4af-4586-90d3-f810abc51f2f": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Company",
+            "menu": "company"
+          }
+        },
+        "f8335e6e-4c4b-43ad-9a55-37e8528819ee": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Account",
+            "menu": "account"
+          }
+        },
+        "text_yBcaMr": {
+          "type": "text",
+          "settings": {
+            "heading": "Shop Opening Hours",
+            "subtext": "<p>Monday to Friday 9am - 5.30pm<br\/>Saturday 9am - 4pm<br\/>Sunday 10am - 4pm<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "412cfac8-dd95-4a44-adc3-755064949c22",
+        "8fb2f515-e4af-4586-90d3-f810abc51f2f",
+        "f8335e6e-4c4b-43ad-9a55-37e8528819ee",
+        "text_yBcaMr"
+      ],
+      "settings": {
+        "newsletter_enable": true,
+        "newsletter_heading": "Stay In The Loop For Updates",
+        "newsletter_subheading": "Get the latest Overboard news, promotions and events straight to your inbox with our newsletter.",
+        "enable_follow_on_shop": false,
+        "show_social": false,
+        "enable_country_selector": false,
+        "enable_language_selector": false,
+        "payment_enable": false,
+        "show_policy": false,
+        "margin_top": 0,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}
