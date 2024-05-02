@@ -149,7 +149,8 @@ document.addEventListener('DOMContentLoaded', function() {
         role="list"
         aria-label="{{ 'general.slider.name' | t }}"
       >
-        <li
+        {% comment %}
+          <li
             id="Slide-{{ section.id }}-1"
             class="grid__item hide_on_mobile{% if show_mobile_slider or show_desktop_slider %} slider__slide{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
             {% if settings.animations_reveal_on_scroll %}
@@ -166,6 +167,7 @@ document.addEventListener('DOMContentLoaded', function() {
               new_design: true
             %}
           </li>
+          {% endcomment %}
         {%- for product in section.settings.collection.products limit: section.settings.products_to_show -%}
           <li
             id="Slide-{{ section.id }}-{{ forloop.index | plus: 1 }}"
