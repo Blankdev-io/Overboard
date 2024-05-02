@@ -85,7 +85,8 @@ style="background-color:
 document.addEventListener('DOMContentLoaded', function() {
   var bannerContainer = document.querySelector('.category-banner-container');
   if (bannerContainer) {
-    bannerContainer.classList.add('shopify-section-header-sticky-1');
+    var parnetDiv = bannerContainer.parentElement;
+    parnetDiv.classList.add('shopify-section-header-sticky-1');
   }
 });
 </script>
