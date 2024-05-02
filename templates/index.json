@@ -277,7 +277,7 @@
         "template--17024567967986__39740940-dacf-4570-b5bd-7f0f7fd943fc-heading-1": {
           "type": "heading",
           "settings": {
-            "heading": "WHY OVERBOARD",
+            "heading": "Shop Opening Hours",
             "heading_size": "size32px",
             "bold": true,
             "underline": true,
@@ -287,7 +287,7 @@
         "template--17024567967986__39740940-dacf-4570-b5bd-7f0f7fd943fc-text-1": {
           "type": "text",
           "settings": {
-            "text": "<p>The surf store in Australia is a haven for wave enthusiasts. With its vast selection of surfboards, wetsuits, and accessories, it caters to both beginners and seasoned surfers.<\/p>",
+            "text": "<p>Monday to Friday 9am - 5.30pm<br\/>Saturday 9am - 4pm<br\/>Sunday 10am - 4pm<\/p>",
             "mobilecenter2": true,
             "text_style": "body"
           }
