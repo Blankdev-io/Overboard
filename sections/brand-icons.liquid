@@ -60,13 +60,35 @@ document.addEventListener("DOMContentLoaded", function() {
 
   </script>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // First, find the .brand-carousel-container
+  var brandCarousel = document.querySelector('.brand-carousel-container');
+
+  // Check if the brandCarousel exists
+  if (brandCarousel) {
+    // Get the swiper-wrapper within the brandCarousel
+    var swiperWrapper = brandCarousel.querySelector('.swiper-wrapper');
+
+    // Check if the swiperWrapper exists
+    if (swiperWrapper) {
+      // Find the second swiper-slide child
+      var secondSwiperSlide = swiperWrapper.querySelector('.swiper-slide:nth-child(2)');
+
+      // Check if the second swiper-slide exists
+      if (secondSwiperSlide) {
+        // Apply the specific style
+        secondSwiperSlide.style.width = '100.667px';
+        secondSwiperSlide.style.setProperty('width', '100.667px', 'important'); // Adding !important if needed
+      }
+    }
+  }
+});
+</script>
 
 
 <style>
 
-.swiper-slide:nth-child(2) {
-  width: 100.667px !important;
-}
   .swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction {
     bottom: unset;
     top: unset;
