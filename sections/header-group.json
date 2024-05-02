@@ -48,20 +48,10 @@
         "padding_top": 12,
         "padding_bottom": 12
       }
-    },
-    "category_banner_cKfENr": {
-      "type": "category-banner",
-      "settings": {
-        "background_color1": "#aed7ea",
-        "background_color2": "#778c71",
-        "background_color3": "#980000",
-        "background_color4": "#003366"
-      }
     }
   },
   "order": [
     "announcement-bar",
-    "header",
-    "category_banner_cKfENr"
+    "header"
   ]
 }
