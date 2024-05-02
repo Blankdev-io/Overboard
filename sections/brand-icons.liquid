@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   </script>
 
-<script>
+{% comment %}<script>
 document.addEventListener('DOMContentLoaded', function() {
   // First, find the .brand-carousel-container
   var brandCarousel = document.querySelector('.brand-carousel-container');
@@ -79,13 +79,14 @@ document.addEventListener('DOMContentLoaded', function() {
       if (secondSwiperSlide) {
         // Apply the specific style
         secondSwiperSlide.style.width = '100.667px';
-        secondSwiperSlide.style.setProperty('width', '100.667px', 'important'); // Adding !important if needed
+        secondSwiperSlide.style.setProperty('width', '100.667px', 'important');
       }
     }
   }
 });
 </script>
 
+{% endcomment %}
 
 <style>
 
