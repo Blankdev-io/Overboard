@@ -7,7 +7,7 @@
           {% assign svg_filename = block.settings.image %}
           {% assign svg_file = svg_filename | append: '.svg' %}
           {% if block.settings.url != blank %}
-            <a style="cursor:unset; color:unset;     text-decoration:unset;" href="{{ block.settings.url }}">
+            <a style="cursor:unset" href="{{ block.settings.url }}">
               <img src="{{ svg_file | asset_url }}" alt="{{ block.settings.alttext }}" title="{{ block.settings.text }}">
             </a>
           {% else %}
@@ -29,6 +29,11 @@ document.addEventListener("DOMContentLoaded", function() {
   new Swiper('.brand-carousel', {
     slidesPerView: '2',
     spaceBetween: 0,
+    loop: false,
+    autoplay: {
+      delay: 2500,
+      disableOnInteraction: true,
+    },
     pagination: {
       el: '.swiper-pagination',
       clickable: true,
