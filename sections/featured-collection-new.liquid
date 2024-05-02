@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <div class="color-background1 isolate gradient">
   <div class="collection section-{{ section.id }}-padding">
-    <div class="collection__title title-wrapper title-wrapper--no-top-margin page-width mobile-no-padding{% if show_mobile_slider %} title-wrapper--self-padded-tablet-down{% endif %}{% if show_desktop_slider %} collection__title--desktop-slider{% endif %}">
+    {% comment %}<div class="collection__title title-wrapper title-wrapper--no-top-margin page-width mobile-no-padding{% if show_mobile_slider %} title-wrapper--self-padded-tablet-down{% endif %}{% if show_desktop_slider %} collection__title--desktop-slider{% endif %}">
 
       {% render 'card-collection',
               card_collection: section.settings.collection,
@@ -141,6 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </h2>
       {%- endif -%}
     </div>
+    {% endcomment %}
 
     <slider-component class="slider-mobile-gutter{% if show_mobile_slider == false %} page-width{% endif %}{% if show_desktop_slider %} slider-component-desktop{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       <ul
