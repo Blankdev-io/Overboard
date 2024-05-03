@@ -48,33 +48,20 @@
     }
     
   @media (max-width: 768px) {
-
-
-    {% if current_tag == 'clothing' %}
-
-          .category-banner-container {
-      height: 117px;
-    }
-
-    .category-banner-container svg {
-      width: 132px;
-      height: 132px;
-      bottom: 27px;
-        }
-    {% endif %}
-
-    {% if current_tag == 'boards' %}
-
     .category-banner-container {
       height: 117px;
     }
+
+    .category-header-text {
+      font-size: 5rem;
+      margin-left: 20px;
+    }
+    
     .category-banner-container svg {
       width: 132px;
-      height: 132px;
-      bottom: 34px;
-      
+    height: 132px;
+      bottom: {% if current_tag == 'accessories' %}27px{% else %}25px{% endif %}
   }
-    {% endif %}
   }
 </style>
 
