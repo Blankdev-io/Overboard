@@ -24,43 +24,27 @@
 {{ 'component-volume-pricing.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
-.variant-input {
-  display: none; /* Hide the radio input itself */
+.SizeSwatchList {
+  list-style: none;
+  padding: 0;
 }
 
-.variant-label {
-  background-color: #fff;
-  border: 1px solid #ccc;
-  display: inline-block;
-  position: relative;
-  user-select: none; /* Prevent text selection */
+.SizeSwatch-swatch-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.variant-label:hover {
-  background-color: #f7f7f7; /* Light grey background on hover */
-}
-
-.variant-unavailable {
+.disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  color: #ccc;
 }
 
-.sold-out::before {
-  content: 'Sold Out';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: red;
-  font-size: 0.75em; /* Smaller font size for the sold out label */
+.item-cross {
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><line x1="0" y1="0" x2="100%" y2="100%" stroke="red" stroke-width="2"/><line x1="100%" y1="0" x2="0" y2="100%" stroke="red" stroke-width="2"/></svg>') no-repeat center center;
+  background-size: cover;
+  pointer-events: none; /* Prevent canvas from blocking clicks */
 }
-
-.variant-label:checked + .variant-label {
-  border-color: #000; /* Black border for selected variant */
-}
-
-
 
 {%- endstyle -%}
 
@@ -289,30 +273,35 @@
           </div>
         </div>
         {%- if show_variants -%}
-            {%- liquid
-              assign variants_available_arr = product.variants | map: 'available'
-              assign variants_option1_arr = product.variants | map: 'option1'
-            -%}
+{%- if show_variants and card_product.variants.size > 1 -%}
+<div class="product-card__variant-selector">
+  <form id="variant-selection-form-{{ card_product.id }}" class="SizeSwatchList">
+    {%- for variant in card_product.variants -%}
+    <label class="HorizontalList__Item SizeSwatch-swatch-item{% unless variant.available %} disabled{% endunless %}"
+           style="display: block; position: relative; cursor: pointer; border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 10px; text-transform: uppercase;">
+      <input type="radio" name="id" value="{{ variant.id }}"
+             class="variant-input"
+             form="variant-selection-form-{{ card_product.id }}"
+             {% unless variant.available %} disabled {% endunless %}
+             onclick="addItem({{ variant.id }}, '{{ card_product.id }}')"
+             style="display: none;">
+      {{ variant.title }}
+      {% unless variant.available %}
+      <span style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;">
+        <canvas class="item-cross" style="height: 100%; width: 100%;"></canvas>
+      </span>
+      {% endunless %}
+    </label>
+    {%- endfor -%}
+  </form>
+</div>
+{%- endif -%}
 
-            <div class="variant-buttons">
-              {%- for variant in product.variants -%}
-                {%- assign variant_available = variants_available_arr[forloop.index0] -%}
-                {%- assign variant_option1 = variants_option1_arr[forloop.index0] -%}
+<button class="product-card__add-to-cart" data-product-id="{{ card_product.id }}" type="button"
+        onclick="document.getElementById('variant-selection-form-{{ card_product.id }}').submit();">
+  Add to Cart
+</button>
 
-                <input type="radio" id="variant-{{ variant.id }}" name="variant" value="{{ variant.id }}" 
-                  form="add-to-cart-form-{{ product.id }}" class="variant-input"
-                  {% if variant_available == false %} disabled {% endif %}
-                  {% if variant.id == product.selected_or_first_available_variant.id %} checked {% endif %}>
-                
-                <label for="variant-{{ variant.id }}" class="variant-label{% if variant_available == false %} variant-unavailable{% endif %}"
-                  style="margin: 5px; padding: 10px 20px; border-radius: 10px; cursor: pointer; text-transform: uppercase;">
-                  {{ variant_option1 }}
-                  {% if variant_available == false %}
-                    <span class="sold-out">Sold Out</span>
-                  {% endif %}
-                </label>
-              {%- endfor -%}
-            </div>
 
 
 
