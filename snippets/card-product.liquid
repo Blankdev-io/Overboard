@@ -24,31 +24,40 @@
 {{ 'component-volume-pricing.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
-.SizeSwatchList {
-  list-style: none;
-  display: flex;
-  padding: 0;
+.variant-input {
+  display: none; /* Hide the radio input itself */
 }
 
-.SizeSwatch-swatch-item .relative {
-  position: relative;
-  margin: 5px;
-}
-
-.SizeSwatch {
-  padding: 10px 20px;
+.variant-label {
+  background-color: #fff;
   border: 1px solid #ccc;
-  background-color: white;
-  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  user-select: none; /* Prevent text selection */
 }
 
-.item-cross {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: url('data:image/png;base64,...') no-repeat center center; /* Replace '...' with actual base64 for cross image */
-  background-size: contain;
+.variant-label:hover {
+  background-color: #f7f7f7; /* Light grey background on hover */
+}
+
+.variant-unavailable {
   opacity: 0.5;
+  cursor: not-allowed;
+  color: #ccc;
+}
+
+.sold-out::before {
+  content: 'Sold Out';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: red;
+  font-size: 0.75em; /* Smaller font size for the sold out label */
+}
+
+.variant-label:checked + .variant-label {
+  border-color: #000; /* Black border for selected variant */
 }
 
 
@@ -280,34 +289,31 @@
           </div>
         </div>
         {%- if show_variants -%}
-            {%- if show_variants and card_product.variants.size > 1 -%}
-            <div class="product-card__variant-selector">
-              <ul class="SizeSwatchList">
-                {%- for variant in card_product.variants -%}
-                <li class="HorizontalList__Item SizeSwatch-swatch-item">
-                  <div class="relative">
-                    {% if variant.available %}
-                    <button class="SizeSwatch sizeswatch-item" onclick="addItem({{ variant.id }}, '{{ card_product.id }}')" fdprocessedid="custom{{ variant.id }}">
-                      {{ variant.title }}
-                    </button>
-                    {% else %}
-                    <div style="position: absolute; width: 100%; height: 100%;">
-                      <canvas class="item-cross" style="height: 100%; width: 100%;"></canvas>
-                    </div>
-                    <button class="SizeSwatch sizeswatch-item" disabled>
-                      {{ variant.title }}
-                    </button>
-                    {% endif %}
-                  </div>
-                </li>
-                {%- endfor -%}
-              </ul>
-            </div>
-            {%- endif -%}
+            {%- liquid
+              assign variants_available_arr = product.variants | map: 'available'
+              assign variants_option1_arr = product.variants | map: 'option1'
+            -%}
 
-            <button class="product-card__add-to-cart" data-product-id="{{ card_product.id }}" type="button">
-              Add to Cart
-            </button>
+            <div class="variant-buttons">
+              {%- for variant in product.variants -%}
+                {%- assign variant_available = variants_available_arr[forloop.index0] -%}
+                {%- assign variant_option1 = variants_option1_arr[forloop.index0] -%}
+
+                <input type="radio" id="variant-{{ variant.id }}" name="variant" value="{{ variant.id }}" 
+                  form="add-to-cart-form-{{ product.id }}" class="variant-input"
+                  {% if variant_available == false %} disabled {% endif %}
+                  {% if variant.id == product.selected_or_first_available_variant.id %} checked {% endif %}>
+                
+                <label for="variant-{{ variant.id }}" class="variant-label{% if variant_available == false %} variant-unavailable{% endif %}"
+                  style="margin: 5px; padding: 10px 20px; border-radius: 10px; cursor: pointer; text-transform: uppercase;">
+                  {{ variant_option1 }}
+                  {% if variant_available == false %}
+                    <span class="sold-out">Sold Out</span>
+                  {% endif %}
+                </label>
+              {%- endfor -%}
+            </div>
+
 
 
    
