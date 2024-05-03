@@ -67,6 +67,22 @@
     <span class="js-variant-color" style="display: none;"></span>
       <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
     </label>
+
+    <!-- Start Product Form -->
+<form action="/cart/add" method="post" enctype="multipart/form-data" id="{{ product_form_id }}" novalidate="novalidate">
+  {%- unless product.has_only_default_variant -%}
+    {%- render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id -%}
+    <!-- Hidden input to store the selected variant ID -->
+    <input type="hidden" name="id" class="product-variant-id" value="{{ product.selected_or_first_available_variant.id }}">
+  {%- endunless -%}
+
+  <!-- Add to Cart Button -->
+  <button type="submit" name="add" class="product-form__cart-submit" {% unless product.available %}disabled{% endunless %}>
+    <span>{{ 'products.product.add_to_cart' | t }}</span>
+  </button>
+</form>
+<!-- End Product Form -->
+
   {%- elsif block.settings.picker_type == 'dropdown' -%}
     <option
       value="{{ value | escape }}"
@@ -113,4 +129,23 @@
       return 'other'; // Default or other types
     }
   }  
+
+
+  
   </script>
+
+  <script>
+document.addEventListener('DOMContentLoaded', function() {
+  const variantSelectors = document.querySelectorAll('[name="options[Color]"], [name="options[Size]"]'); // Adjust based on your actual option names
+  const addToCartButton = document.querySelector('.product-form__cart-submit');
+  const variantIdInput = document.querySelector('.product-variant-id');
+
+  variantSelectors.forEach(selector => {
+    selector.addEventListener('change', function() {
+      const selectedOption = document.querySelector('input[type="radio"][name="options[Color]"]:checked, select[name="options[Size]"] option:checked'); // Update selector as needed
+      variantIdInput.value = selectedOption.value;
+      addToCartButton.disabled = !selectedOption.dataset.available;
+    });
+  });
+});
+</script>
