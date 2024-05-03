@@ -258,6 +258,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   {{ 'variant-map.js' | asset_url | script_tag }}
 
+  <form action="/cart/add" method="post" enctype="multipart/form-data" id="{{ product_form_id }}" novalidate="novalidate">
+
 {% for option in product.options_with_values %}
   <div class="variant-option">
     <h3>{{ option.name }}</h3>
@@ -287,12 +289,6 @@ document.addEventListener('DOMContentLoaded', function() {
 {% endfor %}
           
 <!-- Start Product Form -->
-<form action="/cart/add" method="post" enctype="multipart/form-data" id="{{ product_form_id }}" novalidate="novalidate">
-  {%- unless product.has_only_default_variant -%}
-    {%- render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id -%}
-    <!-- Hidden input to store the selected variant ID -->
-    <input type="hidden" name="id" class="product-variant-id" value="{{ product.selected_or_first_available_variant.id }}">
-  {%- endunless -%}
 
   <!-- Add to Cart Button -->
   <button type="submit" name="add" class="product-form__cart-submit" {% unless product.available %}disabled{% endunless %}>
