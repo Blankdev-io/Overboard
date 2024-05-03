@@ -25,9 +25,12 @@
 
 {% style  %}
 
-.disabled{  border-color: rgba(var(--color-foreground), 0.1);
+.variant-unavailable {
+  color: #999;
+  border-color: rgba(var(--color-foreground), 0.1);
   color: rgba(var(--color-foreground), 0.6);
-  text-decoration: line-through;}
+  text-decoration: line-through;
+}
 
 {% endstyle %}
 
@@ -258,11 +261,11 @@
             {%- endif -%}
           </div>
         </div>
-          {%- if show_variants and card_product.variants.size > 1 -%}
-      <div class="card__variants">
-        {%- render 'product-variant-picker', product: card_product -%}
-      </div>
-      
+        {%- if show_variants and card_product.variants.size > 1 -%}
+            <div class="card__variants">
+              {%- render 'product-variant-picker', product: card_product -%}
+            </div>
+            
       
 
         {%- endif -%}
