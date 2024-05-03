@@ -271,14 +271,6 @@
         {%- if show_variants -%}
           {%- for product in collections.all.products -%}
             <div class="product-card">
-              <a href="{{ product.url }}" class="product-card__image-link">
-                <img src="{{ product.featured_image | img_url: '300x300' }}" alt="{{ product.title | escape }}">
-              </a>
-              <div class="product-card__info">
-                <h3><a href="{{ product.url }}">{{ product.title }}</a></h3>
-                <p>{{ product.price | money }}</p>
-              </div>
-
               {%- if product.variants.size > 1 -%}
                 <select class="product-card__variants" onchange="location = this.value;">
                   {%- for variant in product.variants -%}
