@@ -52,6 +52,11 @@
 }
 }
 
+@media only screen and (max-width: 750px) {
+  .only-mobile {
+    display: none;
+  }
+}
 
 {% endstyle %}
 
@@ -176,7 +181,7 @@
 
                   <!-- Variant Picker -->
                   {%- if show_variants and card_product.variants.size > 1 -%}
-                  <div class="card__variants" style="display: none;">
+                  <div class="card__variants">
                       {%- render 'product-variant-picker-new', product: card_product -%}
                   </div>
                   {%- endif -%}
@@ -290,7 +295,7 @@
           </div>
         </div>
         {%- if show_variants and card_product.variants.size > 1 -%}
-            <div class="card__variants">
+            <div class="only-mobile card__variants">
               {%- render 'product-variant-picker-new', product: card_product -%}
             </div>
         {%- endif -%}
