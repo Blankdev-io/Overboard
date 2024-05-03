@@ -24,33 +24,6 @@
 {{ 'component-volume-pricing.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
-.SizeSwatchList {
-  list-style: none;
-  display: flex;
-  padding: 0;
-}
-
-.SizeSwatch-swatch-item .relative {
-  position: relative;
-  margin: 5px;
-}
-
-.SizeSwatch {
-  padding: 10px 20px;
-  border: 1px solid #ccc;
-  background-color: white;
-  cursor: pointer;
-}
-
-.item-cross {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: url('data:image/png;base64,...') no-repeat center center; /* Replace '...' with actual base64 for cross image */
-  background-size: contain;
-  opacity: 0.5;
-}
-
 
 
 {%- endstyle -%}
@@ -279,38 +252,12 @@
             {%- endif -%}
           </div>
         </div>
-        {%- if show_variants -%}
-            {%- if show_variants and card_product.variants.size > 1 -%}
-            <div class="product-card__variant-selector">
-              <ul class="SizeSwatchList">
-                {%- for variant in card_product.variants -%}
-                <li class="HorizontalList__Item SizeSwatch-swatch-item">
-                  <div class="relative">
-                    {% if variant.available %}
-                    <button class="SizeSwatch sizeswatch-item" onclick="addItem({{ variant.id }}, '{{ card_product.id }}')" fdprocessedid="custom{{ variant.id }}">
-                      {{ variant.title }}
-                    </button>
-                    {% else %}
-                    <div class="disabled" style="position: absolute; width: 100%; height: 100%;">
-                      <canvas class="disabled" class="item-cross" style="height: 100%; width: 100%;"></canvas>
-                    </div>
-                    <button class="SizeSwatch sizeswatch-item" disabled>
-                      {{ variant.title }}
-                    </button>
-                    {% endif %}
-                  </div>
-                </li>
-                {%- endfor -%}
-              </ul>
-            </div>
-            {%- endif -%}
-
-            <button class="product-card__add-to-cart" data-product-id="{{ card_product.id }}" type="button">
-              Add to Cart
-            </button>
-
-
-   
+          {%- if show_variants and card_product.variants.size > 1 -%}
+      <div class="card__variants">
+        {%- render 'product-variant-picker', product: card_product -%}
+      </div>
+      
+      
 
         {%- endif -%}
         {%- if show_quick_add -%}
@@ -474,34 +421,3 @@
   </div>
 {%- endif -%}
 
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('.SizeSwatch.sizeswatch-item').forEach(function(button) {
-    button.addEventListener('click', function() {
-      var variantId = this.getAttribute('onclick').split(',')[0].replace('addItem(', '').trim();
-      var productId = this.getAttribute('onclick').split(',')[1].replace(/'|\)| /g, '').trim();
-      addItem(variantId, productId);
-    });
-  });
-
-  function addItem(variantId, productId) {
-    var form = document.createElement('form');
-    form.style.display = 'none';
-    form.method = 'post';
-    form.action = '/cart/add';
-    form.appendChild(createInputElement('id', variantId));
-    form.appendChild(createInputElement('quantity', '1'));
-    document.body.appendChild(form);
-    form.submit();
-
-    function createInputElement(name, value) {
-      var input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = name;
-      input.value = value;
-      return input;
-    }
-  }
-});
-</script>
