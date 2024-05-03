@@ -269,7 +269,6 @@
           </div>
         </div>
         {%- if show_variants -%}
-          {%- for product in collections.all.products -%}
             <div class="product-card">
               {%- if product.variants.size > 1 -%}
                 <select class="product-card__variants" onchange="location = this.value;">
@@ -281,7 +280,6 @@
                 </select>
               {%- endif -%}
             </div>
-          {%- endfor -%}
 
         {%- endif -%}
         {%- if show_quick_add -%}
