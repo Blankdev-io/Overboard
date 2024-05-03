@@ -26,25 +26,32 @@
 {%- style -%}
 .SizeSwatchList {
   list-style: none;
+  display: flex;
   padding: 0;
 }
 
-.SizeSwatch-swatch-item {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.SizeSwatch-swatch-item .relative {
+  position: relative;
+  margin: 5px;
 }
 
-.disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.SizeSwatch {
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  background-color: white;
+  cursor: pointer;
 }
 
 .item-cross {
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><line x1="0" y1="0" x2="100%" y2="100%" stroke="red" stroke-width="2"/><line x1="100%" y1="0" x2="0" y2="100%" stroke="red" stroke-width="2"/></svg>') no-repeat center center;
-  background-size: cover;
-  pointer-events: none; /* Prevent canvas from blocking clicks */
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: url('data:image/png;base64,...') no-repeat center center; /* Replace '...' with actual base64 for cross image */
+  background-size: contain;
+  opacity: 0.5;
 }
+
+
 
 {%- endstyle -%}
 
@@ -273,36 +280,34 @@
           </div>
         </div>
         {%- if show_variants -%}
-{%- if show_variants and card_product.variants.size > 1 -%}
-<div class="product-card__variant-selector">
-  <form id="variant-selection-form-{{ card_product.id }}" class="SizeSwatchList">
-    {%- for variant in card_product.variants -%}
-    <label class="HorizontalList__Item SizeSwatch-swatch-item{% unless variant.available %} disabled{% endunless %}"
-           style="display: block; position: relative; cursor: pointer; border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 10px; text-transform: uppercase;">
-      <input type="radio" name="id" value="{{ variant.id }}"
-             class="variant-input"
-             form="variant-selection-form-{{ card_product.id }}"
-             {% unless variant.available %} disabled {% endunless %}
-             onclick="addItem({{ variant.id }}, '{{ card_product.id }}')"
-             style="display: none;">
-      {{ variant.title }}
-      {% unless variant.available %}
-      <span style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;">
-        <canvas class="item-cross" style="height: 100%; width: 100%;"></canvas>
-      </span>
-      {% endunless %}
-    </label>
-    {%- endfor -%}
-  </form>
-</div>
-{%- endif -%}
+            {%- if show_variants and card_product.variants.size > 1 -%}
+            <div class="product-card__variant-selector">
+              <ul class="SizeSwatchList">
+                {%- for variant in card_product.variants -%}
+                <li class="HorizontalList__Item SizeSwatch-swatch-item">
+                  <div class="relative">
+                    {% if variant.available %}
+                    <button class="SizeSwatch sizeswatch-item" onclick="addItem({{ variant.id }}, '{{ card_product.id }}')" fdprocessedid="custom{{ variant.id }}">
+                      {{ variant.title }}
+                    </button>
+                    {% else %}
+                    <div style="position: absolute; width: 100%; height: 100%;">
+                      <canvas class="item-cross" style="height: 100%; width: 100%;"></canvas>
+                    </div>
+                    <button class="SizeSwatch sizeswatch-item" disabled>
+                      {{ variant.title }}
+                    </button>
+                    {% endif %}
+                  </div>
+                </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+            {%- endif -%}
 
-<button class="product-card__add-to-cart" data-product-id="{{ card_product.id }}" type="button"
-        onclick="document.getElementById('variant-selection-form-{{ card_product.id }}').submit();">
-  Add to Cart
-</button>
-
-
+            <button class="product-card__add-to-cart" data-product-id="{{ card_product.id }}" type="button">
+              Add to Cart
+            </button>
 
 
    
