@@ -3842,6 +3842,9 @@ h1,
 
 .variant-row.variant-unavailable {
   color: #999;
+  border-color: rgba(var(--color-foreground), 0.1);
+  color: rgba(var(--color-foreground), 0.6);
+  text-decoration: line-through;
 }
 
 .variant-row {
