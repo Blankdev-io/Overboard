@@ -60,7 +60,7 @@
     .category-banner-container svg {
       width: {% if current_tag == 'boards' or 'wetsuits' %}110px;{% else %}132px;{% endif %}
       height: {% if current_tag == 'boards'or 'wetsuits' %}110px;{% else %}132px;{% endif %}
-      bottom: {% if current_tag == 'boards' or 'wetsuits' %}28px;{% elsif current_tag == 'accessories' %}27px;{% else %}25px;{% endif %}
+      bottom: {% if current_tag == 'boards' %}28px;{% elsif current_tag == 'accessories' or 'wetsuits'  %}27px;{% else %}25px;{% endif %}
   }
   }
 </style>
