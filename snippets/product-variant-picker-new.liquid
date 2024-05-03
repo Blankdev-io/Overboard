@@ -258,61 +258,76 @@ document.addEventListener('DOMContentLoaded', function() {
 
   {{ 'variant-map.js' | asset_url | script_tag }}
 
-  <form action="/cart/add" method="post" enctype="multipart/form-data" id="{{ product_form_id }}" novalidate="novalidate">
-
-{% for option in product.options_with_values %}
-  <div class="variant-option">
-    <h3>{{ option.name }}</h3>
-    <div class="variant-values">
-      {% for value in option.values %}
-        {% assign variant_found = false %}
-        {% for variant in product.variants %}
-          {% if variant.options contains value and variant.available %}
-            <div class="variant-value variant-value-new" data-value="{{ value }}" data-option="{{ option.name }}"
-              data-variant-id="{{ variant.id }}"
-              data-variant-price="{{ variant.price | money }}"
-              data-variant-image="{{ variant.featured_image | default: product.featured_image | img_url: 'master' }}">
+<form action="/cart/add" method="post" enctype="multipart/form-data" id="{{ product_form_id }}" novalidate="novalidate">
+  {% for option in product.options_with_values %}
+    <div class="variant-option">
+      <h3>{{ option.name }}</h3>
+      <div class="variant-values">
+        {% for value in option.values %}
+          {% assign variant_found = false %}
+          {% for variant in product.variants %}
+            {% if variant.options contains value and variant.available %}
+              <div class="variant-value variant-value-new" data-value="{{ value }}" data-option="{{ option.name }}"
+                data-variant-id="{{ variant.id }}"
+                data-variant-price="{{ variant.price | money }}"
+                data-variant-image="{{ variant.featured_image | default: product.featured_image | img_url: 'master' }}"
+                onclick="updateVariantSelection(this)">
+                <!-- Placeholder for the value, filled by JavaScript -->
+              </div>
+              {% assign variant_found = true %}
+              {% break %}
+            {% endif %}
+          {% endfor %}
+          {% unless variant_found %}
+            <div class="variant-value variant-value-new variant-unavailable" data-value="{{ value }}" data-option="{{ option.name }}">
               <!-- Placeholder for the value, filled by JavaScript -->
             </div>
-            {% assign variant_found = true %}
-            {% break %}
-          {% endif %}
+          {% endunless %}
         {% endfor %}
-        {% unless variant_found %}
-          <div class=" variant-value variant-value-new variant-unavailable" data-value="{{ value }}" data-option="{{ option.name }}">
-            <!-- Placeholder for the value, filled by JavaScript -->
-          </div>
-        {% endunless %}
-      {% endfor %}
+      </div>
     </div>
-  </div>
-{% endfor %}
-          
-<!-- Start Product Form -->
+  {% endfor %}
+
+  <!-- Hidden input to store selected variant ID -->
+  <input type="hidden" name="id" class="product-variant-id">
 
   <!-- Add to Cart Button -->
   <button type="submit" name="add" class="product-form__cart-submit" {% unless product.available %}disabled{% endunless %}>
     <span>{{ 'products.product.add_to_cart' | t }}</span>
   </button>
 </form>
-<!-- End Product Form -->
 
-    <script>
+<script>
+function updateVariantSelection(element) {
+  var variantId = element.getAttribute('data-variant-id');
+  var variantPrice = element.getAttribute('data-variant-price');
+  var variantImageSrc = element.getAttribute('data-variant-image');
+
+  // Update hidden input for variant ID
+  document.querySelector('.product-variant-id').value = variantId;
+
+  // Update the price display if necessary
+  if (document.querySelector('.price-item')) {
+    document.querySelector('.price-item').textContent = variantPrice;
+  }
+
+  // Optionally update product image
+  if (document.querySelector('.product__media img')) {
+    document.querySelector('.product__media img').src = variantImageSrc;
+  }
+
+  // Enable the Add to Cart button if the variant is available
+  document.querySelector('.product-form__cart-submit').disabled = false;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-  const variantSelectors = document.querySelectorAll('[name="options[Color]"], [name="options[Size]"]'); // Adjust based on your actual option names
-  const addToCartButton = document.querySelector('.product-form__cart-submit');
-  const variantIdInput = document.querySelector('.product-variant-id');
-
-  variantSelectors.forEach(selector => {
-    selector.addEventListener('change', function() {
-      const selectedOption = document.querySelector('input[type="radio"][name="options[Color]"]:checked, select[name="options[Size]"] option:checked'); // Update selector as needed
-      variantIdInput.value = selectedOption.value;
-      addToCartButton.disabled = !selectedOption.dataset.available;
-    });
-  });
+  // Automatically select the first available variant
+  const firstAvailableVariant = document.querySelector('.variant-value:not(.variant-unavailable)');
+  if (firstAvailableVariant) {
+    firstAvailableVariant.click();
+  }
 });
 </script>
-
 
   <script>
 document.addEventListener('DOMContentLoaded', function() {
