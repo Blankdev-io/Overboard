@@ -34,7 +34,7 @@ font-size: 14px;
       {%- for option in product.options_with_values -%}
         <fieldset class="js product-form__input">
           <legend class="form__label" style="    font-family: Plus Jakarta Sans,sans-serif!important; color: black; font-size: 19px;">{{ option.name }}</legend>
-          {% render 'product-variant-options', product: product, option: option, block: block %}
+          {% render 'product-variant-options-new', product: product, option: option, block: block %}
         </fieldset>
       {%- endfor -%}
       <script type="application/json">
