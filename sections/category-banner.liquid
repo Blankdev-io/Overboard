@@ -48,11 +48,14 @@
     }
     
   @media (max-width: 768px) {
-    .category-banner-container {
+
+
+    {% if current_tag == 'clothing' %}
+
+          .category-banner-container {
       height: 117px;
     }
 
-    {% if current_tag == 'clothing' %}
     .category-banner-container svg {
       width: 132px;
       height: 132px;
@@ -61,6 +64,10 @@
     {% endif %}
 
     {% if current_tag == 'boards' %}
+
+    .category-banner-container {
+      height: 117px;
+    }
     .category-banner-container svg {
       width: 132px;
       height: 132px;
