@@ -43,7 +43,7 @@
     height: {% if current_tag == 'wetsuits' or current_tag == 'boards' %}201px;{% else %}262px;{% endif %}
       position: absolute;
       right: 0;
-      bottom: {% if current_tag == 'accessories' or current_tag == 'boards'  %}53px;{% else %}50px;{% endif %}
+      bottom: {% if current_tag == 'accessories' %}53px;{% elsif current_tag == 'boards'  %} 52px;{% else %}50px;{% endif %}
       transform: translateY(50%);
     }
     
