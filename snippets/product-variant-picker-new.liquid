@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <input type="hidden" name="id" class="product-variant-id">
 
   <!-- Add to Cart Button -->
-  <button type="submit" name="add" class="product-form__cart-submit" {% unless product.available %}disabled{% endunless %}>
+  <button type="submit" name="add" class="product-form__submit overboard-buy-button button button--full-width button--secondary product-form__cart-submit" {% unless product.available %}disabled{% endunless %}>
     <span>{{ 'products.product.add_to_cart' | t }}</span>
   </button>
 </form>
