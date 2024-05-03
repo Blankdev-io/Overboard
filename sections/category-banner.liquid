@@ -40,7 +40,7 @@
 
     .category-banner-container svg {
     width: 260px;
-    height: 262px;
+    height: {% if current_tag == 'wetsuits' %}262px;{% else %}201px;{% endif %}
       position: absolute;
       right: 0;
       bottom: {% if current_tag == 'accessories' %}53px;{% else %}50px;{% endif %}
