@@ -15,6 +15,22 @@
     height: 35px;
     font-size: 14px;
   }
+  
+  .variant-value {
+    cursor: pointer;
+    border: 2px solid transparent; /* Default state with transparent border */
+    padding: 5px; /* Padding for better visual appearance */
+    margin: 2px; /* Space between variant options */
+  }
+
+  .variant-value.selected {
+    border-color: #333; /* Border color when selected */
+  }
+
+  .variant-value.variant-unavailable {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 {% endstyle %}
 {%- unless product.has_only_default_variant -%}
   {%- if block.settings.picker_type == 'button' -%}
