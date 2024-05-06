@@ -76,9 +76,10 @@
               >
                 <!-- Placeholder for the value, filled by JavaScript -->
                 <p>
-                  {{ data-option == 'Size' }}
-                  {{ value }}
-                  {{ endif }}
+              {% if option.name == 'Size' %}
+
+                {{ value }}
+              {% endif %}
                 </p>
               </div>
             {% endunless %}
