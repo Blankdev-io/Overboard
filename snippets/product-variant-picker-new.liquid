@@ -27,13 +27,26 @@
     border-color: #333; /* Border color when selected */
   }
 
-  .variant-value.variant-unavailable {
+.variant-value.variant-unavailable {
     cursor: not-allowed;
     background-color: #f0f0f0;
-    color: #ccc; /* Gray out text to show it's not selectable */
-    border-color: #ccc; /* Optionally add a gray border */
-    opacity: 0.5; /* Optionally reduce opacity */
-  }
+    color: #ccc;
+    border-color: #ccc;
+    opacity: 0.5;
+    text-decoration: line-through; /* Cross-out effect */
+}
+
+/* Tooltip styling */
+.tooltip {
+    visibility: hidden;
+    background-color: black;
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+}
 {% endstyle %}
 {%- unless product.has_only_default_variant -%}
   <form
