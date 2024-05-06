@@ -32,24 +32,11 @@
   text-decoration: line-through;
 }
 .media--hover-effect:hover .hover-content {
-  display: block; /* This will show the secondary image and the variant picker on hover */
+  display: block !important; /* This will show the secondary image and the variant picker on hover */
 }
 
 .media--hover-effect {
   position: relative;
-}
-
-.hover-content {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: rgba(255, 255, 255, 0.9); /* Optional: Background to enhance visibility */
-  z-index: 2; /* Ensures it appears above the primary image */
-  display: flex;
-  flex-direction: column; /* Ensures items are stacked vertically */
-  align-items: center; /* Centers items horizontally */
-  justify-content: center; /* Centers items vertically */
 }
 
 .secondary-image {
