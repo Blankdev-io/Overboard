@@ -179,7 +179,14 @@
                 >
               {%- endif -%}
 
-  
+                  <!-- Variant Picker -->
+                     {%- if show_variants and card_product.variants.size > 1 -%}
+          {%- unless card_product.tags contains 'Boards' -%}
+            <div class="only-mobile card__variants">
+              {%- render 'product-variant-picker-new', product: card_product -%}
+            </div>
+          {%- endunless -%}
+                  {%- endif -%}
             </div>
           </div>
         {%- endif -%}
@@ -289,13 +296,7 @@
             {%- endif -%}
           </div>
         </div>
-        {%- if show_variants and card_product.variants.size > 1 -%}
-          {%- unless card_product.tags contains 'Boards' -%}
-            <div class="only-mobile card__variants">
-              {%- render 'product-variant-picker-new', product: card_product -%}
-            </div>
-          {%- endunless -%}
-        {%- endif -%}
+   
         {%- if show_quick_add -%}
           <div class="quick-add no-js-hidden">
             {%- liquid
