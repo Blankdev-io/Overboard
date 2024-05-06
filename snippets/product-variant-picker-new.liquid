@@ -165,118 +165,6 @@
       {% endfor %}
     </table>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        var variantRows = document.querySelectorAll('.variant-row');
-        var variantInput = document.querySelector('.product-variant-id');
-        var defaultSelected = false;
-
-        function isMobile() {
-          var content = window.getComputedStyle(document.body, ':after').getPropertyValue('content');
-          return content === '"mobile"';
-        }
-
-        function normalizeUrl(url) {
-          return url.replace(/^https?:/, '');
-        }
-
-        variantRows.forEach(function (row) {
-          var variantId = row.getAttribute('data-variant-id');
-
-          if (!row.classList.contains('variant-unavailable')) {
-            row.addEventListener('click', function () {
-              var variantId = this.getAttribute('data-variant-id');
-              if (variantInput) {
-                variantInput.value = variantId;
-              }
-
-              // Update all rows to default border style
-              variantRows.forEach(function (r) {
-                r.style.backgroundColor = 'white';
-              });
-
-              // Highlight the selected row
-              row.style.backgroundColor = '#f0f0f0';
-
-              // Update the price
-              var price = row.getAttribute('data-variant-price');
-              document.querySelector('.price-item').textContent = price;
-
-              // Get variant data and normalize URL
-              var variantImageSrc = normalizeUrl(row.getAttribute('data-variant-image'));
-
-              // Iterate over <li> elements within .product__media-list
-              var listItems = document.querySelectorAll('.product__media-list li');
-              var thumbnails = document.querySelectorAll('.thumbnail img');
-              var matchFound = false;
-
-              listItems.forEach(function (li) {
-                var img = li.querySelector('.product__media img');
-                if (img) {
-                  var imgSrc = normalizeUrl(img.getAttribute('src'));
-
-                  if (imgSrc.includes(variantImageSrc)) {
-                    matchFound = true;
-
-                    // Remove 'is-active' class from all <li> elements
-                    listItems.forEach(function (item) {
-                      item.classList.remove('is-active');
-                    });
-
-                    // Add 'is-active' class to the matching <li>
-                    li.classList.add('is-active');
-                  }
-                }
-              });
-
-              // Update thumbnails
-              if (matchFound) {
-                thumbnails.forEach(function (thumbnail) {
-                  var thumbnailSrc = thumbnail.getAttribute('src');
-                  if (thumbnailSrc && thumbnailSrc.includes(variantImageSrc)) {
-                    // Remove aria-current from all thumbnails
-                    document.querySelectorAll('.thumbnail[aria-current="true"]').forEach(function (thumb) {
-                      thumb.removeAttribute('aria-current');
-                    });
-
-                    // Set aria-current on the matched thumbnail
-                    thumbnail.closest('.thumbnail').setAttribute('aria-current', 'true');
-                  }
-                });
-              }
-
-              // Update thumbnails on mobile
-              if (isMobile()) {
-                var activeLi = document.querySelector('.product__media-list li.is-active');
-                if (activeLi) {
-                  var img = activeLi.querySelector('.product__media img');
-                  if (img) {
-                    img.src = variantImageSrc;
-                    // Optionally, update srcset as well if you use it
-                    img.srcset = variantImageSrc;
-                  }
-                }
-              }
-
-              // Update Shopify's variant selector (if used)
-              var variantSelect = document.querySelector('select[name=id]');
-              if (variantSelect) {
-                variantSelect.value = variantId;
-              }
-            });
-
-            // Automatically select the first available variant
-            if (!defaultSelected) {
-              row.click();
-              defaultSelected = true;
-            }
-          } else {
-            row.style.pointerEvents = 'none';
-          }
-        });
-      });
-    </script>
-
   {%- else -%}
     {{ 'variant-map.js' | asset_url | script_tag }}
 
@@ -303,7 +191,6 @@
                     data-variant-id="{{ variant.id }}"
                     data-variant-price="{{ variant.price | money }}"
                     data-variant-image="{{ variant.featured_image | default: product.featured_image | img_url: 'master' }}"
-                    onclick="updateVariantSelection(this)"
                   >
                     <!-- Showing the value for clarity -->
                   </div>
@@ -344,133 +231,67 @@
   {%- endif -%}
 {%- endunless -%}
 
-<noscript class="product-form__noscript-wrapper-{{ section.id }}">
-  <div class="product-form__input{% if product.has_only_default_variant %} hidden{% endif %}">
-    <label class="form__label" for="Variants-{{ section.id }}">
-      {{- 'products.product.product_variants' | t -}}
-    </label>
-    <div class="select">
-      <select
-        name="id"
-        id="Variants-{{ section.id }}"
-        class="select__select"
-        form="{{ product_form_id }}"
-      >
-        {%- for variant in product.variants -%}
-          <option
-            {% if variant == product.selected_or_first_available_variant %}
-              selected="selected"
-            {% endif %}
-            {% if variant.available == false %}
-              disabled
-            {% endif %}
-            value="{{ variant.id }}"
-          >
-            {%- liquid
-              echo variant.title
-              echo variant.price | money | strip_html | prepend: ' - '
-              if variant.available == false
-                echo 'products.product.sold_out' | t | prepend: ' - '
-              endif
-              if variant.quantity_rule.increment > 1
-                echo 'products.product.quantity.multiples_of' | t: quantity: variant.quantity_rule.increment | prepend: ' - '
-              endif
-              if variant.quantity_rule.min > 1
-                echo 'products.product.quantity.minimum_of' | t: quantity: variant.quantity_rule.min | prepend: ' - '
-              endif
-              if variant.quantity_rule.max != null
-                echo 'products.product.quantity.maximum_of' | t: quantity: variant.quantity_rule.max | prepend: ' - '
-              endif
-              # TODO: enable theme-check once `item_count_for_variant` is accepted as valid filter
-              # theme-check-disable
-              assign cart_quantity = cart | item_count_for_variant: variant.id
-              # theme-check-enable
-              if cart_quantity > 0
-                echo 'products.product.quantity.in_cart_html' | t: quantity: cart_quantity | prepend: ' - '
-              endif
-            -%}
-          </option>
-        {%- endfor -%}
-      </select>
-      {% render 'icon-caret' %}
-    </div>
-  </div>
-</noscript>
+
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const variantOptions = document.querySelectorAll('.variant-value');
-    const productImage = document.querySelector('.product__media img');
-    const productPrice = document.querySelector('.price-item');
-    const variantInput = document.querySelector('.product-variant-id');
-    const allVariants = JSON.parse(document.getElementById('variant-json').textContent); // Assuming JSON data is available
-    console.log('all variants', allVariants);
+document.addEventListener('DOMContentLoaded', function () {
+  const variantOptions = document.querySelectorAll('.variant-value.variant-value-new:not(.variant-unavailable)');
 
-    function updateVariantSelection(element) {
-      const selectedOption = element.dataset.option;
-      const selectedValue = element.dataset.value;
-      const variantId = element.getAttribute('data-variant-id');
-      const variantPrice = element.getAttribute('data-variant-price');
-      const variantImageSrc = element.getAttribute('data-variant-image');
-      const optionGroups = document.querySelectorAll('.variant-values');
-
-      // Update UI within the same option group
-      element
-        .closest('.variant-values')
-        .querySelectorAll('.variant-value')
-        .forEach(function (v) {
-          v.classList.remove('selected');
-        });
-      element.classList.add('selected');
-
-      // Update other options based on selected option
-      optionGroups.forEach((group) => {
-        if (group !== element.closest('.variant-values')) {
-          updateOptionAvailability(group, selectedOption, selectedValue);
-        }
-      });
-
-      console.log('Selected variant:', variantId);
-      console.log('optionGroups', optionGroups);
-
-      // Update hidden input, image, and price
-      variantInput.value = variantId;
-      if (productImage && variantImageSrc) productImage.src = variantImageSrc;
-      if (productPrice) productPrice.textContent = variantPrice;
-      document.querySelector('.product-form__cart-submit').disabled = false;
-    }
-
-    function updateOptionAvailability(group, selectedOption, selectedValue) {
-      group.querySelectorAll('.variant-value').forEach((option) => {
-        const combinations = allVariants.filter(
-          (variant) =>
-            variant.options[selectedOption] === selectedValue &&
-            variant.options[option.dataset.option] === option.dataset.value
-        );
-        if (combinations.length === 0) {
-          option.classList.add('variant-unavailable');
-          option.disabled = true;
-        } else {
-          option.classList.remove('variant-unavailable');
-          option.disabled = false;
-        }
-      });
-    }
-
-    variantOptions.forEach((option) => {
-      option.addEventListener('click', function () {
-        if (!this.classList.contains('variant-unavailable')) {
-          updateVariantSelection(this);
-        }
-      });
-    });
-
-    // Initialize first available selections
-    document.querySelectorAll('.variant-values').forEach((group) => {
-      const firstAvailable = group.querySelector('.variant-value:not(.variant-unavailable)');
-      if (firstAvailable) {
-        firstAvailable.click();
+  variantOptions.forEach(option => {
+    option.addEventListener('click', function () {
+      if (!this.classList.contains('variant-unavailable')) {
+        updateVariantSelection(this);
       }
     });
   });
+
+  function updateVariantSelection(element) {
+    const selectedOption = element.dataset.option;
+    const selectedValue = element.dataset.value;
+    const variantId = element.getAttribute('data-variant-id');
+    const variantPrice = element.getAttribute('data-variant-price');
+    const variantImageSrc = element.getAttribute('data-variant-image');
+    const optionGroups = document.querySelectorAll('.variant-values');
+
+    // Update UI within the same option group
+    element.closest('.variant-values').querySelectorAll('.variant-value').forEach(v => {
+      v.classList.remove('selected');
+    });
+    element.classList.add('selected');
+
+    // Update other options based on selected option
+    optionGroups.forEach(group => {
+      if (group !== element.closest('.variant-values')) {
+        updateOptionAvailability(group, selectedOption, selectedValue);
+      }
+    });
+
+    // Update hidden input, image, and price
+    const variantInput = document.querySelector('.product-variant-id');
+    const productImage = document.querySelector('.product__media img');
+    const productPrice = document.querySelector('.price-item');
+
+    variantInput.value = variantId;
+    if (productImage && variantImageSrc) productImage.src = variantImageSrc;
+    if (productPrice) productPrice.textContent = variantPrice;
+    document.querySelector('.product-form__cart-submit').disabled = false;
+  }
+
+  function updateOptionAvailability(group, selectedOption, selectedValue) {
+    group.querySelectorAll('.variant-value').forEach(option => {
+      const combinations = JSON.parse(document.getElementById('variant-json').textContent).filter(
+        variant => variant.options[selectedOption] === selectedValue &&
+                   variant.options[option.dataset.option] === option.dataset.value
+      );
+      if (combinations.length === 0) {
+        option.classList.add('variant-unavailable');
+        option.disabled = true;
+      } else {
+        option.classList.remove('variant-unavailable');
+        option.disabled = false;
+      }
+    });
+  }
+});
+
 </script>
