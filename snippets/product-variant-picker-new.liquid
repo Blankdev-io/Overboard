@@ -107,6 +107,17 @@
         let variantInput = document.querySelector('.product-variant-id');
 
         variantOptions.forEach((option) => {
+          // Set up the variant map
+          if (variantMap.colors[value]) {
+            option.style.backgroundColor = variantMap.colors[value];
+          } else if (variantMap.sizes[value]) {
+            option.textContent = variantMap.sizes[value];
+            option.classList.add('text-type');
+          } else {
+            option.textContent = value;
+            option.classList.add('text-type');
+          }
+
           option.addEventListener('click', function () {
             // Remove 'selected' class from all options and then add to the clicked one
             variantOptions.forEach((opt) => opt.classList.remove('selected'));
