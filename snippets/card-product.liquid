@@ -158,7 +158,7 @@
               >
               {% comment %}theme-check-enable ImgLazyLoading{% endcomment %}
 
-              <div>
+
               {%- if card_product.media[1] != null and show_secondary_image -%}
                 <img
                   srcset="
@@ -180,15 +180,7 @@
                 >
               {%- endif -%}
 
-                  <!-- Variant Picker -->
-                  {%- if show_variants and card_product.variants.size > 1 -%}
-                      {%- unless card_product.tags contains 'Boards' -%}
-                        <div class="only-mobile card__variants">
-                          {%- render 'product-variant-picker-new', product: card_product -%}
-                        </div>
-                      {%- endunless -%}
-                  {%- endif -%}
-                </div>
+           
             </div>
           </div>
         {%- endif -%}
