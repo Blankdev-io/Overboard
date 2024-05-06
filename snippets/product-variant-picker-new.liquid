@@ -76,7 +76,9 @@
               >
                 <!-- Placeholder for the value, filled by JavaScript -->
                 <p>
+                  {{ data-option == 'Size' }}
                   {{ value }}
+                  {{ endif }}
                 </p>
               </div>
             {% endunless %}
@@ -110,28 +112,18 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      console.log('DOM fully loaded and parsed');
-
       document.querySelectorAll('.product-card-wrapper').forEach(function (card) {
         let productID = card.getAttribute('data-product-id');
-        console.log('Processing card with productID:', productID);
 
         let variantOptions = card.querySelectorAll('.variant-value[data-product-id="' + productID + '"]');
         let productPrice = card.querySelector('.price-item[data-price-productid="' + productID + '"]');
         let variantInput = card.querySelector('.product-variant-id[data-variant-productid="' + productID + '"]');
-
-        console.log('Found', variantOptions.length, 'variant options for product ID:', productID);
 
         variantOptions.forEach((option) => {
           let value = option.getAttribute('data-value');
 
           let variantId = option.getAttribute('data-variant-id');
           let variantPrice = option.getAttribute('data-variant-price');
-
-          console.log('Option data:', {
-            variantId: variantId,
-            variantPrice: variantPrice,
-          });
 
           // Set up the variant map
           if (variantMap.colors[value]) {
@@ -156,20 +148,13 @@
               });
               option.classList.add('selected');
 
-              console.log('Variant selected:', {
-                variantId: variantId,
-                productID: productID,
-              });
-
               if (variantInput) {
                 variantInput.value = variantId;
-                console.log('Variant input updated to:', variantId);
               }
 
               // Update the price display specific to this product card
               if (productPrice && variantPrice) {
                 productPrice.textContent = variantPrice;
-                console.log('Price updated to:', variantPrice);
               }
             });
           }
@@ -178,7 +163,6 @@
         // Automatically select the first available variant
         const firstAvailableVariant = card.querySelector('.variant-value:not(.variant-unavailable)');
         if (firstAvailableVariant) {
-          console.log('Auto-selecting first available variant for product ID:', productID);
           firstAvailableVariant.click();
         }
       });
