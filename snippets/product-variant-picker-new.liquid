@@ -16,6 +16,23 @@ width: 35px;
 height: 35px;
 font-size: 14px;
 }
+
+.variant-value {
+  cursor: pointer;
+  border: 2px solid transparent; /* Default state with transparent border */
+  padding: 5px; /* Padding for better visual appearance */
+  margin: 2px; /* Space between variant options */
+}
+
+.variant-value.selected {
+  border-color: #333; /* Border color when selected */
+}
+
+.variant-value.variant-unavailable {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 {% endstyle %}
 {%- unless product.has_only_default_variant -%}
   {%- if block.settings.picker_type == 'button' -%}
@@ -306,6 +323,15 @@ function updateVariantSelection(element) {
   var variantId = element.getAttribute('data-variant-id');
   var variantPrice = element.getAttribute('data-variant-price');
   var variantImageSrc = element.getAttribute('data-variant-image');
+  var allVariants = document.querySelectorAll('.variant-value');
+
+  // Remove the selected class from all variant values
+  allVariants.forEach(function(v) {
+    v.classList.remove('selected');
+  });
+
+  // Add the selected class to the clicked element
+  element.classList.add('selected');
 
   // Update hidden input for variant ID
   document.querySelector('.product-variant-id').value = variantId;
@@ -323,6 +349,15 @@ function updateVariantSelection(element) {
   // Enable the Add to Cart button if the variant is available
   document.querySelector('.product-form__cart-submit').disabled = false;
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Automatically select the first available variant
+  const firstAvailableVariant = document.querySelector('.variant-value:not(.variant-unavailable)');
+  if (firstAvailableVariant) {
+    firstAvailableVariant.click();
+  }
+});
+
 
 document.addEventListener('DOMContentLoaded', function() {
   // Automatically select the first available variant
@@ -362,7 +397,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!variantId) {
       option.classList.add('variant-unavailable');
       option.style.pointerEvents = 'none';
-      option.style.opacity = '0.5';
+      option.style.opacity = '0.3';
     } else {
       option.addEventListener('click', function() {
         // Update selected variant
