@@ -83,7 +83,7 @@
       assign ratio = 1
     endif
   -%}
-  <div class="card-wrapper product-card-wrapper underline-links-hover" data-product-id="{{ product.id }}">
+  <div class="card-wrapper product-card-wrapper underline-links-hover" data-product-id="{{ card_product.id }}">
     <div
       class="
         card card--{{ settings.card_style }}
@@ -390,7 +390,7 @@
     </div>
   </div>
 {%- else -%}
-  <div class="card-wrapper product-card-wrapper underline-links-hover" data-product-id="{{ product.id }}">
+  <div class="card-wrapper product-card-wrapper underline-links-hover" data-product-id="{{ card_product.id }}">
     <div
       class="
         card card--{{ settings.card_style }}
