@@ -102,10 +102,13 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      var variantOptions = document.querySelectorAll('.variant-value');
-      var productImage = document.querySelector('.product__media img');
-      var productPrice = document.querySelector('.price-item');
-      var variantInput = document.querySelector('.product-variant-id');
+      // Get the current form based on the product ID
+      var form = document.querySelector('form[id^="form-"]'); // This assumes there's only one such form per page. Adjust if necessary.
+
+      var variantOptions = form.querySelectorAll('.variant-value');
+      var productImage = form.querySelector('.product__media img');
+      var productPrice = form.querySelector('.price-item');
+      var variantInput = form.querySelector('.product-variant-id');
 
       variantOptions.forEach((option) => {
         var value = option.getAttribute('data-value');
@@ -114,10 +117,10 @@
         var variantPrice = option.getAttribute('data-variant-price');
         var variantImageSrc = option.getAttribute('data-variant-image');
 
-        // Set up the variant map
-        if (variantMap.colors[value]) {
+        // Set up the variant map (this script assumes you have loaded a variantMap script separately)
+        if (window.variantMap && variantMap.colors[value]) {
           option.style.backgroundColor = variantMap.colors[value];
-        } else if (variantMap.sizes[value]) {
+        } else if (window.variantMap && variantMap.sizes[value]) {
           option.textContent = variantMap.sizes[value];
           option.classList.add('text-type');
         } else {
@@ -141,7 +144,7 @@
             }
 
             // Update Shopify's variant selector
-            var variantSelect = document.querySelector('select[name=id]');
+            var variantSelect = form.querySelector('select[name=id]');
             if (variantSelect) {
               variantSelect.value = variantId;
             }
@@ -153,12 +156,6 @@
           });
         }
       });
-
-      // Automatically select the first available variant
-      const firstAvailableVariant = document.querySelector('.variant-value:not(.variant-unavailable)');
-      if (firstAvailableVariant) {
-        firstAvailableVariant.click();
-      }
     });
   </script>
 {%- endunless -%}
