@@ -104,80 +104,112 @@
 
   <script>
     function updateVariantSelection(element) {
+      const productCard = element.closest('.product-card'); // Adjust selector as necessary to match your structure
+
       var variantId = element.getAttribute('data-variant-id');
       var variantPrice = element.getAttribute('data-variant-price');
       var variantImageSrc = element.getAttribute('data-variant-image');
 
-      // Update hidden input for variant ID
-      document.querySelector('.product-variant-id').value = variantId;
+      // Update hidden input for variant ID, scoped to the current product card
+      const variantInput = productCard.querySelector('.product-variant-id');
+      variantInput.value = variantId;
 
-      // Update the price display if necessary
-      if (document.querySelector('.price-item')) {
-        document.querySelector('.price-item').textContent = variantPrice;
+      // Update the price display if necessary, scoped to the current product card
+      const priceDisplay = productCard.querySelector('.price-item');
+      if (priceDisplay) {
+        priceDisplay.textContent = variantPrice;
       }
 
-      // Optionally update product image
-      if (document.querySelector('.product__media img')) {
-        document.querySelector('.product__media img').src = variantImageSrc;
+      // Optionally update product image, scoped to the current product card
+      const productImage = productCard.querySelector('.product__media img');
+      if (productImage) {
+        productImage.src = variantImageSrc;
       }
 
-      // Enable the Add to Cart button if the variant is available
-      document.querySelector('.product-form__cart-submit').disabled = false;
+      // Enable the Add to Cart button if the variant is available, scoped to the current product card
+      const cartButton = productCard.querySelector('.product-form__cart-submit');
+      cartButton.disabled = false;
     }
 
     document.addEventListener('DOMContentLoaded', function () {
+      const variantOptions = document.querySelectorAll('.variant-value');
+      variantOptions.forEach((option) => {
+        option.addEventListener('click', function () {
+          if (!this.classList.contains('variant-unavailable')) {
+            updateVariantSelection(this);
+          }
+        });
+      });
+
+      // Automatically select the first available variant in each product card
+      document.querySelectorAll('.product-card').forEach((card) => {
+        const firstAvailableVariant = card.querySelector('.variant-value:not(.variant-unavailable)');
+        if (firstAvailableVariant) {
+          firstAvailableVariant.click();
+        }
+      });
+    });
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var variantOptions = document.querySelectorAll('.variant-value');
+      var productImage = document.querySelector('.product__media img');
+      var productPrice = document.querySelector('.price-item');
+      var variantInput = document.querySelector('.product-variant-id');
+
+      variantOptions.forEach((option) => {
+        var value = option.getAttribute('data-value');
+        var optionType = option.getAttribute('data-option');
+        var variantId = option.getAttribute('data-variant-id');
+        var variantPrice = option.getAttribute('data-variant-price');
+        var variantImageSrc = option.getAttribute('data-variant-image');
+
+        // Set up the variant map
+        if (variantMap.colors[value]) {
+          option.style.backgroundColor = variantMap.colors[value];
+        } else if (variantMap.sizes[value]) {
+          option.textContent = variantMap.sizes[value];
+          option.classList.add('text-type');
+        } else {
+          option.textContent = value;
+          option.classList.add('text-type');
+        }
+
+        // Handle unavailable variants
+        if (!variantId) {
+          option.classList.add('variant-unavailable');
+          option.style.pointerEvents = 'none';
+          option.style.opacity = '0.5';
+        } else {
+          option.addEventListener('click', function () {
+            // Update selected variant
+            variantOptions.forEach((opt) => opt.classList.remove('selected'));
+            option.classList.add('selected');
+
+            if (variantInput) {
+              variantInput.value = variantId;
+            }
+
+            // Update Shopify's variant selector
+            var variantSelect = document.querySelector('select[name=id]');
+            if (variantSelect) {
+              variantSelect.value = variantId;
+            }
+
+            // Update the price
+            if (productPrice && variantPrice) {
+              productPrice.textContent = variantPrice;
+            }
+          });
+        }
+      });
+
       // Automatically select the first available variant
       const firstAvailableVariant = document.querySelector('.variant-value:not(.variant-unavailable)');
       if (firstAvailableVariant) {
         firstAvailableVariant.click();
       }
     });
-function updateVariantSelection(element) {
-  const productCard = element.closest('.product-card'); // Adjust selector as necessary to match your structure
-
-  var variantId = element.getAttribute('data-variant-id');
-  var variantPrice = element.getAttribute('data-variant-price');
-  var variantImageSrc = element.getAttribute('data-variant-image');
-
-  // Update hidden input for variant ID, scoped to the current product card
-  const variantInput = productCard.querySelector('.product-variant-id');
-  variantInput.value = variantId;
-
-  // Update the price display if necessary, scoped to the current product card
-  const priceDisplay = productCard.querySelector('.price-item');
-  if (priceDisplay) {
-    priceDisplay.textContent = variantPrice;
-  }
-
-  // Optionally update product image, scoped to the current product card
-  const productImage = productCard.querySelector('.product__media img');
-  if (productImage) {
-    productImage.src = variantImageSrc;
-  }
-
-  // Enable the Add to Cart button if the variant is available, scoped to the current product card
-  const cartButton = productCard.querySelector('.product-form__cart-submit');
-  cartButton.disabled = false;
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-  const variantOptions = document.querySelectorAll('.variant-value');
-  variantOptions.forEach((option) => {
-    option.addEventListener('click', function () {
-      if (!this.classList.contains('variant-unavailable')) {
-        updateVariantSelection(this);
-      }
-    });
-  });
-
-  // Automatically select the first available variant in each product card
-  document.querySelectorAll('.product-card').forEach(card => {
-    const firstAvailableVariant = card.querySelector('.variant-value:not(.variant-unavailable)');
-    if (firstAvailableVariant) {
-      firstAvailableVariant.click();
-    }
-  });
-});
-
   </script>
 {%- endunless -%}
