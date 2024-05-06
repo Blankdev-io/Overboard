@@ -60,111 +60,6 @@
       </script>
     </variant-radios>
 
-  {%- elsif block.settings.picker_type == 'dropdown' -%}
-    <variant-selects
-      id="variant-selects-{{ section.id }}"
-      class="no-js-hidden"
-      data-section="{{ section.id }}"
-      data-url="{{ product.url }}"
-      {% if update_url == false %}
-        data-update-url="false"
-      {% endif %}
-      {{ block.shopify_attributes }}
-    >
-      {%- for option in product.options_with_values -%}
-        <div class="product-form__input product-form__input--dropdown">
-          <label class="form__label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
-            {{ option.name }}
-          </label>
-          <div class="select">
-            <select
-              id="Option-{{ section.id }}-{{ forloop.index0 }}"
-              class="select__select"
-              name="options[{{ option.name | escape }}]"
-              form="{{ product_form_id }}"
-            >
-              {% render 'product-variant-options', product: product, option: option, block: block %}
-            </select>
-            {% render 'icon-caret' %}
-          </div>
-        </div>
-      {%- endfor -%}
-
-      <script type="application/json">
-        {{ product.variants | json }}
-      </script>
-    </variant-selects>
-
-  {%- elsif block.settings.picker_type == 'list' and template contains 'boards' -%}
-    <style>
-      @media only screen and (max-width: 768px) {
-        body:after {
-          content: 'mobile' !important;
-          display: none;
-        }
-      }
-    </style>
-
-    <table class="variant-table">
-      <tr>
-        {% for option in product.options %}
-          {% if option contains '-' %}
-            {% assign split_options = option | split: '-' %}
-            {% for split_option in split_options %}
-              <td>{{ split_option | strip }}</td>
-            {% endfor %}
-          {% else %}
-            <td>{{ option }}</td>
-          {% endif %}
-        {% endfor %}
-        <th>In Stock</th>
-      </tr>
-
-      {% for variant in product.variants %}
-        <tr
-          class="variant-row{% if variant.available %}{% else %} variant-unavailable{% endif %}"
-          data-variant-id="{{ variant.id }}"
-          data-variant-price="{{ variant.price | money }}"
-          data-variant-image="{{ variant.featured_image | default: product.featured_image | img_url: 'master' }}"
-        >
-          {% for option in variant.options %}
-            {% if option contains '-' %}
-              {% assign split_options = option | split: '-' %}
-              {% for split_option in split_options %}
-                <td>{{ split_option | strip }}</td>
-              {% endfor %}
-            {% else %}
-              <td>{{ option }}</td>
-            {% endif %}
-          {% endfor %}
-          <td>
-            {% if variant.available %}
-              <span class="stock-pill available">
-                {% if variant.inventory_management == 'shopify' %}
-                  {{ variant.inventory_quantity }} in stock
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-                    <path d="M13.78 4.22a.75.75 0 00-1.06-1.06L6 9.88 3.28 7.16a.75.75 0 10-1.06 1.06l3.25 3.25c.3.3.77.3 1.06 0l7.25-7.25z"/>
-                  </svg>
-                {% else %}
-                  In stock
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-                    <path d="M13.78 4.22a.75.75 0 00-1.06-1.06L6 9.88 3.28 7.16a.75.75 0 10-1.06 1.06l3.25 3.25c.3.3.77.3 1.06 0l7.25-7.25z"/>
-                  </svg>
-                {% endif %}
-              </span>
-            {% else %}
-              <span class="stock-pill unavailable">
-                Not in stock
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-                  <path d="M8.53 8l3.25-3.25a.75.75 0 00-1.06-1.06L7.47 6.94 4.22 3.69a.75.75 0 00-1.06 1.06L6.44 8l-3.25 3.25a.75.75 0 001.06 1.06L7.47 9.06l3.25 3.25a.75.75 0 001.06-1.06L8.53 8z"/>
-                </svg>
-              </span>
-            {% endif %}
-          </td>
-        </tr>
-      {% endfor %}
-    </table>
-
   {%- else -%}
     {{ 'variant-map.js' | asset_url | script_tag }}
 
@@ -231,67 +126,73 @@
   {%- endif -%}
 {%- endunless -%}
 
-
-
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  const variantOptions = document.querySelectorAll('.variant-value.variant-value-new:not(.variant-unavailable)');
+  document.addEventListener('DOMContentLoaded', function () {
+    const variantOptions = document.querySelectorAll('.variant-value.variant-value-new:not(.variant-unavailable)');
 
-  variantOptions.forEach(option => {
-    option.addEventListener('click', function () {
-      if (!this.classList.contains('variant-unavailable')) {
-        updateVariantSelection(this);
-      }
+    variantOptions.forEach((option) => {
+      option.addEventListener('click', function () {
+        if (!this.classList.contains('variant-unavailable')) {
+          updateVariantSelection(this);
+        }
+      });
     });
+
+    function updateVariantSelection(element) {
+      const selectedOption = element.dataset.option;
+      const selectedValue = element.dataset.value;
+      const variantId = element.getAttribute('data-variant-id');
+      const variantPrice = element.getAttribute('data-variant-price');
+      const variantImageSrc = element.getAttribute('data-variant-image');
+      const optionGroups = document.querySelectorAll('.variant-values');
+
+      // Update UI within the same option group
+      element
+        .closest('.variant-values')
+        .querySelectorAll('.variant-value')
+        .forEach((v) => {
+          v.classList.remove('selected');
+        });
+      element.classList.add('selected');
+
+      // Update other options based on selected option
+      optionGroups.forEach((group) => {
+        if (group !== element.closest('.variant-values')) {
+          updateOptionAvailability(group, selectedOption, selectedValue);
+        }
+      });
+
+      // Update hidden input, image, and price
+      const variantInput = document.querySelector('.product-variant-id');
+      const productImage = document.querySelector('.product__media img');
+      const productPrice = document.querySelector('.price-item');
+
+      variantInput.value = variantId;
+      if (productImage && variantImageSrc) productImage.src = variantImageSrc;
+      if (productPrice) productPrice.textContent = variantPrice;
+      document.querySelector('.product-form__cart-submit').disabled = false;
+    }
+
+    function updateOptionAvailability(group, selectedOption, selectedValue) {
+      const allVariants = JSON.parse(document.getElementById('variant-json').textContent);
+      group.querySelectorAll('.variant-value').forEach((option) => {
+        const optionName = option.dataset.option;
+        const value = option.dataset.value;
+        const combinations = allVariants.filter(
+          (variant) => variant.options[selectedOption] === selectedValue && variant.options[optionName] === value
+        );
+        if (combinations.length === 0) {
+          option.classList.add('variant-unavailable');
+          option.disabled = true;
+        } else {
+          option.classList.remove('variant-unavailable');
+          option.disabled = false;
+        }
+      });
+    }
   });
+</script>
 
-  function updateVariantSelection(element) {
-    const selectedOption = element.dataset.option;
-    const selectedValue = element.dataset.value;
-    const variantId = element.getAttribute('data-variant-id');
-    const variantPrice = element.getAttribute('data-variant-price');
-    const variantImageSrc = element.getAttribute('data-variant-image');
-    const optionGroups = document.querySelectorAll('.variant-values');
-
-    // Update UI within the same option group
-    element.closest('.variant-values').querySelectorAll('.variant-value').forEach(v => {
-      v.classList.remove('selected');
-    });
-    element.classList.add('selected');
-
-    // Update other options based on selected option
-    optionGroups.forEach(group => {
-      if (group !== element.closest('.variant-values')) {
-        updateOptionAvailability(group, selectedOption, selectedValue);
-      }
-    });
-
-    // Update hidden input, image, and price
-    const variantInput = document.querySelector('.product-variant-id');
-    const productImage = document.querySelector('.product__media img');
-    const productPrice = document.querySelector('.price-item');
-
-    variantInput.value = variantId;
-    if (productImage && variantImageSrc) productImage.src = variantImageSrc;
-    if (productPrice) productPrice.textContent = variantPrice;
-    document.querySelector('.product-form__cart-submit').disabled = false;
-  }
-
-  function updateOptionAvailability(group, selectedOption, selectedValue) {
-    group.querySelectorAll('.variant-value').forEach(option => {
-      const combinations = JSON.parse(document.getElementById('variant-json').textContent).filter(
-        variant => variant.options[selectedOption] === selectedValue &&
-                   variant.options[option.dataset.option] === option.dataset.value
-      );
-      if (combinations.length === 0) {
-        option.classList.add('variant-unavailable');
-        option.disabled = true;
-      } else {
-        option.classList.remove('variant-unavailable');
-        option.disabled = false;
-      }
-    });
-  }
-});
-
+<script id="variant-json" type="application/json">
+  {{ product.variants | json }}
 </script>
