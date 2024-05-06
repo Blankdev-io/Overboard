@@ -67,6 +67,8 @@
                 class="variant-value variant-value-new variant-unavailable"
                 data-value="{{ value }}"
                 data-option="{{ option.name }}"
+                data-variant-id="{{ variant.id }}"
+                data-variant-image="{{ variant.featured_image | default: product.featured_image | img_url: 'master' }}"
               >
                 <!-- Placeholder for the value, filled by JavaScript -->
               </div>
