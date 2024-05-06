@@ -123,16 +123,7 @@
           });
 
 
-                 // Set up the variant map
-        if (variantMap.colors[value]) {
-          option.style.backgroundColor = variantMap.colors[value];
-        } else if (variantMap.sizes[value]) {
-          option.textContent = variantMap.sizes[value];
-          option.classList.add('text-type');
-        } else {
-          option.textContent = value;
-          option.classList.add('text-type');
-        }
+          
 
           if (!variantId) {
             option.classList.add('variant-unavailable');
