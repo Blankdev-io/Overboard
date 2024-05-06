@@ -83,7 +83,7 @@
       assign ratio = 1
     endif
   -%}
-  <div class="card-wrapper product-card-wrapper underline-links-hover">
+  <div class="card-wrapper product-card-wrapper underline-links-hover" data-product-id="{{ product.id }}">
     <div
       class="
         card card--{{ settings.card_style }}
@@ -164,6 +164,7 @@
                 width="{{ card_product.featured_media.width }}"
                 height="{{ card_product.featured_media.height }}"
               >
+
               {% comment %}theme-check-enable ImgLazyLoading{% endcomment %}
 
               <div class="hover-content" style="display: none;">
@@ -389,7 +390,7 @@
     </div>
   </div>
 {%- else -%}
-  <div class="card-wrapper product-card-wrapper underline-links-hover">
+  <div class="card-wrapper product-card-wrapper underline-links-hover" data-product-id="{{ product.id }}">
     <div
       class="
         card card--{{ settings.card_style }}
