@@ -30,6 +30,10 @@
   .variant-value.variant-unavailable {
     opacity: 0.5;
     cursor: not-allowed;
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #f0f0f0;
+    color: #000;
   }
 {% endstyle %}
 {%- unless product.has_only_default_variant -%}
@@ -65,12 +69,16 @@
             {% unless variant_found %}
               <div
                 class="variant-value variant-value-new variant-unavailable"
+                data-product-id="{{ product.id }}"
                 data-value="{{ value }}"
                 data-option="{{ option.name }}"
                 data-variant-id="{{ variant.id }}"
                 data-variant-image="{{ variant.featured_image | default: product.featured_image | img_url: 'master' }}"
               >
                 <!-- Placeholder for the value, filled by JavaScript -->
+                <p>
+                  {{ value }}
+                </p>
               </div>
             {% endunless %}
           {% endfor %}
