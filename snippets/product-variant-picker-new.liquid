@@ -102,25 +102,25 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      // Get the current form based on the product ID
-      var form = document.querySelector('form[id^="form-"]'); // This assumes there's only one such form per page. Adjust if necessary.
 
-      var variantOptions = form.querySelectorAll('.variant-value');
-      var productImage = form.querySelector('.product__media img');
-      var productPrice = form.querySelector('.price-item');
-      var variantInput = form.querySelector('.product-variant-id');
+      let form = document.querySelector('form[id^="form-"]');
+
+      let variantOptions = document.querySelectorAll('.variant-value');
+      let productImage = document.querySelector('.product__media img');
+      let productPrice = document.querySelector('.price-item');
+      let variantInput = document.querySelector('.product-variant-id');
 
       variantOptions.forEach((option) => {
-        var value = option.getAttribute('data-value');
-        var optionType = option.getAttribute('data-option');
-        var variantId = option.getAttribute('data-variant-id');
-        var variantPrice = option.getAttribute('data-variant-price');
-        var variantImageSrc = option.getAttribute('data-variant-image');
+        let value = option.getAttribute('data-value');
+        let optionType = option.getAttribute('data-option');
+        let variantId = option.getAttribute('data-variant-id');
+        let variantPrice = option.getAttribute('data-variant-price');
+        let variantImageSrc = option.getAttribute('data-variant-image');
 
-        // Set up the variant map (this script assumes you have loaded a variantMap script separately)
-        if (window.variantMap && variantMap.colors[value]) {
+        // Set up the variant map
+        if (variantMap.colors[value]) {
           option.style.backgroundColor = variantMap.colors[value];
-        } else if (window.variantMap && variantMap.sizes[value]) {
+        } else if (variantMap.sizes[value]) {
           option.textContent = variantMap.sizes[value];
           option.classList.add('text-type');
         } else {
@@ -144,7 +144,7 @@
             }
 
             // Update Shopify's variant selector
-            var variantSelect = form.querySelector('select[name=id]');
+            let variantSelect = document.querySelector('select[name=id]');
             if (variantSelect) {
               variantSelect.value = variantId;
             }
@@ -156,6 +156,15 @@
           });
         }
       });
+
+      // Automatically select the first available variant
+      const firstAvailableVariant = document.querySelector('.variant-value:not(.variant-unavailable)');
+      if (firstAvailableVariant) {
+        firstAvailableVariant.click();
+      }
     });
   </script>
 {%- endunless -%}
+
+
+              
