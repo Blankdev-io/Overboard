@@ -88,13 +88,13 @@
                 data-variant-image="{{ variant.featured_image | default: product.featured_image | img_url: 'master' }}"
               >
                 <!-- Placeholder for the value, filled by JavaScript -->
-                <p>
+                
               {% if option.name == 'Size' %}
                {{ value }}
               {% else %}
-               x
+               <p class= "tooltip">x </p>
               {% endif %}
-                </p>
+               
               </div>
             {% endunless %}
           {% endfor %}
