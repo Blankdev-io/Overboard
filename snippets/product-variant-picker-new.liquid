@@ -101,30 +101,27 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  // Loop through each product card
+  console.log('DOM fully loaded and parsed');
+
   document.querySelectorAll('.product-card-wrapper').forEach(function (card) {
-    let productID = card.getAttribute('data-product-id'); // Get the product ID from the card data attribute
+    let productID = card.getAttribute('data-product-id');
+    console.log('Processing card with productID:', productID);
+
     let variantOptions = card.querySelectorAll('.variant-value[data-product-id="' + productID + '"]');
     let productPrice = card.querySelector('.price-item[data-price-productid="' + productID + '"]');
-    let variantInput = card.querySelector('.product-variant-id[data-variant-productid="' + productID + '"]'); // Ensure this if you have such an attribute
+    let variantInput = card.querySelector('.product-variant-id[data-variant-productid="' + productID + '"]');
+
+    console.log('Found', variantOptions.length, 'variant options for product ID:', productID);
 
     variantOptions.forEach((option) => {
       let variantId = option.getAttribute('data-variant-id');
       let variantPrice = option.getAttribute('data-variant-price');
-      let variantImageSrc = option.getAttribute('data-variant-image');
 
-              // Set up the variant map
-        if (variantMap.colors[value]) {
-          option.style.backgroundColor = variantMap.colors[value];
-        } else if (variantMap.sizes[value]) {
-          option.textContent = variantMap.sizes[value];
-          option.classList.add('text-type');
-        } else {
-          option.textContent = value;
-          option.classList.add('text-type');
-        }
+      console.log('Option data:', {
+        variantId: variantId,
+        variantPrice: variantPrice
+      });
 
-      // Handle unavailable variants
       if (!variantId) {
         option.classList.add('variant-unavailable');
         option.style.pointerEvents = 'none';
@@ -132,34 +129,38 @@ document.addEventListener('DOMContentLoaded', function () {
       } else {
         option.addEventListener('click', function () {
           // Remove 'selected' class from all options in this specific card and add to the clicked one
-          variantOptions.forEach(opt => opt.classList.remove('selected'));
+          variantOptions.forEach(opt => {
+            opt.classList.remove('selected');
+          });
           option.classList.add('selected');
 
-          // Update hidden input for variants, if used
+          console.log('Variant selected:', {
+            variantId: variantId,
+            productID: productID
+          });
+
           if (variantInput) {
             variantInput.value = variantId;
+            console.log('Variant input updated to:', variantId);
           }
 
-          // Update the displayed price specific to this product card
+          // Update the price display specific to this product card
           if (productPrice && variantPrice) {
             productPrice.textContent = variantPrice;
-          }
-
-          // Optionally update the product image
-          if (productImage && variantImageSrc) {
-            productImage.src = variantImageSrc;
+            console.log('Price updated to:', variantPrice);
           }
         });
       }
     });
 
-    // Optionally, auto-select the first available variant
+    // Automatically select the first available variant
     const firstAvailableVariant = card.querySelector('.variant-value:not(.variant-unavailable)');
     if (firstAvailableVariant) {
+      console.log('Auto-selecting first available variant for product ID:', productID);
       firstAvailableVariant.click();
     }
   });
 });
+</script>
 
-  </script>
 {%- endunless -%}
