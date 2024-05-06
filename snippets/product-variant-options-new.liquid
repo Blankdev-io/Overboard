@@ -6,7 +6,6 @@
   - option: {Object} current product_option object.
   - block: {Object} block object.
 
-
   Usage:
   {% render 'product-variant-options',
     product: product,
@@ -61,10 +60,13 @@
         class="disabled"
       {% endif %}
     >
-    <label class="variant-value" for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-    style="border-radius: 10px; padding: 0; display: inline-flex; text-transform: uppercase;">
-    <span class="js-variant-display" data-variant-value="{{ value | escape }}"></span>
-    <span class="js-variant-color" style="display: none;"></span>
+    <label
+      class="variant-value"
+      for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+      style="border-radius: 10px; padding: 0; display: inline-flex; text-transform: uppercase;"
+    >
+      <span class="js-variant-display" data-variant-value="{{ value | escape }}"></span>
+      <span class="js-variant-color" style="display: none;"></span>
       <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
     </label>
   {%- elsif block.settings.picker_type == 'dropdown' -%}
@@ -82,35 +84,3 @@
     </option>
   {%- endif -%}
 {%- endfor -%}
-
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const variantElements = document.querySelectorAll('.js-variant-display');
-  
-    variantElements.forEach(el => {
-      const originalValue = el.getAttribute('data-variant-value');
-      const type = determineType(originalValue); // Implement this function based on your requirements
-      const mappedValue = variantMap[type] && variantMap[type][originalValue];
-  
-      if (type === 'colors' && mappedValue) {
-        // Set the background color to the hex code and display the color's name
-        el.closest('.variant-value').style.backgroundColor = mappedValue;
-        el.textContent = originalValue;
-      } else {
-        // For non-color types, display the mapped value or the original value
-        el.textContent = mappedValue || originalValue;
-      }
-    });
-  });
-  
-  function determineType(value) {
-    // Implement the logic to determine if the value is a color, size, etc.
-    if (variantMap.colors[value]) {
-      return 'colors';
-    } else if (variantMap.sizes[value]) {
-      return 'sizes';
-    } else {
-      return 'other'; // Default or other types
-    }
-  }  
-  </script>
