@@ -33,8 +33,7 @@
   }
 {% endstyle %}
 {%- unless product.has_only_default_variant -%}
-  {{ 'variant-map.js' | asset_url | script_tag }}
-
+  <script src="{{ 'variant-map.js' | asset_url }}" defer></script>
   <form
     action="/cart/add"
     method="post"
