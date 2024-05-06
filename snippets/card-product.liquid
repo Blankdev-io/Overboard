@@ -24,36 +24,6 @@
 {{ 'component-volume-pricing.css' | asset_url | stylesheet_tag }}
 
 {% style  %}
-.media--hover-effect:hover .secondary-image,
-.media--hover-effect:hover .card__variants {
-  display: block;  /* Show on hover */
-}
-
-.media--hover-effect {
-  position: relative;
-}
-
-.card__variants {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-  color: #fff; /* Text color */
-  padding: 10px;
-  box-sizing: border-box;
-  z-index: 2; /* Ensure it's on top of the images */
-}
-
-.secondary-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 1; /* Behind the variants but above the primary image */
-}
 
 .variant-unavailable {
   color: #999;
@@ -61,6 +31,32 @@
   color: rgba(var(--color-foreground), 0.6);
   text-decoration: line-through;
 }
+.media--hover-effect:hover .hover-content {
+  display: block; /* This will show the secondary image and the variant picker on hover */
+}
+
+.media--hover-effect {
+  position: relative;
+}
+
+.hover-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.9); /* Optional: Background to enhance visibility */
+  z-index: 2; /* Ensures it appears above the primary image */
+  display: flex;
+  flex-direction: column; /* Ensures items are stacked vertically */
+  align-items: center; /* Centers items horizontally */
+  justify-content: center; /* Centers items vertically */
+}
+
+.secondary-image {
+  max-width: 100%; /* Ensures the image does not overflow the container */
+  height: auto; /* Maintains aspect ratio */
+}
+
 
 @media only screen and (min-width: 750px) {
 .card__variants {
@@ -188,6 +184,7 @@
               >
               {% comment %}theme-check-enable ImgLazyLoading{% endcomment %}
 
+      <div class="hover-content" style="display: none;">
 
               {%- if card_product.media[1] != null and show_secondary_image -%}
      
@@ -204,14 +201,14 @@
                   src="{{ card_product.media[1] | image_url: width: 533 }}"
                   sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
                   alt=""
-                  class="motion-reduce secondary-image"
+                  class="motion-reduc secondary-image"
                   loading="lazy"
                   width="{{ card_product.media[1].width }}"
                   height="{{ card_product.media[1].height }}"
                   style="display: none;"
                 >
               {%- endif -%}
-                              <!-- Variant Picker -->
+                               <!-- Variant Picker -->
                   {%- if show_variants and card_product.variants.size > 1 -%}
                       {%- unless card_product.tags contains 'Boards' -%}
                         <div class="only-mobile card__variants">
@@ -219,6 +216,8 @@
                         </div>
                       {%- endunless -%}
                   {%- endif -%}
+      </div>
+
             </div>
           </div>
         {%- endif -%}
