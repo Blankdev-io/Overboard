@@ -107,7 +107,7 @@
         let productID = card.getAttribute('data-product-id');
         console.log('Processing card with productID:', productID);
 
-        let variantOptions = document.querySelectorAll('.variant-value');
+        let variantOptions = card.querySelectorAll('.variant-value[data-product-id="' + productID + '"]');
         let productPrice = card.querySelector('.price-item[data-price-productid="' + productID + '"]');
         let variantInput = card.querySelector('.product-variant-id[data-variant-productid="' + productID + '"]');
 
@@ -121,9 +121,6 @@
             variantId: variantId,
             variantPrice: variantPrice,
           });
-
-
-          
 
           if (!variantId) {
             option.classList.add('variant-unavailable');
