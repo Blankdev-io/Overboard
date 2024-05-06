@@ -34,7 +34,6 @@
 {% endstyle %}
 {%- unless product.has_only_default_variant -%}
   <form
-    id="form-{{ product.id }}"
     action="/cart/add"
     method="post"
     enctype="multipart/form-data"
@@ -50,6 +49,7 @@
               {% if variant.options contains value and variant.available %}
                 <div
                   class="variant-value variant-value-new"
+                  data-product-id="{{ product.id }}"
                   data-value="{{ value }}"
                   data-option="{{ option.name }}"
                   data-variant-id="{{ variant.id }}"
