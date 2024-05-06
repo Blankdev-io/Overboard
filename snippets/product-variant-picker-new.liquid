@@ -323,10 +323,10 @@ function updateVariantSelection(element) {
   var variantId = element.getAttribute('data-variant-id');
   var variantPrice = element.getAttribute('data-variant-price');
   var variantImageSrc = element.getAttribute('data-variant-image');
-  var allVariants = document.querySelectorAll('.variant-value');
+  var optionGroup = element.closest('.variant-values'); // Get the parent container of the variant values for the specific option
 
-  // Remove the selected class from all variant values
-  allVariants.forEach(function(v) {
+  // Remove the selected class only from siblings in the same option group
+  optionGroup.querySelectorAll('.variant-value').forEach(function(v) {
     v.classList.remove('selected');
   });
 
@@ -351,21 +351,15 @@ function updateVariantSelection(element) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  // Automatically select the first available variant
-  const firstAvailableVariant = document.querySelector('.variant-value:not(.variant-unavailable)');
-  if (firstAvailableVariant) {
-    firstAvailableVariant.click();
-  }
+  // Automatically select the first available variant for each option type
+  document.querySelectorAll('.variant-values').forEach(function(group) {
+    const firstAvailable = group.querySelector('.variant-value:not(.variant-unavailable)');
+    if (firstAvailable) {
+      firstAvailable.click();
+    }
+  });
 });
 
-
-document.addEventListener('DOMContentLoaded', function() {
-  // Automatically select the first available variant
-  const firstAvailableVariant = document.querySelector('.variant-value:not(.variant-unavailable)');
-  if (firstAvailableVariant) {
-    firstAvailableVariant.click();
-  }
-});
 </script>
 
   <script>
