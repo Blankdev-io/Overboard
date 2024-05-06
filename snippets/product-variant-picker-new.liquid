@@ -101,37 +101,38 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      let variantOptions = document.querySelectorAll('.variant-value');
-      let productPrice = document.querySelector('.price-item'); // Ensure this selector matches the element where the price is displayed.
-      let variantInput = document.querySelector('.product-variant-id');
+      document.querySelectorAll('.card-wrapper').forEach(function (card) {
+        let variantOptions = document.querySelectorAll('.variant-value');
+        let productPrice = document.querySelector('.price-item'); // Ensure this selector matches the element where the price is displayed.
+        let variantInput = document.querySelector('.product-variant-id');
 
-      variantOptions.forEach((option) => {
-        option.addEventListener('click', function () {
-          // Remove 'selected' class from all options and then add to the clicked one
-          variantOptions.forEach((opt) => opt.classList.remove('selected'));
-          option.classList.add('selected');
+        variantOptions.forEach((option) => {
+          option.addEventListener('click', function () {
+            // Remove 'selected' class from all options and then add to the clicked one
+            variantOptions.forEach((opt) => opt.classList.remove('selected'));
+            option.classList.add('selected');
 
-          let variantId = option.getAttribute('data-variant-id');
-          let variantPrice = option.getAttribute('data-variant-price');
+            let variantId = option.getAttribute('data-variant-id');
+            let variantPrice = option.getAttribute('data-variant-price');
 
-          // Update the hidden input value if necessary
-          if (variantInput) {
-            variantInput.value = variantId;
-          }
+            // Update the hidden input value if necessary
+            if (variantInput) {
+              variantInput.value = variantId;
+            }
 
-          // Update the price display
-          if (productPrice && variantPrice) {
-            productPrice.textContent = variantPrice;
-          }
-    
+            // Update the price display
+            if (productPrice && variantPrice) {
+              productPrice.textContent = variantPrice;
+            }
+          });
         });
-      });
 
-      // Optionally, select the first available variant on page load
-      const firstAvailableVariant = document.querySelector('.variant-value:not(.variant-unavailable)');
-      if (firstAvailableVariant) {
-        firstAvailableVariant.click();
-      }
+        // Optionally, select the first available variant on page load
+        const firstAvailableVariant = document.querySelector('.variant-value:not(.variant-unavailable)');
+        if (firstAvailableVariant) {
+          firstAvailableVariant.click();
+        }
+      });
     });
   </script>
 {%- endunless -%}
