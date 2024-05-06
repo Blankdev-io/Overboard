@@ -320,38 +320,8 @@ document.addEventListener('DOMContentLoaded', function() {
   var productImage = document.querySelector('.product__media img');
   var productPrice = document.querySelector('.price-item');
   var variantInput = document.querySelector('.product-variant-id');
-  var allVariants = {{ product.variants | json }};
-
-  function updateVariantAvailability(selectedOption) {
-    const selectedOptions = {};
-    selectedOption.closest('form').querySelectorAll('.variant-value.selected').forEach(el => {
-      selectedOptions[el.dataset.option] = el.dataset.value;
-    });
-
-    variantOptions.forEach(option => {
-      const optionVariants = allVariants.filter(v => 
-        v.options[option.dataset.option] === option.dataset.value &&
-        Object.keys(selectedOptions).every(key => 
-          v.options[key] === selectedOptions[key] || key === option.dataset.option
-        )
-      );
-
-      if (optionVariants.length === 0) {
-        option.classList.add('variant-unavailable');
-        option.classList.remove('selected');
-        option.disabled = true; // Disable the button if it's a button element
-      } else {
-        option.classList.remove('variant-unavailable');
-        option.disabled = false; // Enable the button if applicable
-      }
-    });
-  }
 
   function updateVariantSelection(element) {
-    if (element.classList.contains('variant-unavailable')) {
-      return; // Prevent selection of unavailable variants
-    }
-
     var variantId = element.getAttribute('data-variant-id');
     var variantPrice = element.getAttribute('data-variant-price');
     var variantImageSrc = element.getAttribute('data-variant-image');
@@ -368,9 +338,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (productImage && variantImageSrc) productImage.src = variantImageSrc;
     if (productPrice) productPrice.textContent = variantPrice;
     document.querySelector('.product-form__cart-submit').disabled = false;
-
-    // Update the availability of other options based on the current selection
-    updateVariantAvailability(element);
   }
 
   variantOptions.forEach(option => {
@@ -388,7 +355,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
-
 
                   
   {%- endif -%}
