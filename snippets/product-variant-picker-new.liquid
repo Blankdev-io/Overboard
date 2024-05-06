@@ -40,7 +40,6 @@
     method="post"
     enctype="multipart/form-data"
     novalidate="novalidate"
-    class="product-form"
   >
     {% for option in product.options_with_values %}
       <div class="variant-option">
@@ -103,33 +102,63 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      document.querySelectorAll('.product-form').forEach(function (form) {
-        var variantOptions = form.querySelectorAll('.variant-value');
-        var productPrice = form.querySelector('.price-item--regular'); // Adjust the selector if necessary
+      var variantOptions = document.querySelectorAll('.variant-value');
+      var productImage = document.querySelector('.product__media img');
+      var productPrice = document.querySelector('.price-item');
+      var variantInput = document.querySelector('.product-variant-id');
 
-        variantOptions.forEach(function (option) {
+      variantOptions.forEach((option) => {
+        var value = option.getAttribute('data-value');
+        var optionType = option.getAttribute('data-option');
+        var variantId = option.getAttribute('data-variant-id');
+        var variantPrice = option.getAttribute('data-variant-price');
+        var variantImageSrc = option.getAttribute('data-variant-image');
+
+        // Set up the variant map
+        if (variantMap.colors[value]) {
+          option.style.backgroundColor = variantMap.colors[value];
+        } else if (variantMap.sizes[value]) {
+          option.textContent = variantMap.sizes[value];
+          option.classList.add('text-type');
+        } else {
+          option.textContent = value;
+          option.classList.add('text-type');
+        }
+
+        // Handle unavailable variants
+        if (!variantId) {
+          option.classList.add('variant-unavailable');
+          option.style.pointerEvents = 'none';
+          option.style.opacity = '0.5';
+        } else {
           option.addEventListener('click', function () {
+            // Update selected variant
             variantOptions.forEach((opt) => opt.classList.remove('selected'));
             option.classList.add('selected');
 
-            var variantId = option.getAttribute('data-variant-id');
-            var variantPrice = option.getAttribute('data-variant-price');
+            if (variantInput) {
+              variantInput.value = variantId;
+            }
 
-            // Update the price in this specific form
+            // Update Shopify's variant selector
+            var variantSelect = document.querySelector('select[name=id]');
+            if (variantSelect) {
+              variantSelect.value = variantId;
+            }
+
+            // Update the price
             if (productPrice && variantPrice) {
               productPrice.textContent = variantPrice;
             }
-
-            // Further logic to handle image updates, etc., should also be scoped to this form
           });
-        });
-
-        // Optionally, select the first available variant on load
-        const firstAvailableVariant = form.querySelector('.variant-value:not(.variant-unavailable)');
-        if (firstAvailableVariant) {
-          firstAvailableVariant.click();
         }
       });
+
+      // Automatically select the first available variant
+      const firstAvailableVariant = document.querySelector('.variant-value:not(.variant-unavailable)');
+      if (firstAvailableVariant) {
+        firstAvailableVariant.click();
+      }
     });
   </script>
 {%- endunless -%}
