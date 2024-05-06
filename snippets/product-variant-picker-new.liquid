@@ -101,26 +101,33 @@
 
   <script>
     function updateVariantSelection(element) {
-      const productCard = element.closest('.product-card'); // Adjust selector as necessary to match your structure
+      // Adjusting the closest method to target 'card__content' which seems like the closest logical container based on your HTML
+      const productCard = element.closest('.card__content');
+
+      if (!productCard) {
+        console.error('Product card container not found!');
+        return; // Exit the function if productCard is null
+      }
 
       var variantId = element.getAttribute('data-variant-id');
       var variantPrice = element.getAttribute('data-variant-price');
       var variantImageSrc = element.getAttribute('data-variant-image');
 
-      // Update hidden input for variant ID, scoped to the current product card
+      // Find the variant input within the card
       const variantInput = productCard.querySelector('.product-variant-id');
-      variantInput.value = variantId;
+      if (variantInput) variantInput.value = variantId;
 
-      // Update the price and image display, scoped to the current product card
+      // Find and update the price display within the card
       const priceDisplay = productCard.querySelector('.price-item');
       if (priceDisplay) priceDisplay.textContent = variantPrice;
 
+      // Optionally update the product image within the card
       const productImage = productCard.querySelector('.product__media img');
       if (productImage) productImage.src = variantImageSrc;
 
       // Enable the Add to Cart button if the variant is available
       const cartButton = productCard.querySelector('.product-form__cart-submit');
-      cartButton.disabled = false;
+      if (cartButton) cartButton.disabled = false;
     }
 
     document.addEventListener('DOMContentLoaded', function () {
