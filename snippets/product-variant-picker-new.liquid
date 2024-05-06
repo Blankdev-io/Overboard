@@ -123,13 +123,7 @@
           if (productPrice && variantPrice) {
             productPrice.textContent = variantPrice;
           }
-
-          // Optionally, update other elements like images, etc.
-          // Example for updating image:
-          let variantImageSrc = option.getAttribute('data-variant-image');
-          if (variantImageSrc) {
-            document.querySelector('.product__media img').src = variantImageSrc;
-          }
+    
         });
       });
 
