@@ -28,12 +28,11 @@
   }
 
   .variant-value.variant-unavailable {
-    opacity: 0.5;
-    cursor: not-allowed;
-    opacity: 0.5;
     cursor: not-allowed;
     background-color: #f0f0f0;
-    color: #000;
+    color: #ccc; /* Gray out text to show it's not selectable */
+    border-color: #ccc; /* Optionally add a gray border */
+    opacity: 0.5; /* Optionally reduce opacity */
   }
 {% endstyle %}
 {%- unless product.has_only_default_variant -%}
@@ -46,7 +45,7 @@
     {% for option in product.options_with_values %}
       <div class="variant-option">
         <h3>{{ option.name }}</h3>
-        <div class="variant-values">
+        <div class="variant-values" style="display: inline-flex;">
           {% for value in option.values %}
             {% assign variant_found = false %}
             {% for variant in product.variants %}
