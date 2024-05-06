@@ -62,6 +62,9 @@
 
   {%- else -%}
     {{ 'variant-map.js' | asset_url | script_tag }}
+    <script id="variant-json" type="application/json">
+      {{ product.variants | json }}
+    </script>
 
     <form
       action="/cart/add"
@@ -191,8 +194,4 @@
       });
     }
   });
-</script>
-
-<script id="variant-json" type="application/json">
-  {{ product.variants | json }}
 </script>
