@@ -105,10 +105,10 @@
 
       let form = document.querySelector('form[id^="form-"]');
 
-      let variantOptions = document.querySelectorAll('.variant-value');
-      let productImage = document.querySelector('.product__media img');
-      let productPrice = document.querySelector('.price-item');
-      let variantInput = document.querySelector('.product-variant-id');
+      let variantOptions = form.document.querySelectorAll('.variant-value');
+      let productImage = form.document.querySelector('.product__media img');
+      let productPrice = form.document.querySelector('.price-item');
+      let variantInput = form.document.querySelector('.product-variant-id');
 
       variantOptions.forEach((option) => {
         let value = option.getAttribute('data-value');
@@ -144,7 +144,7 @@
             }
 
             // Update Shopify's variant selector
-            let variantSelect = document.querySelector('select[name=id]');
+            let variantSelect = form.document.querySelector('select[name=id]');
             if (variantSelect) {
               variantSelect.value = variantId;
             }
