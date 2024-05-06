@@ -159,7 +159,6 @@
               {% comment %}theme-check-enable ImgLazyLoading{% endcomment %}
 
               {%- if card_product.media[1] != null and show_secondary_image -%}
-              <div>
                 <img
                   srcset="
                     {%- if card_product.media[1].width >= 165 -%}{{ card_product.media[1] | image_url: width: 165 }} 165w,{%- endif -%}
@@ -178,7 +177,9 @@
                   width="{{ card_product.media[1].width }}"
                   height="{{ card_product.media[1].height }}"
                 >
-                <!-- Variant Picker -->
+              {%- endif -%}
+
+                  <!-- Variant Picker -->
                   {%- if show_variants and card_product.variants.size > 1 -%}
                       {%- unless card_product.tags contains 'Boards' -%}
                         <div class="only-mobile card__variants">
@@ -186,9 +187,6 @@
                         </div>
                       {%- endunless -%}
                   {%- endif -%}
-              {%- endif -%}
-
-              </div>
             </div>
           </div>
         {%- endif -%}
