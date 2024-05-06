@@ -102,58 +102,38 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       let variantOptions = document.querySelectorAll('.variant-value');
-      let productImage = document.querySelector('.product__media img');
-      let productPrice = document.querySelector('.price-item');
+      let productPrice = document.querySelector('.price-item'); // Ensure this selector matches the element where the price is displayed.
       let variantInput = document.querySelector('.product-variant-id');
 
       variantOptions.forEach((option) => {
-        let value = option.getAttribute('data-value');
-        let optionType = option.getAttribute('data-option');
-        let variantId = option.getAttribute('data-variant-id');
-        let variantPrice = option.getAttribute('data-variant-price');
-        let variantImageSrc = option.getAttribute('data-variant-image');
+        option.addEventListener('click', function () {
+          // Remove 'selected' class from all options and then add to the clicked one
+          variantOptions.forEach((opt) => opt.classList.remove('selected'));
+          option.classList.add('selected');
 
-        // Set up the variant map
-        if (variantMap.colors[value]) {
-          option.style.backgroundColor = variantMap.colors[value];
-        } else if (variantMap.sizes[value]) {
-          option.textContent = variantMap.sizes[value];
-          option.classList.add('text-type');
-        } else {
-          option.textContent = value;
-          option.classList.add('text-type');
-        }
+          let variantId = option.getAttribute('data-variant-id');
+          let variantPrice = option.getAttribute('data-variant-price');
 
-        // Handle unavailable variants
-        if (!variantId) {
-          option.classList.add('variant-unavailable');
-          option.style.pointerEvents = 'none';
-          option.style.opacity = '0.5';
-        } else {
-          option.addEventListener('click', function () {
-            // Update selected variant
-            variantOptions.forEach((opt) => opt.classList.remove('selected'));
-            option.classList.add('selected');
+          // Update the hidden input value if necessary
+          if (variantInput) {
+            variantInput.value = variantId;
+          }
 
-            if (variantInput) {
-              variantInput.value = variantId;
-            }
+          // Update the price display
+          if (productPrice && variantPrice) {
+            productPrice.textContent = variantPrice;
+          }
 
-            // Update Shopify's variant selector
-            let variantSelect = document.querySelector('select[name=id]');
-            if (variantSelect) {
-              variantSelect.value = variantId;
-            }
-
-            // Update the price
-            if (productPrice && variantPrice) {
-              productPrice.textContent = variantPrice;
-            }
-          });
-        }
+          // Optionally, update other elements like images, etc.
+          // Example for updating image:
+          let variantImageSrc = option.getAttribute('data-variant-image');
+          if (variantImageSrc) {
+            document.querySelector('.product__media img').src = variantImageSrc;
+          }
+        });
       });
 
-      // Automatically select the first available variant
+      // Optionally, select the first available variant on page load
       const firstAvailableVariant = document.querySelector('.variant-value:not(.variant-unavailable)');
       if (firstAvailableVariant) {
         firstAvailableVariant.click();
