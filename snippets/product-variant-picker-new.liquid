@@ -245,11 +245,11 @@
         productPrice.textContent = variantPrice;
       }
 
-      if (Object.keys(variantState).length === variantOptions.length) {
+      // Compute the final Variant ID when all options are selected
+      if (Object.keys(variantState).length === document.querySelectorAll('.variant-option').length) {
         const finalVariantId = computeFinalVariantId(variantState);
-        console.log('Final Variant ID:', finalVariantId);
-
         variantInput.value = finalVariantId;
+        console.log('Final Variant ID:', finalVariantId); // Debugging
       }
       // Here you need to ensure selectedOptionType and selectedOptionValue are derived from `option`.
       const selectedOptionType = option.getAttribute('data-option');
@@ -290,8 +290,25 @@
       }
     }
 
-    function computeFinalVariantId(state) {
-      return Object.values(state).join('-');
+    function computeFinalVariantId(variantState) {
+      // Assume you have a mapping or function to convert the selected options to a final variant index
+      let optionsArray = Object.keys(variantState).map((key) => parseInt(variantState[key]));
+      return optionsToVariantIndex(optionsArray);
+    }
+
+    function optionsToVariantIndex(options) {
+      // Translate your option selection to a variant index
+      let addcumulator = 0;
+      let multcumulator;
+      for (let i = 0; i < options.length - 1; i++) {
+        multcumulator = options[i];
+        for (let j = i + 1; j < optionSizes.length; j++) {
+          multcumulator *= optionSizes[j];
+        }
+        addcumulator += multcumulator;
+      }
+      addcumulator += options[options.length - 1];
+      return addcumulator;
     }
   </script>
 {%- endunless -%}
