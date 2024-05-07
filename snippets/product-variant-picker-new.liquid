@@ -186,18 +186,11 @@
               // Logic to update the hidden input field and product price display
               // If all necessary variant types have been selected (e.g., both size and color)
               // This logic could be customized based on what should trigger an update
-              if (Object.keys(variantState).length === card.querySelectorAll('.variant-option').length) {
-                // Example logic to set the hidden input field
-                // Could use the last selected variantId or a generated ID from combining all selections
-                variantInput.value = variantId; // or a custom function to generate a unified ID
-
-                // Example logic to update the displayed price
-                productPrice.textContent = variantPrice;
-
-                console.log('Submitting variant ID:', variantInput.value);
-
-                // Prevent form from submitting to the server so you can read the log
-                card.preventDefault();
+              if (Object.keys(variantState).length === variantCount) {
+                // Assuming your system can handle composite IDs
+                let compositeVariantId = computeCompositeVariantId(variantState);
+                variantInput.value = compositeVariantId;
+                console.log('All variants selected, composite ID:', compositeVariantId);
               }
             });
           }
