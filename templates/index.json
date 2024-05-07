@@ -295,7 +295,7 @@
         "heading_xFFd67": {
           "type": "heading",
           "settings": {
-            "heading": "Shop Opening Hours",
+            "heading": "GET IN TOUCH",
             "heading_size": "size32px",
             "bold": true,
             "underline": true,
@@ -305,7 +305,7 @@
         "text_Phgjed": {
           "type": "text",
           "settings": {
-            "text": "<p>Monday to Friday 9am - 5.30pm<br\/>Saturday 9am - 4pm<br\/>Sunday 10am - 4pm<br\/><br\/>info@overboardsurf.com.au<br\/><br\/>+61 242250644<\/p>",
+            "text": "<p><strong>OPENING HOURS<\/strong><\/p><p>Monday - Friday: 9:00am - 5:30pm<\/p><p>Saturday: 9:00am - 4:00pm<\/p><p>Sunday: 10:00am - 4:00pm<\/p>",
             "mobilecenter2": true,
             "text_style": "body"
           }
