@@ -11,8 +11,8 @@
 {% endcomment %}
 {% style %}
   .variant-value-new {
-    width: 35px;
-    height: 35px;
+    width: 29px;
+    height: 29px;
     font-size: 14px;
   }
 
@@ -27,24 +27,23 @@
     border-color: #333; /* Border color when selected */
   }
 
-.variant-value.variant-unavailable {
+  .variant-value.variant-unavailable {
     cursor: not-allowed;
     background-color: #f0f0f0;
     color: #ccc;
     border-color: #ccc;
     opacity: 0.5;
-
-}
-.variant-value.variant-unavailable {
+  }
+  .variant-value.variant-unavailable {
     background-image: linear-gradient(
-        45deg,
-        #f0f0f0 25%,
-        #ccc 25%,
-        #ccc 50%,
-        #f0f0f0 50%,
-        #f0f0f0 75%,
-        #ccc 75%,
-        #ccc 100%
+      45deg,
+      #f0f0f0 25%,
+      #ccc 25%,
+      #ccc 50%,
+      #f0f0f0 50%,
+      #f0f0f0 75%,
+      #ccc 75%,
+      #ccc 100%
     );
     background-size: 10px 10px;
   }
@@ -90,13 +89,12 @@
                 data-variant-image="{{ variant.featured_image | default: product.featured_image | img_url: 'master' }}"
               >
                 <!-- Placeholder for the value, filled by JavaScript -->
-                
-              {% if option.name == 'Size' %}
-               {{ value }}
-              {% else %}
-               <p>x</p>
-              {% endif %}
-               
+
+                {% if option.name == 'Size' %}
+                  {{ value }}
+                {% else %}
+                  <p>x</p>
+                {% endif %}
               </div>
             {% endunless %}
           {% endfor %}
