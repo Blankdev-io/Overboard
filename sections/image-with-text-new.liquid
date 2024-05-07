@@ -165,9 +165,20 @@
                     {{ block.shopify_attributes }}
                   >
                     {{ block.settings.text1 }}
-                    <div style="diplay:inline-flex">
-                      {{ block.settings.text2 }}
-                      {% if block.settings.maplinksvg %}{%- render 'icon-map-link' -%}{% endif %}
+                    <div style="display: inline-flex;">
+                      {% if block.settings.map_link_url %}
+                        <a href="{{ block.settings.map_link_url }}">
+                          {{ block.settings.text2 }}
+                          {% if block.settings.maplinksvg %}
+                            {%- render 'icon-map-link' -%}
+                          {% endif %}
+                        </a>
+                      {% else %}
+                        {{ block.settings.text2 }}
+                        {% if block.settings.maplinksvg %}
+                          {%- render 'icon-map-link' -%}
+                        {% endif %}
+                      {% endif %}
                     </div>
                   </div>
                 {%- when 'button' -%}
@@ -642,11 +653,17 @@
           "label": "t:sections.image-with-text.blocks.text.settings.text.label"
         },
         {
+          "type": "url",
+          "id": "map_link_url",
+          "label": "Map Link URL"
+        },
+        {
           "type": "richtext",
           "id": "text2",
           "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
           "label": "t:sections.image-with-text.blocks.text.settings.text.label"
         },
+
         {
           "type": "checkbox",
           "id": "mobilecenter2",
