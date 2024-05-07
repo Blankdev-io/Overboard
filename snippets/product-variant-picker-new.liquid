@@ -234,5 +234,37 @@
       // For demonstration, we're just joining IDs, but you might need specific logic based on your backend
       return Object.values(state).join('-');
     }
+
+    function isVariantAvailable(currentState, variantOption) {
+      // Assuming currentState contains previously selected variant details
+      // and variantOption is the currently being checked option element.
+      const productId = variantOption.getAttribute('data-product-id');
+      const selectedOptions = {
+        [variantOption.getAttribute('data-option')]: variantOption.getAttribute('data-value'),
+        ...Object.keys(currentState).reduce((acc, key) => {
+          acc[key] = currentState[key].value;
+          return acc;
+        }, {}),
+      };
+
+      return fetch('/api/check-availability', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          productId: productId,
+          options: selectedOptions,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          return data.isAvailable;
+        })
+        .catch((error) => {
+          console.error('Error checking variant availability:', error);
+          return false; // Assume unavailable on error
+        });
+    }
   </script>
 {%- endunless -%}
