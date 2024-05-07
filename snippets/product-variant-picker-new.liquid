@@ -263,8 +263,13 @@
           // Skip the currently selected type
           const elements = card.querySelectorAll(`.variant-value[data-option="${optionType}"]`);
           elements.forEach((element) => {
+            console.log('Element:', element); // Check if the element is correctly selected
+
             const value = element.getAttribute('data-value');
             const variantInfo = options[optionType][value];
+
+            console.log('Variant Info:', variantInfo); // Check if the variantInfo is correctly selected
+            conosle.log('Selected Option Type:', selectedOptionType); // Check if the selected option type is correctly selected
 
             // Check if the selected option's variantId matches any other option's variantId to determine availability
             let isAvailable = false;
