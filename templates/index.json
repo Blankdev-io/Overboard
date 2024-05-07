@@ -289,10 +289,10 @@
         "marginbot": 50
       }
     },
-    "39740940-dacf-4570-b5bd-7f0f7fd943fc": {
-      "type": "image-with-text",
+    "image_with_text_new_Y9MEtY": {
+      "type": "image-with-text-new",
       "blocks": {
-        "template--17024567967986__39740940-dacf-4570-b5bd-7f0f7fd943fc-heading-1": {
+        "heading_xFFd67": {
           "type": "heading",
           "settings": {
             "heading": "Shop Opening Hours",
@@ -302,7 +302,7 @@
             "mobilecenter": true
           }
         },
-        "template--17024567967986__39740940-dacf-4570-b5bd-7f0f7fd943fc-text-1": {
+        "text_Phgjed": {
           "type": "text",
           "settings": {
             "text": "<p>Monday to Friday 9am - 5.30pm<br\/>Saturday 9am - 4pm<br\/>Sunday 10am - 4pm<br\/><br\/>info@overboardsurf.com.au<br\/><br\/>+61 242250644<\/p>",
@@ -310,7 +310,7 @@
             "text_style": "body"
           }
         },
-        "template--17024567967986__39740940-dacf-4570-b5bd-7f0f7fd943fc-button-1": {
+        "button_tbrKCa": {
           "type": "button",
           "settings": {
             "button_label": "Shop Location",
@@ -320,7 +320,7 @@
             "mobilecenter3": true
           }
         },
-        "caption_fV99wJ": {
+        "caption_VC9x96": {
           "type": "caption",
           "settings": {
             "caption": "94 Flinders St, Wollongong NSW 2500, Australia",
@@ -330,10 +330,10 @@
         }
       },
       "block_order": [
-        "template--17024567967986__39740940-dacf-4570-b5bd-7f0f7fd943fc-heading-1",
-        "template--17024567967986__39740940-dacf-4570-b5bd-7f0f7fd943fc-text-1",
-        "template--17024567967986__39740940-dacf-4570-b5bd-7f0f7fd943fc-button-1",
-        "caption_fV99wJ"
+        "heading_xFFd67",
+        "text_Phgjed",
+        "button_tbrKCa",
+        "caption_VC9x96"
       ],
       "settings": {
         "image": "shopify:\/\/shop_images\/Frame_42.png",
@@ -489,7 +489,7 @@
     "features_collection_new_z8heeD",
     "151614d1-d5c0-4006-bb31-3638c6e51111",
     "24b56190-cee8-4490-89c3-37f560101186",
-    "39740940-dacf-4570-b5bd-7f0f7fd943fc",
+    "image_with_text_new_Y9MEtY",
     "eebbe087-efad-4081-a61b-bdace783286f",
     "16b76912-c1ba-497b-b47c-d17629b5a064"
   ]
