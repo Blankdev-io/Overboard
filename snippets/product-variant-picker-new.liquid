@@ -17,7 +17,7 @@
   }
 
   .variant-option {
-    height: 60px;
+    height: 50px;
   }
 
   .variant-value {
@@ -107,7 +107,7 @@
     {% endfor %}
 
     <!-- Hidden input to store selected variant ID -->
-    <input type="hidden" name="id" class="product-variant-id">
+    <input type="hidden" name="id" class="product-variant-id" data-variant-productid="{{ product.id }}">
 
     <!-- Add to Cart Button -->
     <button
@@ -167,6 +167,7 @@
               });
               option.classList.add('selected');
 
+              console.log(variantInput); // Check if the input element is correctly selected
               if (variantInput) {
                 variantInput.value = variantId;
               }
