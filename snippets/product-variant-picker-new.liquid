@@ -257,17 +257,20 @@
 
     function updateVariantAvailability(card, selectedOptionType, productID) {
       console.log('Updating variant availability for:', variantsAvailability[productID]);
-      console.log('Selected option type:', selectedOptionType);
       console.log('Product ID:', productID);
       console.log('Card:', card);
       console.log('Card:', card.querySelector('.variant-value'));
       const options = variantsAvailability[productID];
+
+      console.log('Options:', options);
+      console.log('Selected option type:', selectedOptionType);
       for (let optionType in options) {
         if (optionType !== selectedOptionType) {
           for (let value in options[optionType]) {
             const optionElement = card.querySelector(
               `.variant-value[data-option="${optionType}"][data-value="${value}"]`
             );
+            console.log('Option Element:', optionElement);
             if (optionElement) {
               const isAvailable = options[optionType][value].available;
               optionElement.classList.toggle('variant-unavailable', !isAvailable);
