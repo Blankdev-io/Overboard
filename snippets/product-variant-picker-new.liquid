@@ -257,6 +257,10 @@
 
     function updateVariantAvailability(card, selectedOptionType, productID) {
       console.log('Updating variant availability for:', variantsAvailability[productID]);
+      console.log('Selected option type:', selectedOptionType);
+      console.log('Product ID:', productID);
+      console.log('Card:', card);
+      console.log('Card:', card.querySelector('.variant-value'));
       const options = variantsAvailability[productID];
       for (let optionType in options) {
         if (optionType !== selectedOptionType) {
