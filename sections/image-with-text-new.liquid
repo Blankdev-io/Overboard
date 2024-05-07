@@ -30,6 +30,12 @@
     }
 
     @media screen and (min-width: 750px) {
+        .OBimagewithtext {
+      font-size: 22px !important;
+      color: black !important;
+      line-height: normal !important;
+      font-family: Plus Jakarta Sans, sans-serif !important;
+    }
   	.signup-form {
   display: flex; justify-content: space-between; align-items: center; flex-grow: 0; flex-shrink: 0; width: 455px; height: 40px; border-radius: 32px; border: 1px solid #030000;
   }
@@ -60,12 +66,7 @@
      	}
      }
 
-      .OBimagewithtext {
-      font-size: 22px !important;
-      color: black !important;
-      line-height: normal !important;
-      font-family: Plus Jakarta Sans, sans-serif !important;
-    }
+
 
     .image-with-text__content__new > * + * {
       margin-top: 3rem;
@@ -160,7 +161,7 @@
                 {%- when 'caption' -%}
                   <p
                     style="margin-top: 1rem;"
-                    class=" letter-spacing image-with-text__text image-with-text__text--caption {{ block.settings.text_style }} {{ block.settings.text_style }}--{{ block.settings.text_size }} {{ block.settings.text_style }}"
+                    class=" letter-spacing image-with-text__text image-with-text__text--caption mobilecenter {{ block.settings.text_style }} {{ block.settings.text_style }}--{{ block.settings.text_size }} {{ block.settings.text_style }}"
                     {{ block.shopify_attributes }}
                   >
                     {{ block.settings.caption | escape }}
