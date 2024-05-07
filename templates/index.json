@@ -347,7 +347,7 @@
           "type": "caption",
           "settings": {
             "caption": "By signing up, I agree with the data protection policy of Overboard.",
-            "text_style": "caption-with-letter-spacing",
+            "text_style": "subtitle",
             "text_size": "medium"
           }
         }
