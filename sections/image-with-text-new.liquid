@@ -1,35 +1,39 @@
 {{ 'component-image-with-text.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
-    .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
-    }
-
-    @media screen and (min-width: 750px) {
       .section-{{ section.id }}-padding {
-        padding-top: {{ section.settings.padding_top }}px;
-        padding-bottom: {{ section.settings.padding_bottom }}px;
+        padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+        padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
       }
-    }
 
-    @media screen and (max-width: 750px) {
-      .mobile-reverse {
-        flex-direction: column-reverse;
+      @media screen and (min-width: 750px) {
+        .section-{{ section.id }}-padding {
+          padding-top: {{ section.settings.padding_top }}px;
+          padding-bottom: {{ section.settings.padding_bottom }}px;
+        }
       }
-    }
 
-    @media screen and (min-width: 750px) {
-    #ContactSection {
-      align-items: flex-start !important;
-      margin-top: 1rem;
-    }
-    *:focus-visible {
-      outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
-      outline-offset: 0.3rem;
-      box-shadow:unset;
-    }
+      @media screen and (max-width: 750px) {
+        .mobile-reverse {
+          flex-direction: column-reverse;
+        }
+      }
+
+      @media screen and (min-width: 750px) {
+      #ContactSection {
+        align-items: flex-start !important;
+        margin-top: 1rem;
+      }
+      *:focus-visible {
+        outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
+        outline-offset: 0.3rem;
+        box-shadow:unset;
+      }
+      .image-with-text__content > * + * {
+    margin-top:3rem;
   }
+
+    }
 {%- endstyle -%}
 
 {%- liquid
@@ -80,7 +84,7 @@
         <div class="image-with-text__text-item grid__item align-self-center">
           <div
             id="ImageWithText--{{ section.id }}"
-            class="image-with-text__content{% if section.settings.noright2 %}2{% endif %} image-with-text__content--{{ section.settings.desktop_content_position }} image-with-text__content--desktop-{{ section.settings.desktop_content_alignment }} image-with-text__content--mobile-{{ section.settings.mobile_content_alignment }} image-with-text__content--{{ section.settings.height }} content-container{% unless remove_color_classes %} gradient color-{{ section.settings.color_scheme }}{% else %} background-transparent{% endunless %}"
+            class="image-with-text__content__new{% if section.settings.noright2 %}2{% endif %} image-with-text__content__new--{{ section.settings.desktop_content_position }} image-with-text__content__new--desktop-{{ section.settings.desktop_content_alignment }} image-with-text__content__new--mobile-{{ section.settings.mobile_content_alignment }} image-with-text__content__new--{{ section.settings.height }} content-container{% unless remove_color_classes %} gradient color-{{ section.settings.color_scheme }}{% else %} background-transparent{% endunless %}"
           >
             {%- for block in section.blocks -%}
               {% case block.type %}
@@ -206,7 +210,7 @@
     font-family: Plus Jakarta Sans, sans-serif !important;
   }
 
-  .image-with-text__content > * + * {
+  .image-with-text__content__new > * + * {
     margin-top: 3rem;
   }
   .round-button {
