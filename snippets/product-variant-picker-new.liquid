@@ -238,6 +238,16 @@
       variantState[variantType] = variantId;
       variantInput.value = variantId;
 
+      console.log(
+        'Variant Options:',
+        Array.from(document.querySelectorAll('.variant-option')).map((el) => el.textContent.trim())
+      );
+      console.log(
+        'Checking all options selected',
+        Object.keys(variantState).length,
+        document.querySelectorAll('.variant-option').length
+      );
+
       console.log('Variant Input', variantInput); // Check if the input element is correctly selected
       console.log('Variant State', variantState); // Check the current state of the variant picker
 
