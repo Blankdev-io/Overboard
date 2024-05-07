@@ -251,7 +251,9 @@
 
         variantInput.value = finalVariantId;
       }
-
+      // Here you need to ensure selectedOptionType and selectedOptionValue are derived from `option`.
+      const selectedOptionType = option.getAttribute('data-option');
+      const selectedOptionValue = option.getAttribute('data-value');
       updateVariantAvailability(card, selectedOptionType, selectedOptionValue, productID);
     }
 
@@ -260,22 +262,19 @@
 
       Object.keys(options).forEach((optionType) => {
         if (optionType !== selectedOptionType) {
-          // Skip the currently selected type
           const elements = card.querySelectorAll(`.variant-value[data-option="${optionType}"]`);
           elements.forEach((element) => {
-            console.log('Element:', element); // Check if the element is correctly selected
-
             const value = element.getAttribute('data-value');
             const variantInfo = options[optionType][value];
 
-            console.log('Variant Info:', variantInfo); // Check if the variantInfo is correctly selected
-            conosle.log('Selected Option Type:', selectedOptionType); // Check if the selected option type is correctly selected
+            console.log('Element:', element);
+            console.log('Variant Info:', variantInfo);
+            console.log('Selected Option Type:', selectedOptionType);
 
-            // Check if the selected option's variantId matches any other option's variantId to determine availability
-            let isAvailable = false;
-            if (variantInfo && variantInfo.variantId === options[selectedOptionType][selectedOptionValue].variantId) {
-              isAvailable = variantInfo.available;
-            }
+            let isAvailable =
+              variantInfo &&
+              variantInfo.variantId === options[selectedOptionType][selectedOptionValue].variantId &&
+              variantInfo.available;
 
             element.classList.toggle('variant-unavailable', !isAvailable);
             element.style.pointerEvents = isAvailable ? 'auto' : 'none';
