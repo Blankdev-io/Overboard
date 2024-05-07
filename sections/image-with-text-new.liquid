@@ -87,7 +87,10 @@
                     {{ block.settings.caption | escape }}
                   </p>
                 {%- when 'text' -%}
-                  <div class="image-with-text__text rte OBimagewithtext{% if block.settings.mobilecenter2 %} mobilecenter{% endif %} {{ block.settings.text_style }}" {{ block.shopify_attributes }}>
+                  <div
+                    class="image-with-text__text rte OBimagewithtext{% if block.settings.mobilecenter2 %} mobilecenter{% endif %} {{ block.settings.text_style }}"
+                    {{ block.shopify_attributes }}
+                  >
                     {{ block.settings.text }}
                   </div>
                 {%- when 'button' -%}
@@ -114,28 +117,28 @@
 </div>
 
 <style>
-  .OBimagewithtext{
+  .OBimagewithtext {
     font-size: 23px !important;
     color: black !important;
     line-height: normal !important;
   }
-  
-  .round-button{
-  border-radius: 40px;
-  height: 40px !important;
-  color: white;
-  background: black !important;
-  text-transform: uppercase;
-  font-size: 16px;
-  opacity: 1 !important;
-  cursor: pointer !important;
-  min-height: 40px !important;
-  max-height: 40px !important;
-  margin-top: 16px !important;
+
+  .round-button {
+    border-radius: 40px;
+    height: 40px !important;
+    color: white;
+    background: black !important;
+    text-transform: uppercase;
+    font-size: 16px;
+    opacity: 1 !important;
+    cursor: pointer !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
+    margin-top: 16px !important;
   }
 
-  .round-button:after{
-    display:none !important;
+  .round-button:after {
+    display: none !important;
   }
 
   @media only screen and (max-width: 768px) {
@@ -145,7 +148,6 @@
       max-height: 32px !important;
     }
   }
-
 </style>
 
 {% schema %}
@@ -556,7 +558,7 @@
   ],
   "presets": [
     {
-      "name": "t:sections.image-with-text.presets.name",
+      "name": "Image With Text New",
       "blocks": [
         {
           "type": "heading"
