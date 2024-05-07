@@ -204,5 +204,9 @@
         }
       });
     });
+
+    function computeCompositeVariantId(state) {
+      return Object.values(state).join('-');
+    }
   </script>
 {%- endunless -%}
