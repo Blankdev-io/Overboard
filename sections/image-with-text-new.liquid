@@ -21,9 +21,11 @@
     	flex-direction: column-reverse;
     	}
     	.signup-form {
-  	    margin-top: 1rem;
   display: flex; justify-content: space-between; align-items: center; flex-grow: 0; flex-shrink: 0; width: 369px; height: 40px; border-radius: 32px; border: 1px solid #030000;
   }
+  .signup-margin-top{
+  		margin-top: 1rem;
+     }
 
       .OBimagewithtext {
       font-size: 18px !important;
@@ -214,7 +216,10 @@
                     <strong style="margin-bottom: 1rem;">NEWSLETTER</strong>
                   </div>
 
-                  {%- form 'customer', id: 'ContactSection', class: 'footer__newsletter newsletter-form' -%}
+                  {%- form 'customer',
+                    id: 'ContactSection',
+                    class: 'footer__newsletter newsletter-form signup-margin-top'
+                  -%}
                     <div
                       class="mobilecenter signup-form"
                     >
