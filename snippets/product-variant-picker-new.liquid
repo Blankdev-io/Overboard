@@ -131,19 +131,6 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      const form = document.querySelector('form');
-      form.addEventListener('submit', function (e) {
-        let variantInput = card.querySelector('.product-variant-id[data-variant-productid="' + productID + '"]');
-        console.log('Submitting variant ID:', variantInput.value);
-
-        // Prevent form from submitting to the server so you can read the log
-        e.preventDefault();
-
-        // After checking the console, you can manually allow the form to submit, if needed:
-        // Uncomment the next line to proceed with the form submission after your checks
-        // form.submit();
-      });
-
       document.querySelectorAll('.product-card-wrapper').forEach(function (card) {
         let productID = card.getAttribute('data-product-id');
         let variantState = {};
@@ -206,6 +193,11 @@
 
                 // Example logic to update the displayed price
                 productPrice.textContent = variantPrice;
+
+                console.log('Submitting variant ID:', variantInput.value);
+
+                // Prevent form from submitting to the server so you can read the log
+                card.preventDefault();
               }
             });
           }
