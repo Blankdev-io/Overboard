@@ -316,7 +316,7 @@
             "text1": "<p><strong>LOCATION<\/strong><\/p>",
             "map_link_url": "https:\/\/maps.app.goo.gl\/mMrdh7FkSmboRBuH9",
             "text2": "<p><a href=\"https:\/\/maps.app.goo.gl\/mMrdh7FkSmboRBuH9\" target=\"_blank\" title=\"https:\/\/maps.app.goo.gl\/mMrdh7FkSmboRBuH9\">94 Flinders St Wollongong NSW 2500<\/a><\/p>",
-            "mobilecenter2": false,
+            "mobilecenter2": true,
             "maplinksvg": true,
             "text_style": "body"
           }
