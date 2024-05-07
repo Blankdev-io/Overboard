@@ -221,12 +221,17 @@
       variantState[variantType] = variantId;
       variantInput.value = variantId;
 
+      console.log('Variant Input', variantInput); // Check if the input element is correctly selected
+      console.log('Variant State', variantState); // Check the current state of the variant picker
+
       if (productPrice && variantPrice) {
         productPrice.textContent = variantPrice;
       }
 
       if (Object.keys(variantState).length === variantOptions.length) {
         const finalVariantId = computeFinalVariantId(variantState);
+        console.log('Final Variant ID:', finalVariantId);
+
         variantInput.value = finalVariantId;
       }
     }
