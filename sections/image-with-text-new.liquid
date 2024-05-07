@@ -1,87 +1,100 @@
 {{ 'component-image-with-text.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
-  .section-{{ section.id }}-padding {
-  	padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-  	padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
-  }
-
-  @media screen and (min-width: 750px) {
-  	.section-{{ section.id }}-padding {
-  	padding-top: {{ section.settings.padding_top }}px;
-  	padding-bottom: {{ section.settings.padding_bottom }}px;
-  	}
-  }
-
-  @media screen and (max-width: 750px) {
-  	.mobile-reverse {
-  	flex-direction: column-reverse;
-  	}
-  }
-
-  @media screen and (min-width: 750px) {
-  #ContactSection {
-  	align-items: flex-start !important;
-  	margin-top: 1rem;
-  }
-  *:focus-visible {
-  	outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
-  	outline-offset: 0.3rem;
-
-  	box-shadow:unset;
-  }
-  .image-with-text__content__new{
-   	margin-top:3rem;
-   	align-items: flex-start;
-   	display: flex;
-   	flex-direction: column;
-   	height: 100%;
-   	justify-content: center;
-   	align-self: center;
-   	padding: 4rem calc(4rem / var(--font-body-scale)) 5rem;
-   	position: relative;
-   	z-index: 1;
-   	}
-   	.letter-spacing{
-   	  letter-spacing: 0.05rem;
-   	}
-   }
-
-    .OBimagewithtext {
-    font-size: 22px !important;
-    color: black !important;
-    line-height: normal !important;
-    font-family: Plus Jakarta Sans, sans-serif !important;
-  }
-
-  .image-with-text__content__new > * + * {
-    margin-top: 3rem;
-  }
-  .round-button {
-    border-radius: 40px;
-    height: 40px !important;
-    color: white;
-    background: black !important;
-    text-transform: uppercase;
-    font-size: 16px;
-    opacity: 1 !important;
-    cursor: pointer !important;
-    min-height: 40px !important;
-    max-height: 40px !important;
-    margin-top: 16px !important;
-  }
-
-  .round-button:after {
-    display: none !important;
-  }
-
-  @media only screen and (max-width: 768px) {
-    .round-button {
-      font-size: 13px;
-      min-height: 32px !important;
-      max-height: 32px !important;
+    .section-{{ section.id }}-padding {
+    	padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    	padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
     }
+
+    @media screen and (min-width: 750px) {
+    	.section-{{ section.id }}-padding {
+    	padding-top: {{ section.settings.padding_top }}px;
+    	padding-bottom: {{ section.settings.padding_bottom }}px;
+    	}
+    }
+
+    @media screen and (max-width: 750px) {
+    	.mobile-reverse {
+    	flex-direction: column-reverse;
+    	}
+    	.signup-form {
+  display: flex; justify-content: space-between; align-items: center; flex-grow: 0; flex-shrink: 0; width: 369px; height: 40px; border-radius: 32px; border: 1px solid #030000;
   }
+
+      .OBimagewithtext {
+      font-size: 18px !important;
+      color: black !important;
+      line-height: normal !important;
+      font-family: Plus Jakarta Sans, sans-serif !important;
+    }
+    }
+
+    @media screen and (min-width: 750px) {
+  	.signup-form {
+  display: flex; justify-content: space-between; align-items: center; flex-grow: 0; flex-shrink: 0; width: 455px; height: 40px; border-radius: 32px; border: 1px solid #030000;
+  }
+
+    #ContactSection {
+    	align-items: flex-start !important;
+    	margin-top: 1rem;
+    }
+    *:focus-visible {
+    	outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
+    	outline-offset: 0.3rem;
+    	box-shadow:unset;
+    }
+    .image-with-text__content__new{
+     	margin-top:3rem;
+     	align-items: flex-start;
+     	display: flex;
+     	flex-direction: column;
+     	height: 100%;
+     	justify-content: center;
+     	align-self: center;
+     	padding: 4rem calc(4rem / var(--font-body-scale)) 5rem;
+     	position: relative;
+     	z-index: 1;
+     	}
+     	.letter-spacing{
+     	  letter-spacing: 0.05rem;
+     	}
+     }
+
+      .OBimagewithtext {
+      font-size: 22px !important;
+      color: black !important;
+      line-height: normal !important;
+      font-family: Plus Jakarta Sans, sans-serif !important;
+    }
+
+    .image-with-text__content__new > * + * {
+      margin-top: 3rem;
+    }
+    .round-button {
+      border-radius: 40px;
+      height: 40px !important;
+      color: white;
+      background: black !important;
+      text-transform: uppercase;
+      font-size: 16px;
+      opacity: 1 !important;
+      cursor: pointer !important;
+      min-height: 40px !important;
+      max-height: 40px !important;
+      margin-top: 16px !important;
+    }
+
+    .round-button:after {
+      display: none !important;
+    }
+
+    @media only screen and (max-width: 768px) {
+      .round-button {
+        font-size: 13px;
+        min-height: 32px !important;
+        max-height: 32px !important;
+      }
+    }
 {%- endstyle -%}
 
 {%- liquid
@@ -190,7 +203,7 @@
                   {%- endif -%}
                 {%- when 'newsletter' -%}
                   <div
-                    class="letter-spacing image-with-text__text rte OBimagewithtext{% if block.settings.mobilecenter2 %} mobilecenter{% endif %} {{ block.settings.text_style }}"
+                    class="letter-spacing image-with-text__text rte OBimagewithtext mobilecenter{{ block.settings.text_style }}"
                     {{ block.shopify_attributes }}
                   >
                     <strong style="margin-bottom: 1rem;">NEWSLETTER</strong>
@@ -198,7 +211,7 @@
 
                   {%- form 'customer', id: 'ContactSection', class: 'footer__newsletter newsletter-form' -%}
                     <div
-                      style="display: flex; justify-content: space-between; align-items: center; flex-grow: 0; flex-shrink: 0; width: 455px; height: 40px; border-radius: 32px; border: 1px solid #030000;"
+                      class="mobilecenter signup-form"
                     >
                       <div
                         style="display: flex; justify-content: center; align-items: center; flex-grow: 0; flex-shrink: 0; height: 40px; position: relative; gap: 10px; padding: 12px 24px; border-top-left-radius: 50px; border-bottom-left-radius: 50px; background-color: #030000;"
