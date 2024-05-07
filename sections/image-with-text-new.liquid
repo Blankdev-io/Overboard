@@ -164,9 +164,9 @@
                     class="letter-spacing image-with-text__text rte {% if block.settings.mobilecenter2 %} mobilecenter{% endif %} {{ block.settings.text_style }}"
                     {{ block.shopify_attributes }}
                   >
-                    {{ block.settings.text }}
+                    {{ block.settings.text1 }}
                     <div>
-                      {{ block.settings.text }}
+                      {{ block.settings.text2 }}
                       {% if block.settings.maplinksvg %}{%- render 'icon-map-link' -%}{% endif %}
                     </div>
                   </div>
@@ -638,12 +638,18 @@
     },
     {
       "type": "text3",
-      "name": "Text",
+      "name": "t:sections.image-with-text.blocks.text3.name",
       "limit": 4,
       "settings": [
         {
           "type": "richtext",
-          "id": "text3",
+          "id": "text1",
+          "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+          "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+        },
+        {
+          "type": "richtext",
+          "id": "text2",
           "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
           "label": "t:sections.image-with-text.blocks.text.settings.text.label"
         },
