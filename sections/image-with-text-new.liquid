@@ -156,10 +156,8 @@
                     class="image-with-text__text rte OBimagewithtext{% if block.settings.mobilecenter2 %} mobilecenter{% endif %} {{ block.settings.text_style }}"
                     {{ block.shopify_attributes }}
                   >
-                    <div style="display:inline-flex">
-                      {{ block.settings.text }}
-                      {% if block.settings.maplinksvg %}{%- render 'icon-map-link' -%}{% endif %}
-                    </div>
+                    {{ block.settings.text }}
+                    {% if block.settings.maplinksvg %}{%- render 'icon-map-link' -%}{% endif %}
                   </div>
                 {%- when 'button' -%}
                   {%- if block.settings.button_label != blank -%}
