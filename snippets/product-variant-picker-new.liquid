@@ -255,25 +255,21 @@
       updateVariantAvailability(card, variantType, productID);
     }
 
-    function updateVariantAvailability(card, selectedOptionType, productID, variantState) {
-      console.log('Updating variant availability for:', variantsAvailability[productID]);
-      const options = variantsAvailability[productID];
-      const allOptionTypes = Object.keys(options);
+    function updateVariantAvailability(card, selectedOptionType, selectedOptionValue, productID) {
+      const options = variantsAvailability; // Assuming this is the root object you're working with
 
-      // Get all combinations of selections available for the non-selected option types
-      allOptionTypes.forEach((optionType) => {
+      Object.keys(options).forEach((optionType) => {
         if (optionType !== selectedOptionType) {
+          // Skip the currently selected type
           const elements = card.querySelectorAll(`.variant-value[data-option="${optionType}"]`);
           elements.forEach((element) => {
             const value = element.getAttribute('data-value');
-            let isAvailable = false;
+            const variantInfo = options[optionType][value];
 
-            // Check if there's any variant that matches this option's value with current selected options
-            for (const variant of options[optionType][value]) {
-              if (isVariantAvailable(variant, variantState, optionType, value)) {
-                isAvailable = true;
-                break;
-              }
+            // Check if the selected option's variantId matches any other option's variantId to determine availability
+            let isAvailable = false;
+            if (variantInfo && variantInfo.variantId === options[selectedOptionType][selectedOptionValue].variantId) {
+              isAvailable = variantInfo.available;
             }
 
             element.classList.toggle('variant-unavailable', !isAvailable);
@@ -281,17 +277,6 @@
           });
         }
       });
-    }
-
-    function isVariantAvailable(variant, variantState, currentOptionType, currentValue) {
-      let matches = true;
-      for (let [type, value] of Object.entries(variantState)) {
-        if (type !== currentOptionType && variant.options[type] !== value) {
-          matches = false;
-          break;
-        }
-      }
-      return matches && variant.options[currentOptionType] === currentValue && variant.available;
     }
 
     function selectFirstAvailableVariant(card) {
