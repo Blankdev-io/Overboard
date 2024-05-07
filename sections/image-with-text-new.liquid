@@ -166,19 +166,10 @@
                   >
                     {{ block.settings.text1 }}
                     <div style="display: inline-flex;">
-                      {% if block.settings.map_link_url %}
-                        <a href="{{ block.settings.map_link_url }}">
-                          {{ block.settings.text2 }}
-                          {% if block.settings.maplinksvg %}
-                            {%- render 'icon-map-link' -%}
-                          {% endif %}
-                        </a>
-                      {% else %}
+                      <a href="{{ block.settings.map_link_url }}">
                         {{ block.settings.text2 }}
-                        {% if block.settings.maplinksvg %}
-                          {%- render 'icon-map-link' -%}
-                        {% endif %}
-                      {% endif %}
+                        {%- render 'icon-map-link' -%}
+                      </a>
                     </div>
                   </div>
                 {%- when 'button' -%}
