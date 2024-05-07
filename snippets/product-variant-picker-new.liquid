@@ -132,7 +132,8 @@
   </form>
 
   <script>
-    
+    let variantsAvailability = {};
+
     document.addEventListener('DOMContentLoaded', function () {
       initializeProductCards();
     });
@@ -149,18 +150,31 @@
       let productPrice = card.querySelector('.price-item[data-price-productid="' + productID + '"]');
       let variantInput = card.querySelector('.product-variant-id[data-variant-productid="' + productID + '"]');
 
+      variantsAvailability[productID] = {}; // Initialize state for this product
+
       variantOptions.forEach((option) =>
-        setupVariantOption(option, variantState, variantOptions, productPrice, variantInput, card)
+        setupVariantOption(option, variantState, variantOptions, productPrice, variantInput, card, productID)
       );
 
       selectFirstAvailableVariant(card);
     }
 
-    function setupVariantOption(option, variantState, variantOptions, productPrice, variantInput, card) {
+    function setupVariantOption(option, variantState, variantOptions, productPrice, variantInput, card, productID) {
       let value = option.getAttribute('data-value');
       let variantType = option.getAttribute('data-option');
       let variantId = option.getAttribute('data-variant-id');
       let variantPrice = option.getAttribute('data-variant-price');
+      let isAvailable = option.getAttribute('data-available') === 'true';
+
+      // Update the global variants availability object
+      if (!variantsAvailability[productID][variantType]) {
+        variantsAvailability[productID][variantType] = {};
+      }
+      variantsAvailability[productID][variantType][value] = {
+        available: isAvailable,
+        variantId: variantId,
+        variantPrice: variantPrice,
+      };
 
       styleVariantOption(option, value);
 
@@ -177,7 +191,8 @@
             variantState,
             variantInput,
             productPrice,
-            card
+            card,
+            productID
           );
         });
       }
@@ -210,7 +225,8 @@
       variantState,
       variantInput,
       productPrice,
-      card
+      card,
+      productID
     ) {
       variantOptions.forEach((opt) => {
         if (opt.getAttribute('data-option') === variantType) {
@@ -234,6 +250,27 @@
         console.log('Final Variant ID:', finalVariantId);
 
         variantInput.value = finalVariantId;
+      }
+
+      updateVariantAvailability(card, variantType, productID);
+    }
+
+    function updateVariantAvailability(card, selectedOptionType, productID) {
+      console.log('Updating variant availability for:', variantsAvailability[productID]);
+      const options = variantsAvailability[productID];
+      for (let optionType in options) {
+        if (optionType !== selectedOptionType) {
+          for (let value in options[optionType]) {
+            const optionElement = card.querySelector(
+              `.variant-value[data-option="${optionType}"][data-value="${value}"]`
+            );
+            if (optionElement) {
+              const isAvailable = options[optionType][value].available;
+              optionElement.classList.toggle('variant-unavailable', !isAvailable);
+              optionElement.style.pointerEvents = isAvailable ? 'auto' : 'none';
+            }
+          }
+        }
       }
     }
 
