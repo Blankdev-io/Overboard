@@ -133,7 +133,39 @@
 
   <script>
     let variantsAvailability = {};
-
+    document.addEventListener('DOMContentLoaded', function() {
+      const variantsAvailability = {
+        {% for product in collections.all_products %}
+          "{{ product.id }}": {
+            {% for option in product.options_with_values %}
+              "{{ option.name | downcase }}": {
+                {% for value in option.values %}
+                  {% assign found = false %}
+                  {% for variant in product.variants %}
+                    {% if variant.options contains value %}
+                      "{{ value }}": {
+                        "available": {{ variant.available | json }},
+                        "variantId": "{{ variant.id }}",
+                        "price": "{{ variant.price | money_without_currency }}"
+                      },
+                      {% assign found = true %}
+                      {% break %}
+                    {% endif %}
+                  {% endfor %}
+                  {% unless found %}
+                    "{{ value }}": {
+                      "available": false,
+                      "variantId": "",
+                      "price": "0"
+                    }
+                  {% endunless %}
+                {% endfor %}
+              }
+            {% endfor %}
+          }
+        {% endfor %}
+      };
+    });
     document.addEventListener('DOMContentLoaded', function () {
       initializeProductCards();
     });
