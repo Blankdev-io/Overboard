@@ -133,14 +133,13 @@
 
   <script>
     let variantsAvailability = {};
+    let uniqueVariantTypes = new Set(); // Moved inside each product card setup
 
     document.addEventListener('DOMContentLoaded', function () {
       initializeProductCards();
     });
 
     function initializeProductCards() {
-      let uniqueVariantTypes = new Set(); // Moved inside each product card setup
-
       document.querySelectorAll('.product-card-wrapper').forEach(setupProductCard);
     }
 
