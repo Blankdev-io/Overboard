@@ -117,32 +117,40 @@
                   </div>
 
                   {%- form 'customer', id: 'ContactFooter', class: 'footer__newsletter newsletter-form' -%}
-                    <div class="flex justify-between items-center flex-grow-0 flex-shrink-0 w-[455px] h-10 rounded-[32px] border border-[#030000]">
-                      <!-- Submit Button -->
-                      <div class="flex justify-center items-center flex-grow-0 flex-shrink-0 h-10 relative gap-2.5 px-6 py-3 rounded-tl-[50px] rounded-bl-[50px] bg-[#030000]">
+                    <div
+                      style="display: flex; justify-content: space-between; align-items: center; flex-grow: 0; flex-shrink: 0; width: 455px; height: 40px; border-radius: 32px; border: 1px solid #030000;"
+                    >
+                      <div
+                        style="display: flex; justify-content: center; align-items: center; flex-grow: 0; flex-shrink: 0; height: 40px; position: relative; gap: 10px; padding: 12px 24px; border-top-left-radius: 50px; border-bottom-left-radius: 50px; background-color: #030000;"
+                      >
                         <button
                           type="submit"
                           name="commit"
                           id="Subscribe"
-                          class="text-base text-white bg-transparent border-0"
+                          style="background: none; border: none; color: white; font-size: 16px; text-align: left; cursor: pointer;"
+                          aria-label="{{ 'newsletter.button_label' | t }}"
                         >
                           SUBSCRIBE
                         </button>
                       </div>
-                      <!-- Email Input Field -->
-                      <div class="flex justify-start items-center self-stretch flex-grow relative gap-2.5 px-8 rounded-tr-[50px] rounded-br-[50px]">
+                      <div
+                        style="display: flex; justify-start; align-items: center; self-stretch; flex-grow: 1; position: relative; gap: 10px; padding: 0 32px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;"
+                      >
                         <input
                           id="NewsletterForm--{{ section.id }}"
                           type="email"
                           name="contact[email]"
-                          class="text-base text-[#030000] bg-transparent border-0 outline-none"
+                          class="field__input"
                           value="{{ form.email }}"
                           aria-required="true"
                           autocorrect="off"
                           autocapitalize="off"
                           autocomplete="email"
+                          style="flex-grow: 1; border: none; outline: none; font-size: 16px; color: #030000; background: transparent;"
                           {% if form.errors %}
-                            autofocus aria-invalid="true" aria-describedby="ContactFooter-error"
+                            autofocus
+                            aria-invalid="true"
+                            aria-describedby="ContactFooter-error"
                           {% elsif form.posted_successfully? %}
                             aria-describedby="ContactFooter-success"
                           {% endif %}
@@ -152,7 +160,7 @@
                       </div>
                     </div>
                     {%- if form.errors -%}
-                      <div class="newsletter-form__message form__message" id="ContactFooter-error">
+                      <div class="newsletter-form__message form__message" id="ContactFooter-error" style="color: red;">
                         {%- render 'icon-error' -%}
                         {{- form.errors.translated_fields.email | capitalize }}
                         {{ form.errors.messages.email -}}
@@ -164,6 +172,7 @@
                         id="ContactFooter-success"
                         tabindex="-1"
                         autofocus
+                        style="color: green;"
                       >
                         {% render 'icon-success' -%}
                         {{- 'newsletter.success' | t }}
