@@ -3941,8 +3941,9 @@ h1,
 }
 
 .variant-option h3 {
-    margin-bottom: 0px !important;
-    font-size: 15px;
+  margin-bottom: 0px !important;
+  margin-top: 3px !important;
+  font-size: 15px;
 }
 
 @media screen and (max-width: 750px) {
