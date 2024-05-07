@@ -1,48 +1,51 @@
 {{ 'component-image-with-text.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
-      .section-{{ section.id }}-padding {
-        padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-        padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
-      }
-
-      @media screen and (min-width: 750px) {
-        .section-{{ section.id }}-padding {
-          padding-top: {{ section.settings.padding_top }}px;
-          padding-bottom: {{ section.settings.padding_bottom }}px;
-        }
-      }
-
-      @media screen and (max-width: 750px) {
-        .mobile-reverse {
-          flex-direction: column-reverse;
-        }
-      }
-
-      @media screen and (min-width: 750px) {
-      #ContactSection {
-        align-items: flex-start !important;
-        margin-top: 1rem;
-      }
-      *:focus-visible {
-        outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
-        outline-offset: 0.3rem;
-        box-shadow:unset;
-      }
-      .image-with-text__content__new{
-            margin-top:3rem;
-              align-items: flex-start;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: center;
-  align-self: center;
-  padding: 4rem calc(4rem / var(--font-body-scale)) 5rem;
-  position: relative;
-  z-index: 1;
+  .section-{{ section.id }}-padding {
+  	padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+  	padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
   }
 
-    }
+  @media screen and (min-width: 750px) {
+  	.section-{{ section.id }}-padding {
+  	padding-top: {{ section.settings.padding_top }}px;
+  	padding-bottom: {{ section.settings.padding_bottom }}px;
+  	}
+  }
+
+  @media screen and (max-width: 750px) {
+  	.mobile-reverse {
+  	flex-direction: column-reverse;
+  	}
+  }
+
+  @media screen and (min-width: 750px) {
+  #ContactSection {
+  	align-items: flex-start !important;
+  	margin-top: 1rem;
+  }
+  *:focus-visible {
+  	outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
+  	outline-offset: 0.3rem;
+
+  	box-shadow:unset;
+  }
+  .image-with-text__content__new{
+   	margin-top:3rem;
+   	align-items: flex-start;
+   	display: flex;
+   	flex-direction: column;
+   	height: 100%;
+   	justify-content: center;
+   	align-self: center;
+   	padding: 4rem calc(4rem / var(--font-body-scale)) 5rem;
+   	position: relative;
+   	z-index: 1;
+   	}
+   	.subtitle--medium{
+   	  letter-spacing: 0.05rem;
+   	}
+   }
 {%- endstyle -%}
 
 {%- liquid
@@ -50,6 +53,7 @@
   if section.index == 1
     assign fetch_priority = 'high'
   endif
+
   if section.settings.color_scheme == section.settings.section_color_scheme and section.settings.content_layout == 'no-overlap'
     assign remove_color_classes = true
   endif
