@@ -92,6 +92,7 @@
                     {{ block.shopify_attributes }}
                   >
                     {{ block.settings.text }}
+                    {% if block.settings.maplinksvg %} {%- render 'icon-map-link' -%}{% endif %}
                   </div>
                 {%- when 'button' -%}
                   {%- if block.settings.button_label != blank -%}
@@ -498,6 +499,12 @@
           "type": "checkbox",
           "id": "mobilecenter2",
           "label": "Center Text on Mobile",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "maplinksvg",
+          "label": "Map Link SVG",
           "default": false
         },
         {
