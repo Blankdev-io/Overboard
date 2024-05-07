@@ -338,6 +338,11 @@
             "text_style": "body"
           }
         },
+        "newsletter_aUeyKA": {
+          "type": "newsletter",
+          "settings": {
+          }
+        },
         "caption_VC9x96": {
           "type": "caption",
           "settings": {
@@ -353,6 +358,7 @@
         "text_3QkY3x",
         "text_ecn83D",
         "text_H37REz",
+        "newsletter_aUeyKA",
         "caption_VC9x96"
       ],
       "settings": {
