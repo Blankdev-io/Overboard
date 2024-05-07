@@ -161,11 +161,11 @@
                   </div>
                 {%- when 'text3' -%}
                   <div
-                    class="letter-spacing image-with-text__text rte {% if block.settings.mobilecenter2 %} mobilecenter{% endif %} {{ block.settings.text_style }}"
+                    class="letter-spacing image-with-text__text rte OBimagewithtext{% if block.settings.mobilecenter2 %} mobilecenter{% endif %} {{ block.settings.text_style }}"
                     {{ block.shopify_attributes }}
                   >
                     {{ block.settings.text1 }}
-                    <div>
+                    <div style="diplay:inline-flex">
                       {{ block.settings.text2 }}
                       {% if block.settings.maplinksvg %}{%- render 'icon-map-link' -%}{% endif %}
                     </div>
@@ -632,7 +632,7 @@
     },
     {
       "type": "text3",
-      "name": "t:sections.image-with-text.blocks.text2.name",
+      "name": "text",
       "limit": 4,
       "settings": [
         {
