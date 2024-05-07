@@ -168,7 +168,9 @@
                     <div style="display: inline-flex;">
                       <a href="{{ block.settings.map_link_url }}">
                         {{ block.settings.text2 }}
-                        {%- render 'icon-map-link' -%}
+                        <a href="{{ block.settings.map_link_url }}">
+                          {%- render 'icon-map-link' -%}
+                        </a>
                       </a>
                     </div>
                   </div>
