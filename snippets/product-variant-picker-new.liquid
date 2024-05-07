@@ -166,26 +166,37 @@
           } else {
             option.addEventListener('click', function () {
               // Remove 'selected' class from all options in this specific card and add to the clicked one
-              variantOptions.forEach((option) => {
-                let variantType = option.getAttribute('data-option');
-                option.addEventListener('click', function () {
-                  // Reset selections for other variant types
-                  resetOtherVariants(variantType, variantOptions);
-
-                  // Mark current option as selected
-                  this.classList.add('selected');
-                  variantState[variantType] = {
-                    id: this.getAttribute('data-variant-id'),
-                    price: this.getAttribute('data-variant-price'),
-                  };
-
-                  // Update price and input value
-                  updatePriceAndVariantInput(variantState, productPrice, variantInput);
-
-                  // Optionally, update the availability of other options
-                  updateVariantAvailability(variantState, variantOptions);
-                });
+              variantOptions.forEach((opt) => {
+                if (opt.getAttribute('data-option') === variantType) {
+                  opt.classList.remove('selected');
+                }
               });
+              option.classList.add('selected');
+
+              variantState[variantType] = variantId;
+
+              console.log('Variant Input', variantInput); // Check if the input element is correctly selected
+              console.log('Variant State', variantState); // Check the current state of the variant picker
+
+              updateVariantAvailability(variantState, variantOptions);
+
+              if (variantInput) {
+                variantInput.value = variantId;
+              }
+
+              // Update the price display specific to this product card
+              if (productPrice && variantPrice) {
+                productPrice.textContent = variantPrice;
+              }
+              // Logic to update the hidden input field and product price display
+              // If all necessary variant types have been selected (e.g., both size and color)
+              // This logic could be customized based on what should trigger an update
+              // Check if all variant types have been selected
+              if (Object.keys(variantState).length === card.querySelectorAll('.variant-option').length) {
+                let finalVariantId = computeFinalVariantId(variantState);
+                variantInput.value = finalVariantId;
+                console.log('Final Variant ID:', finalVariantId);
+              }
             });
           }
         });
@@ -198,73 +209,29 @@
       });
     });
 
-    function resetOtherVariants(selectedType, options) {
-      options.forEach((opt) => {
-        if (opt.getAttribute('data-option') !== selectedType) {
-          opt.classList.remove('selected');
-          opt.disabled = false; // Enable all non-selected options before checking availability
-        }
-      });
-    }
-
-    function updatePriceAndVariantInput(variantState, priceDisplay, input) {
-      if (Object.keys(variantState).length === 2) {
-        // Assuming two types of variants e.g., Size and Color
-        let finalVariantId = computeFinalVariantId(variantState);
-        input.value = finalVariantId;
-        priceDisplay.textContent = variantState[Object.keys(variantState)[1]].price;
-        console.log('Final Variant ID:', finalVariantId);
-      }
-    }
-
-    function updateVariantAvailability(state, options) {
-      // Dummy functionality to show concept - this should be based on actual inventory logic
-      options.forEach((opt) => {
-        if (opt.getAttribute('data-option') !== Object.keys(state)[0]) {
-          if (!isVariantAvailable(state, opt)) {
-            opt.classList.add('variant-unavailable');
-            opt.disabled = true;
-          }
-        }
-      });
-    }
-
     function computeFinalVariantId(state) {
       // This function should ideally return the correct variant ID based on the current selections
       // For demonstration, we're just joining IDs, but you might need specific logic based on your backend
       return Object.values(state).join('-');
     }
 
-    function isVariantAvailable(currentState, variantOption) {
-      // Assuming currentState contains previously selected variant details
-      // and variantOption is the currently being checked option element.
-      const productId = variantOption.getAttribute('data-product-id');
-      const selectedOptions = {
-        [variantOption.getAttribute('data-option')]: variantOption.getAttribute('data-value'),
-        ...Object.keys(currentState).reduce((acc, key) => {
-          acc[key] = currentState[key].value;
-          return acc;
-        }, {}),
-      };
-
-      return fetch('/api/check-availability', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          productId: productId,
-          options: selectedOptions,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          return data.isAvailable;
-        })
-        .catch((error) => {
-          console.error('Error checking variant availability:', error);
-          return false; // Assume unavailable on error
-        });
+    function updateVariantAvailability(variantState, variantOptions) {
+      // This function should update the availability of other options based on the current state
+      // For demonstration, we're just disabling unavailable options
+      variantOptions.forEach((option) => {
+        if (
+          option.getAttribute('data-variant-id') &&
+          option.getAttribute('data-variant-id') !== variantState[option.getAttribute('data-option')]
+        ) {
+          option.classList.add('variant-unavailable');
+          option.style.pointerEvents = 'none';
+          option.style.opacity = '0.5';
+        } else {
+          option.classList.remove('variant-unavailable');
+          option.style.pointerEvents = 'auto';
+          option.style.opacity = '1';
+        }
+      });
     }
   </script>
 {%- endunless -%}
