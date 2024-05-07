@@ -246,14 +246,18 @@
       }
 
       // Compute the final Variant ID when all options are selected
+      console.log(
+        'Checking all options selected',
+        Object.keys(variantState).length,
+        document.querySelectorAll('.variant-option').length
+      );
       if (Object.keys(variantState).length === document.querySelectorAll('.variant-option').length) {
         const finalVariantId = computeFinalVariantId(variantState);
         console.log('Final Variant ID:', finalVariantId); // Debugging
-
         alert('Final Variant ID: ' + finalVariantId); // Debugging
-
         variantInput.value = finalVariantId;
       }
+
       // Here you need to ensure selectedOptionType and selectedOptionValue are derived from `option`.
       const selectedOptionType = option.getAttribute('data-option');
       const selectedOptionValue = option.getAttribute('data-value');
