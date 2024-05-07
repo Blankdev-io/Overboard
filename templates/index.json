@@ -325,7 +325,7 @@
           "type": "text",
           "settings": {
             "text": "<p><strong>CALL US<\/strong><\/p><p>+61 (02) 4225 0644<\/p>",
-            "mobilecenter2": false,
+            "mobilecenter2": true,
             "text_style": "body"
           }
         },
@@ -333,7 +333,7 @@
           "type": "text",
           "settings": {
             "text": "<p><strong>EMAIL<\/strong><\/p><p>info@overboardsurf.com.au<\/p>",
-            "mobilecenter2": false,
+            "mobilecenter2": true,
             "text_style": "body"
           }
         },
