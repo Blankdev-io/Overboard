@@ -132,9 +132,8 @@
   </form>
 
   <script>
-    let variantsAvailability = {};
     document.addEventListener('DOMContentLoaded', function() {
-      const variantsAvailability = {
+      let variantsAvailability = {
         {% for product in collections.all_products %}
           "{{ product.id }}": {
             {% for option in product.options_with_values %}
