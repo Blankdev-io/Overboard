@@ -132,6 +132,7 @@
   </form>
 
   <script>
+    let variantsAvailability = {};
     document.addEventListener('DOMContentLoaded', function() {
       let variantsAvailability = {
         {% for product in collections.all_products %}
