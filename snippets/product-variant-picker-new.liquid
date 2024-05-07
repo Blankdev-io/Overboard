@@ -133,105 +133,110 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      document.querySelectorAll('.product-card-wrapper').forEach(function (card) {
-        let productID = card.getAttribute('data-product-id');
-        let variantState = {};
-        let variantCount = card.querySelectorAll('.variant-option').length; // Count of variant types
-
-        let variantOptions = card.querySelectorAll('.variant-value[data-product-id="' + productID + '"]');
-        let productPrice = card.querySelector('.price-item[data-price-productid="' + productID + '"]');
-        let variantInput = card.querySelector('.product-variant-id[data-variant-productid="' + productID + '"]');
-
-        variantOptions.forEach((option) => {
-          let value = option.getAttribute('data-value');
-          let variantType = option.getAttribute('data-option');
-          let variantId = option.getAttribute('data-variant-id');
-          let variantPrice = option.getAttribute('data-variant-price');
-
-          // Set up the variant map
-          if (variantMap.colors[value]) {
-            option.style.backgroundColor = variantMap.colors[value];
-          } else if (variantMap.sizes[value]) {
-            option.textContent = variantMap.sizes[value];
-            option.classList.add('text-type');
-          } else {
-            option.textContent = value;
-            option.classList.add('text-type');
-          }
-
-          if (!variantId) {
-            option.classList.add('variant-unavailable');
-            option.style.pointerEvents = 'none';
-            option.style.opacity = '0.5';
-          } else {
-            option.addEventListener('click', function () {
-              // Remove 'selected' class from all options in this specific card and add to the clicked one
-              variantOptions.forEach((opt) => {
-                if (opt.getAttribute('data-option') === variantType) {
-                  opt.classList.remove('selected');
-                }
-              });
-              option.classList.add('selected');
-
-              variantState[variantType] = variantId;
-
-              console.log('Variant Input', variantInput); // Check if the input element is correctly selected
-              console.log('Variant State', variantState); // Check the current state of the variant picker
-
-              updateVariantAvailability(variantState, variantOptions);
-
-              if (variantInput) {
-                variantInput.value = variantId;
-              }
-
-              // Update the price display specific to this product card
-              if (productPrice && variantPrice) {
-                productPrice.textContent = variantPrice;
-              }
-              // Logic to update the hidden input field and product price display
-              // If all necessary variant types have been selected (e.g., both size and color)
-              // This logic could be customized based on what should trigger an update
-              // Check if all variant types have been selected
-              if (Object.keys(variantState).length === card.querySelectorAll('.variant-option').length) {
-                let finalVariantId = computeFinalVariantId(variantState);
-                variantInput.value = finalVariantId;
-                console.log('Final Variant ID:', finalVariantId);
-              }
-            });
-          }
-        });
-
-        // Automatically select the first available variant
-        const firstAvailableVariant = card.querySelector('.variant-value:not(.variant-unavailable)');
-        if (firstAvailableVariant) {
-          firstAvailableVariant.click();
-        }
-      });
+      initializeProductCards();
     });
 
-    function computeFinalVariantId(state) {
-      // This function should ideally return the correct variant ID based on the current selections
-      // For demonstration, we're just joining IDs, but you might need specific logic based on your backend
-      return Object.values(state).join('-');
+    function initializeProductCards() {
+      document.querySelectorAll('.product-card-wrapper').forEach(setupProductCard);
     }
 
-    function updateVariantAvailability(variantState, variantOptions) {
-      // This function should update the availability of other options based on the current state
-      // For demonstration, we're just disabling unavailable options
-      variantOptions.forEach((option) => {
-        if (
-          option.getAttribute('data-variant-id') &&
-          option.getAttribute('data-variant-id') !== variantState[option.getAttribute('data-option')]
-        ) {
-          option.classList.add('variant-unavailable');
-          option.style.pointerEvents = 'none';
-          option.style.opacity = '0.5';
-        } else {
-          option.classList.remove('variant-unavailable');
-          option.style.pointerEvents = 'auto';
-          option.style.opacity = '1';
+    function setupProductCard(card) {
+      const productID = card.getAttribute('data-product-id');
+      const variantState = {};
+      const variantOptions = card.querySelectorAll('.variant-value[data-product-id="' + productID + '"]');
+      const productPrice = card.querySelector('.price-item[data-price-productid="' + productID + '"]');
+      const variantInput = card.querySelector('.product-variant-id[data-variant-productid="' + productID + '"]');
+
+      variantOptions.forEach((option) =>
+        setupVariantOption(option, variantState, variantOptions, productPrice, variantInput, card)
+      );
+
+      selectFirstAvailableVariant(card);
+    }
+
+    function setupVariantOption(option, variantState, variantOptions, productPrice, variantInput, card) {
+      const value = option.getAttribute('data-value');
+      const variantType = option.getAttribute('data-option');
+      const variantId = option.getAttribute('data-variant-id');
+      const variantPrice = option.getAttribute('data-variant-price');
+
+      styleVariantOption(option, value);
+
+      if (!variantId) {
+        markOptionAsUnavailable(option);
+      } else {
+        option.addEventListener('click', function () {
+          updateSelections(
+            option,
+            variantType,
+            variantId,
+            variantOptions,
+            variantState,
+            variantInput,
+            productPrice,
+            card
+          );
+        });
+      }
+    }
+
+    function styleVariantOption(option, value) {
+      if (variantMap.colors[value]) {
+        option.style.backgroundColor = variantMap.colors[value];
+      } else if (variantMap.sizes[value]) {
+        option.textContent = variantMap.sizes[value];
+        option.classList.add('text-type');
+      } else {
+        option.textContent = value;
+        option.classList.add('text-type');
+      }
+    }
+
+    function markOptionAsUnavailable(option) {
+      option.classList.add('variant-unavailable');
+      option.style.pointerEvents = 'none';
+      option.style.opacity = '0.5';
+    }
+
+    function updateSelections(
+      option,
+      variantType,
+      variantId,
+      variantOptions,
+      variantState,
+      variantInput,
+      productPrice,
+      card
+    ) {
+      variantOptions.forEach((opt) => {
+        if (opt.getAttribute('data-option') === variantType) {
+          opt.classList.remove('selected');
         }
       });
+      option.classList.add('selected');
+
+      variantState[variantType] = variantId;
+      variantInput.value = variantId;
+
+      if (productPrice && variantPrice) {
+        productPrice.textContent = variantPrice;
+      }
+
+      if (Object.keys(variantState).length === variantOptions.length) {
+        const finalVariantId = computeFinalVariantId(variantState);
+        variantInput.value = finalVariantId;
+      }
+    }
+
+    function selectFirstAvailableVariant(card) {
+      const firstAvailableVariant = card.querySelector('.variant-value:not(.variant-unavailable)');
+      if (firstAvailableVariant) {
+        firstAvailableVariant.click();
+      }
+    }
+
+    function computeFinalVariantId(state) {
+      return Object.values(state).join('-');
     }
   </script>
 {%- endunless -%}
