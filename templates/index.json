@@ -307,14 +307,14 @@
           "settings": {
             "text": "<p><strong>OPENING HOURS<\/strong><\/p><p>Monday - Friday: 9:00am - 5:30pm<\/p><p>Saturday: 9:00am - 4:00pm<\/p><p>Sunday: 10:00am - 4:00pm<\/p>",
             "mobilecenter2": true,
-            "maplinksvg": false,
             "text_style": "body"
           }
         },
-        "text_3QkY3x": {
-          "type": "text",
+        "text3_kdnYXd": {
+          "type": "text3",
           "settings": {
-            "text": "<p><strong>LOCATION<\/strong><\/p><p><a href=\"https:\/\/maps.app.goo.gl\/mMrdh7FkSmboRBuH9\" target=\"_blank\" title=\"https:\/\/maps.app.goo.gl\/mMrdh7FkSmboRBuH9\">94 Flinders St Wollongong NSW 2500<\/a><\/p>",
+            "text1": "<p><strong>LOCATION<\/strong><\/p>",
+            "text2": "<p><a href=\"https:\/\/maps.app.goo.gl\/mMrdh7FkSmboRBuH9\" target=\"_blank\" title=\"https:\/\/maps.app.goo.gl\/mMrdh7FkSmboRBuH9\">94 Flinders St Wollongong NSW 2500<\/a><\/p>",
             "mobilecenter2": false,
             "maplinksvg": true,
             "text_style": "body"
@@ -325,7 +325,6 @@
           "settings": {
             "text": "<p><strong>CALL US<\/strong><\/p><p>+61 (02) 4225 0644<\/p>",
             "mobilecenter2": false,
-            "maplinksvg": false,
             "text_style": "body"
           }
         },
@@ -334,7 +333,6 @@
           "settings": {
             "text": "<p><strong>EMAIL<\/strong><\/p><p>info@overboardsurf.com.au<\/p>",
             "mobilecenter2": false,
-            "maplinksvg": false,
             "text_style": "body"
           }
         },
@@ -355,7 +353,7 @@
       "block_order": [
         "heading_xFFd67",
         "text_Phgjed",
-        "text_3QkY3x",
+        "text3_kdnYXd",
         "text_ecn83D",
         "text_H37REz",
         "newsletter_aUeyKA",
