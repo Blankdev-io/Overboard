@@ -255,30 +255,43 @@
       updateVariantAvailability(card, variantType, productID);
     }
 
-    function updateVariantAvailability(card, selectedOptionType, productID) {
+    function updateVariantAvailability(card, selectedOptionType, productID, variantState) {
       console.log('Updating variant availability for:', variantsAvailability[productID]);
-      console.log('Product ID:', productID);
-      console.log('Card:', card);
-      console.log('Card:', card.querySelector('.variant-value'));
       const options = variantsAvailability[productID];
+      const allOptionTypes = Object.keys(options);
 
-      console.log('Options:', options);
-      console.log('Selected option type:', selectedOptionType);
-      for (let optionType in options) {
+      // Get all combinations of selections available for the non-selected option types
+      allOptionTypes.forEach((optionType) => {
         if (optionType !== selectedOptionType) {
-          for (let value in options[optionType]) {
-            const optionElement = card.querySelector(
-              `.variant-value[data-option="${optionType}"][data-value="${value}"]`
-            );
-            console.log('Option Element:', optionElement);
-            if (optionElement) {
-              const isAvailable = options[optionType][value].available;
-              optionElement.classList.toggle('variant-unavailable', !isAvailable);
-              optionElement.style.pointerEvents = isAvailable ? 'auto' : 'none';
+          const elements = card.querySelectorAll(`.variant-value[data-option="${optionType}"]`);
+          elements.forEach((element) => {
+            const value = element.getAttribute('data-value');
+            let isAvailable = false;
+
+            // Check if there's any variant that matches this option's value with current selected options
+            for (const variant of options[optionType][value]) {
+              if (isVariantAvailable(variant, variantState, optionType, value)) {
+                isAvailable = true;
+                break;
+              }
             }
-          }
+
+            element.classList.toggle('variant-unavailable', !isAvailable);
+            element.style.pointerEvents = isAvailable ? 'auto' : 'none';
+          });
+        }
+      });
+    }
+
+    function isVariantAvailable(variant, variantState, currentOptionType, currentValue) {
+      let matches = true;
+      for (let [type, value] of Object.entries(variantState)) {
+        if (type !== currentOptionType && variant.options[type] !== value) {
+          matches = false;
+          break;
         }
       }
+      return matches && variant.options[currentOptionType] === currentValue && variant.available;
     }
 
     function selectFirstAvailableVariant(card) {
