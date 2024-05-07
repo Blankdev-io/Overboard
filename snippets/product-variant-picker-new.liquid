@@ -248,8 +248,11 @@
       // Compute the final Variant ID when all options are selected
       if (Object.keys(variantState).length === document.querySelectorAll('.variant-option').length) {
         const finalVariantId = computeFinalVariantId(variantState);
-        variantInput.value = finalVariantId;
         console.log('Final Variant ID:', finalVariantId); // Debugging
+
+        alert('Final Variant ID: ' + finalVariantId); // Debugging
+
+        variantInput.value = finalVariantId;
       }
       // Here you need to ensure selectedOptionType and selectedOptionValue are derived from `option`.
       const selectedOptionType = option.getAttribute('data-option');
@@ -293,6 +296,8 @@
     function computeFinalVariantId(variantState) {
       // Assume you have a mapping or function to convert the selected options to a final variant index
       let optionsArray = Object.keys(variantState).map((key) => parseInt(variantState[key]));
+      console.log('Options Array for Index Calculation:', optionsArray); // Log the options array before passing to index calculation
+
       return optionsToVariantIndex(optionsArray);
     }
 
@@ -309,6 +314,7 @@
       }
       addcumulator += options[options.length - 1];
       return addcumulator;
+      console.log('Computed Variant Index:', addcumulator); // Log the computed index
     }
   </script>
 {%- endunless -%}
