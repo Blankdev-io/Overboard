@@ -14,6 +14,10 @@
     }
 
     @media screen and (max-width: 750px) {
+  .signup-input {
+  	    width: 154px;
+      margin-top: 1rem;
+  }
     	.mobile-reverse {
     	flex-direction: column-reverse;
     	}
@@ -234,7 +238,7 @@
                           id="NewsletterForm--{{ section.id }}"
                           type="email"
                           name="contact[email]"
-                          class=""
+                          class="signup-input"
                           value="{{ form.email }}"
                           aria-required="true"
                           autocorrect="off"
