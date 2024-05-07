@@ -131,6 +131,13 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
+      const form = document.querySelector('form');
+      form.addEventListener('submit', function (e) {
+        const variantInput = document.querySelector('.product-variant-id[data-variant-productid]');
+        console.log('Submitting variant ID:', variantInput.value);
+        // e.preventDefault(); // Uncomment this during testing to prevent form submission
+      });
+
       document.querySelectorAll('.product-card-wrapper').forEach(function (card) {
         let productID = card.getAttribute('data-product-id');
         let variantState = {};
