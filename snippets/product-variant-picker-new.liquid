@@ -133,7 +133,7 @@
     document.addEventListener('DOMContentLoaded', function () {
       const form = document.querySelector('form');
       form.addEventListener('submit', function (e) {
-        const variantInput = document.querySelector('.product-variant-id[data-variant-productid]');
+        let variantInput = card.querySelector('.product-variant-id[data-variant-productid="' + productID + '"]');
         console.log('Submitting variant ID:', variantInput.value);
 
         // Prevent form from submitting to the server so you can read the log
@@ -143,81 +143,80 @@
         // Uncomment the next line to proceed with the form submission after your checks
         // form.submit();
       });
-  
 
-          document.querySelectorAll('.product-card-wrapper').forEach(function (card) {
-            let productID = card.getAttribute('data-product-id');
-            let variantState = {};
+      document.querySelectorAll('.product-card-wrapper').forEach(function (card) {
+        let productID = card.getAttribute('data-product-id');
+        let variantState = {};
 
-            let variantOptions = card.querySelectorAll('.variant-value[data-product-id="' + productID + '"]');
-            let productPrice = card.querySelector('.price-item[data-price-productid="' + productID + '"]');
-            let variantInput = card.querySelector('.product-variant-id[data-variant-productid="' + productID + '"]');
+        let variantOptions = card.querySelectorAll('.variant-value[data-product-id="' + productID + '"]');
+        let productPrice = card.querySelector('.price-item[data-price-productid="' + productID + '"]');
+        let variantInput = card.querySelector('.product-variant-id[data-variant-productid="' + productID + '"]');
 
-            variantOptions.forEach((option) => {
-              let value = option.getAttribute('data-value');
-              let variantType = option.getAttribute('data-option');
-              let variantId = option.getAttribute('data-variant-id');
-              let variantPrice = option.getAttribute('data-variant-price');
+        variantOptions.forEach((option) => {
+          let value = option.getAttribute('data-value');
+          let variantType = option.getAttribute('data-option');
+          let variantId = option.getAttribute('data-variant-id');
+          let variantPrice = option.getAttribute('data-variant-price');
 
-              // Set up the variant map
-              if (variantMap.colors[value]) {
-                option.style.backgroundColor = variantMap.colors[value];
-              } else if (variantMap.sizes[value]) {
-                option.textContent = variantMap.sizes[value];
-                option.classList.add('text-type');
-              } else {
-                option.textContent = value;
-                option.classList.add('text-type');
+          // Set up the variant map
+          if (variantMap.colors[value]) {
+            option.style.backgroundColor = variantMap.colors[value];
+          } else if (variantMap.sizes[value]) {
+            option.textContent = variantMap.sizes[value];
+            option.classList.add('text-type');
+          } else {
+            option.textContent = value;
+            option.classList.add('text-type');
+          }
+
+          if (!variantId) {
+            option.classList.add('variant-unavailable');
+            option.style.pointerEvents = 'none';
+            option.style.opacity = '0.5';
+          } else {
+            option.addEventListener('click', function () {
+              // Remove 'selected' class from all options in this specific card and add to the clicked one
+              variantOptions.forEach((opt) => {
+                if (opt.getAttribute('data-option') === variantType) {
+                  opt.classList.remove('selected');
+                }
+              });
+              option.classList.add('selected');
+
+              variantState[variantType] = variantId;
+
+              console.log('Variant Input', variantInput); // Check if the input element is correctly selected
+              console.log('Variant State', variantState); // Check the current state of the variant picker
+
+              if (variantInput) {
+                variantInput.value = variantId;
               }
 
-              if (!variantId) {
-                option.classList.add('variant-unavailable');
-                option.style.pointerEvents = 'none';
-                option.style.opacity = '0.5';
-              } else {
-                option.addEventListener('click', function () {
-                  // Remove 'selected' class from all options in this specific card and add to the clicked one
-                  variantOptions.forEach((opt) => {
-                    if (opt.getAttribute('data-option') === variantType) {
-                      opt.classList.remove('selected');
-                    }
-                  });
-                  option.classList.add('selected');
+              // Update the price display specific to this product card
+              if (productPrice && variantPrice) {
+                productPrice.textContent = variantPrice;
+              }
+              // Logic to update the hidden input field and product price display
+              // If all necessary variant types have been selected (e.g., both size and color)
+              // This logic could be customized based on what should trigger an update
+              if (Object.keys(variantState).length === card.querySelectorAll('.variant-option').length) {
+                // Example logic to set the hidden input field
+                // Could use the last selected variantId or a generated ID from combining all selections
+                variantInput.value = variantId; // or a custom function to generate a unified ID
 
-                  variantState[variantType] = variantId;
-
-                  console.log('Variant Input', variantInput); // Check if the input element is correctly selected
-                  console.log('Variant State', variantState); // Check the current state of the variant picker
-
-                  if (variantInput) {
-                    variantInput.value = variantId;
-                  }
-
-                  // Update the price display specific to this product card
-                  if (productPrice && variantPrice) {
-                    productPrice.textContent = variantPrice;
-                  }
-                  // Logic to update the hidden input field and product price display
-                  // If all necessary variant types have been selected (e.g., both size and color)
-                  // This logic could be customized based on what should trigger an update
-                  if (Object.keys(variantState).length === card.querySelectorAll('.variant-option').length) {
-                    // Example logic to set the hidden input field
-                    // Could use the last selected variantId or a generated ID from combining all selections
-                    variantInput.value = variantId; // or a custom function to generate a unified ID
-
-                    // Example logic to update the displayed price
-                    productPrice.textContent = variantPrice;
-                  }
-                });
+                // Example logic to update the displayed price
+                productPrice.textContent = variantPrice;
               }
             });
-
-            // Automatically select the first available variant
-            const firstAvailableVariant = card.querySelector('.variant-value:not(.variant-unavailable)');
-            if (firstAvailableVariant) {
-              firstAvailableVariant.click();
-            }
-          });
+          }
         });
+
+        // Automatically select the first available variant
+        const firstAvailableVariant = card.querySelector('.variant-value:not(.variant-unavailable)');
+        if (firstAvailableVariant) {
+          firstAvailableVariant.click();
+        }
+      });
+    });
   </script>
 {%- endunless -%}
