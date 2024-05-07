@@ -134,6 +134,7 @@
       document.querySelectorAll('.product-card-wrapper').forEach(function (card) {
         let productID = card.getAttribute('data-product-id');
         let variantState = {};
+        let variantCount = card.querySelectorAll('.variant-option').length; // Count of variant types
 
         let variantOptions = card.querySelectorAll('.variant-value[data-product-id="' + productID + '"]');
         let productPrice = card.querySelector('.price-item[data-price-productid="' + productID + '"]');
