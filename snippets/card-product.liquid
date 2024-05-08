@@ -206,10 +206,10 @@
           >
             <script>
   // Log product tags and availability
-  console.log("Product Tags: {{ product.tags | join: ', ' }}");
-  console.log("Product Available: {{ product.available }}");
+  console.log("Product Tags: {{ card_product.tags | join: ', ' }}");
+  console.log("Product Available: {{ card_product.available }}");
 </script>
-            {%- if product.tags contains 'Sale' -%}
+            {%- if card_product.tags contains 'Sale' -%}
               <div style="display: flex;align-items: center;height: 31px;gap: 10px;padding: 4px;background: #980000;width: 69px;">
                 <p style="font-size: 2rem;font-weight: 700;text-align: left;color: #fff;margin: 0;">SALE</p>
 
@@ -227,7 +227,7 @@
               </div>
             
               {%- else -%}
-    {%- unless product.available -%}
+    {%- unless card_product.available -%}
               <div style="display: flex;align-items: center;height: 31px;gap: 10px;padding: 4px;background: #333333;width: 119px;">
                 <p style="font-size: 2rem;font-weight: 700;text-align: left;color: #fff;margin: 0;">SOLD OUT</p>
 
