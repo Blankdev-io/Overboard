@@ -199,25 +199,34 @@
           </div>
           <div
             style="
-              position: absolute;
-              right: 4px !important;
-            display:inline-flex;
+                position: absolute;
+                right: 4px !important;
+              display:inline-flex;
             "
           >
-            <script>
-  // Log product tags and availability
-              {% assign lowercase_tags = card_product.tags | join: ' ' | downcase %}
+            {% assign lowercase_tags = card_product.tags | join: ' ' | downcase %}
 
-  console.log("Product Tags: {{ lowercase_tags }}");
-  console.log("Product Available: {{ card_product.available }}");
-</script>
-            {%- if lowercase_tags contains 'sale' -%}
-              <div style="display: flex;align-items: center;height: 31px;gap: 10px;padding: 4px;background: #980000;width: 69px;">
-                <p style="font-size: 2rem;font-weight: 700;text-align: left;color: #fff;margin: 0;">SALE</p>
-
-
+            {%- unless card_product.available -%}
+              <div style="display: flex; align-items: center; height: 31px; gap: 10px; padding: 4px; background: #333333; width: 119px;">
+                <p style="font-size: 2rem; font-weight: 700; text-align: left; color: #fff; margin: 0;">SOLD OUT</p>
               </div>
-                            <svg
+              <svg
+                width="16"
+                height="31"
+                viewBox="0 0 16 31"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style="flex-grow: 0; flex-shrink: 0;"
+                preserveAspectRatio="none"
+              >
+                <path d="M0 31V2.34848V0L16 15.5L0 31Z" fill="#333333"></path>
+              </svg>
+            {%- else %}
+              {%- if lowercase_tags contains 'sale' -%}
+                <div style="display: flex; align-items: center; height: 31px; gap: 10px; padding: 4px; background: #980000; width: 69px;">
+                  <p style="font-size: 2rem; font-weight: 700; text-align: left; color: #fff; margin: 0;">SALE</p>
+                </div>
+                <svg
                   width="16"
                   height="31"
                   viewBox="0 0 16 31"
@@ -228,26 +237,8 @@
                 >
                   <path d="M0 31V2.34848V0L16 15.5L0 31Z" fill="#980000"></path>
                 </svg>
-              {%- else -%}
-    {%- unless card_product.available -%}
-              <div style="display: flex;align-items: center;height: 31px;gap: 10px;padding: 4px;background: #333333;width: 119px;">
-                <p style="font-size: 2rem;font-weight: 700;text-align: left;color: #fff;margin: 0;">SOLD OUT</p>
-
-
-              </div>
-                      <svg
-                  width="16"
-                  height="31"
-                  viewBox="0 0 16 31"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  style="flex-grow: 0; flex-shrink: 0;"
-                  preserveAspectRatio="none"
-                >
-                  <path d="M0 31V2.34848V0L16 15.5L0 31Z" fill="#333333"></path>
-                </svg>
-      {%-  endunless -%}
-            {%- endif -%}
+              {%- endif -%}
+            {%- endunless -%}
           </div>
         {%- endif -%}
       </div>
