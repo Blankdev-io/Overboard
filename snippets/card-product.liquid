@@ -219,7 +219,9 @@
                   <path d="M0 31V2.34848V0L16 15.5L0 31Z" fill="#980000"></path>
                 </svg>
               </div>
-{% elsif not product.available -%}
+            {
+              {%- else -%}}
+    {%- unless product.available -%}
               <div style="display: flex;align-items: center;height: 31px;gap: 10px;padding: 4px;background: #333333;width: 69px;">
                 <p style="font-size: 2rem;font-weight: 700;text-align: left;color: #fff;margin: 0;">SOLD OUT</p>
 
@@ -235,6 +237,7 @@
                   <path d="M0 31V2.34848V0L16 15.5L0 31Z" fill="#333333"></path>
                 </svg>
               </div>
+      {%-  endunless -%}}
             {%- endif -%}
           </div>
         {%- endif -%}
