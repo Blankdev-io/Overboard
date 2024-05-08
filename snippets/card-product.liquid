@@ -206,10 +206,12 @@
           >
             <script>
   // Log product tags and availability
-  console.log("Product Tags: {{ card_product.tags | join: ', ' }}");
+              {% assign lowercase_tags = card_product.tags | join: ' ' | downcase %}
+
+  console.log("Product Tags: {{ lowercase_tags }}");
   console.log("Product Available: {{ card_product.available }}");
 </script>
-            {%- if card_product.tags contains 'sale' -%}
+            {%- if lowercase_tags contains 'sale' -%}
               <div style="display: flex;align-items: center;height: 31px;gap: 10px;padding: 4px;background: #980000;width: 69px;">
                 <p style="font-size: 2rem;font-weight: 700;text-align: left;color: #fff;margin: 0;">SALE</p>
 
