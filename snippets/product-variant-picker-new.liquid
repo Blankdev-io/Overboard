@@ -11,19 +11,20 @@
 {% endcomment %}
 {% style %}
   .variant-value-new {
-    width: 29px;
-    height: 29px;
+    width: 25px;
+    height: 25px;
     font-size: 11px;
   }
 
   .variant-option {
-    height: 60px;
+    height: 35px;
+    background-color: black;
   }
 
   .variant-value {
     cursor: pointer;
-    border: 2px solid transparent; /* Default state with transparent border */
-    padding: 5px; /* Padding for better visual appearance */
+    border-radius: 20px;
+    padding: 4px; /* Padding for better visual appearance */
     margin: 2px; /* Space between variant options */
   }
 
@@ -33,23 +34,21 @@
 
   .variant-value.variant-unavailable {
     cursor: not-allowed;
-    background-color: #f0f0f0;
-    color: #ccc;
-    border-color: #ccc;
-    opacity: 0.5;
+    background-color: black;
+    color: white;
+    border-color: white;
+                      opacity: 0.9 !important;
+
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M11.2616 10.8637C11.3144 10.9164 11.3441 10.988 11.3441 11.0627C11.3441 11.1373 11.3144 11.2089 11.2616 11.2616C11.2089 11.3144 11.1373 11.3441 11.0627 11.3441C10.988 11.3441 10.9164 11.3144 10.8637 11.2616L6.00016 6.39813L1.13664 11.2616C1.08387 11.3144 1.01229 11.3441 0.937656 11.3441C0.863023 11.3441 0.791446 11.3144 0.738672 11.2616C0.685898 11.2089 0.65625 11.1373 0.65625 11.0627C0.65625 10.988 0.685898 10.9164 0.738672 10.8637L5.60219 6.00016L0.738672 1.13664C0.685898 1.08387 0.65625 1.01229 0.65625 0.937656C0.65625 0.863023 0.685898 0.791446 0.738672 0.738672C0.791446 0.685898 0.863023 0.65625 0.937656 0.65625C1.01229 0.65625 1.08387 0.685898 1.13664 0.738672L6.00016 5.60219L10.8637 0.738672C10.8898 0.712541 10.9208 0.691813 10.955 0.677671C10.9891 0.663529 11.0257 0.65625 11.0627 0.65625C11.0996 0.65625 11.1362 0.663529 11.1703 0.677671C11.2045 0.691813 11.2355 0.712541 11.2616 0.738672C11.2878 0.764803 11.3085 0.795825 11.3226 0.829967C11.3368 0.864109 11.3441 0.900702 11.3441 0.937656C11.3441 0.974611 11.3368 1.0112 11.3226 1.04535C11.3085 1.07949 11.2878 1.11051 11.2616 1.13664L6.39813 6.00016L11.2616 10.8637Z' fill='white'/%3E%3C/svg%3E");
+
+    background-repeat: no-repeat;
+
+
+    background-position: center;
+    background-size: contain;
   }
-  .variant-value.variant-unavailable {
-    background-image: linear-gradient(
-      45deg,
-      #f0f0f0 25%,
-      #ccc 25%,
-      #ccc 50%,
-      #f0f0f0 50%,
-      #f0f0f0 75%,
-      #ccc 75%,
-      #ccc 100%
-    );
-    background-size: 10px 10px;
+  .button:after {
+    border-radius: 0 !important;
   }
 {% endstyle %}
 {%- unless product.has_only_default_variant -%}
@@ -60,9 +59,34 @@
     novalidate="novalidate"
     style="width: 100% !important;"
   >
+    <!-- Add to Cart Button -->
+    <button
+      type="submit"
+      name="add"
+      style="
+                      min-height: 30px;
+            font-size: 9px;
+            background-color: black !important;
+            border-radius: 0 !important;
+            font-weight: 700;
+            color: white !important;
+            height: 30px !important;
+            text-transform: uppercase;
+            -webkit-transform-origin-x: left;
+            justify-content: left;
+            padding: 0;
+            padding-left: 5px;
+        }
+      "
+      class="overboard-buy-button button button--full-width button--secondary product-form__cart-submit"
+      {% unless product.available %}
+        disabled
+      {% endunless %}
+    >
+      <span>{{ 'products.product.add_to_cart' | t }}</span>
+    </button>
     {% for option in product.options_with_values %}
       <div class="variant-option" data-option-name="{{ option.name }}">
-        <h3>{{ option.name }}</h3>
         <div class="variant-values" style="display: inline-flex;">
           {% for value in option.values %}
             {% assign variant_found = false %}
@@ -77,8 +101,18 @@
                   data-variant-price="{{ variant.price | money }}"
                   data-available="true"
                   data-variant-image="{{ variant.featured_image | default: product.featured_image | img_url: 'master' }}"
+                  style="position: relative; padding: 5px; cursor: pointer; font-size: 8px !important;"
                 >
-                  <!-- Placeholder for the value, filled by JavaScript -->
+                  <!-- Custom styling for different options -->
+                  {% if option.name == 'Color' %}
+                    <div
+                      style="width: 20px; height: 20px; background-color: {{ value | handleize }}; border-radius: 50%;"
+                    ></div>
+                  {% elsif option.name == 'Size' %}
+                    <span style="font-size: 8px; color:white;">{{ value }}</span>
+                  {% else %}
+                    <span>{{ value }}</span>
+                  {% endif %}
                 </div>
                 {% assign variant_found = true %}
                 {% break %}
@@ -92,15 +126,17 @@
                 data-option="{{ option.name }}"
                 data-variant-id="{{ variant.id }}"
                 data-available="false"
-                data-variant-image="{{ variant.featured_image | default: product.featured_image | img_url: 'master' }}"
+                style="
+                  text-decoration: unset;
+                  position: relative;
+                  padding: 5px;
+                  cursor: not-allowed;
+                  font-size: 8px !important;
+                  pointer-events: none;
+                "
               >
-                <!-- Placeholder for the value, filled by JavaScript -->
-
-                {% if option.name == 'Size' %}
-                  {{ value }}
-                {% else %}
-                  <p>x</p>
-                {% endif %}
+                <!-- Unavailable options -->
+                {{ value }}
               </div>
             {% endunless %}
           {% endfor %}
@@ -110,213 +146,5 @@
 
     <!-- Hidden input to store selected variant ID -->
     <input type="hidden" name="id" class="product-variant-id" data-variant-productid="{{ product.id }}">
-
-    <!-- Add to Cart Button -->
-    <button
-      type="submit"
-      name="add"
-      style="
-        min-height: 30px; font-size: 14px; background-color: black !important;
-        color: white !important;
-        height: 30px !important;
-        text-transform: uppercase;
-        font-family: Plus Jakarta Sans, sans-serif !important;
-      "
-      class="overboard-buy-button button button--full-width button--secondary product-form__cart-submit"
-      {% unless product.available %}
-        disabled
-      {% endunless %}
-    >
-      <span>{{ 'products.product.add_to_cart' | t }}</span>
-    </button>
   </form>
-
-  <script>
-    let variantsAvailability = {};
-    let uniqueVariantTypes = new Set(); // Moved inside each product card setup
-
-    document.addEventListener('DOMContentLoaded', function () {
-      initializeProductCards();
-    });
-
-    function initializeProductCards() {
-      document.querySelectorAll('.product-card-wrapper').forEach(setupProductCard);
-    }
-
-    function setupProductCard(card) {
-      let productID = card.getAttribute('data-product-id');
-      let variantState = {};
-      let variantOptions = card.querySelectorAll('.variant-value[data-product-id="' + productID + '"]');
-      let productPrice = card.querySelector('.price-item[data-price-productid="' + productID + '"]');
-      let variantInput = card.querySelector('.product-variant-id[data-variant-productid="' + productID + '"]');
-
-      variantsAvailability[productID] = {}; // Initialize state for this product
-
-      variantOptions.forEach((option) =>
-        setupVariantOption(option, variantState, variantOptions, productPrice, variantInput, card, productID)
-      );
-
-      selectFirstAvailableVariant(card);
-    }
-
-    function setupVariantOption(option, variantState, variantOptions, productPrice, variantInput, card, productID) {
-      let value = option.getAttribute('data-value');
-      let variantType = option.getAttribute('data-option');
-      let variantId = option.getAttribute('data-variant-id');
-      let variantPrice = option.getAttribute('data-variant-price');
-      let isAvailable = option.getAttribute('data-available') === 'true';
-
-      // Update the global variants availability object
-      if (!variantsAvailability[productID][variantType]) {
-        variantsAvailability[productID][variantType] = {};
-      }
-      variantsAvailability[productID][variantType][value] = {
-        available: isAvailable,
-        variantId: variantId,
-        variantPrice: variantPrice,
-      };
-
-      styleVariantOption(option, value);
-
-      if (!variantId) {
-        markOptionAsUnavailable(option);
-      } else {
-        option.addEventListener('click', function () {
-          updateSelections(
-            option,
-            variantType,
-            variantId,
-            variantPrice,
-            variantOptions,
-            variantState,
-            variantInput,
-            productPrice,
-            card,
-            productID,
-            uniqueVariantTypes
-          );
-        });
-      }
-    }
-
-    function styleVariantOption(option, value) {
-      if (variantMap.colors[value]) {
-        option.style.backgroundColor = variantMap.colors[value];
-      } else if (variantMap.sizes[value]) {
-        option.textContent = variantMap.sizes[value];
-        option.classList.add('text-type');
-      } else {
-        option.textContent = value;
-        option.classList.add('text-type');
-      }
-    }
-
-    function markOptionAsUnavailable(option) {
-      option.classList.add('variant-unavailable');
-      option.style.pointerEvents = 'none';
-      option.style.opacity = '0.5';
-    }
-
-    function updateSelections(
-      option,
-      variantType,
-      variantId,
-      variantPrice,
-      variantOptions,
-      variantState,
-      variantInput,
-      productPrice,
-      card,
-      productID,
-      uniqueVariantTypes
-    ) {
-      variantOptions.forEach((opt) => {
-        if (opt.getAttribute('data-option') === variantType) {
-          opt.classList.remove('selected');
-        }
-      });
-      option.classList.add('selected');
-
-      variantState[variantType] = variantId;
-      variantInput.value = variantId;
-
-      console.log('Current unique variant types:', Array.from(uniqueVariantTypes));
-
-      if (productPrice && variantPrice) {
-        productPrice.textContent = variantPrice;
-      }
-
-      console.log('Checking all options selected', Object.keys(variantState).length, uniqueVariantTypes.size);
-
-      // Compute the final Variant ID when all options are selected
-      if (Object.keys(variantState).length === uniqueVariantTypes.size) {
-        const finalVariantId = computeFinalVariantId(variantState);
-        console.log('Final Variant ID:', finalVariantId);
-        alert('Final Variant ID: ' + finalVariantId);
-        variantInput.value = finalVariantId;
-      }
-
-      // Here you need to ensure selectedOptionType and selectedOptionValue are derived from `option`.
-      const selectedOptionType = option.getAttribute('data-option');
-      const selectedOptionValue = option.getAttribute('data-value');
-      updateVariantAvailability(card, selectedOptionType, selectedOptionValue, productID);
-    }
-
-    function updateVariantAvailability(card, selectedOptionType, selectedOptionValue, productID) {
-      const options = variantsAvailability; // Assuming this is the root object you're working with
-
-      Object.keys(options).forEach((optionType) => {
-        if (optionType !== selectedOptionType) {
-          const elements = card.querySelectorAll(`.variant-value[data-option="${optionType}"]`);
-          elements.forEach((element) => {
-            const value = element.getAttribute('data-value');
-            const variantInfo = options[optionType][value];
-
-            console.log('Element:', element);
-            console.log('Variant Info:', variantInfo);
-            console.log('Selected Option Type:', selectedOptionType);
-
-            let isAvailable =
-              variantInfo &&
-              variantInfo.variantId === options[selectedOptionType][selectedOptionValue].variantId &&
-              variantInfo.available;
-
-            element.classList.toggle('variant-unavailable', !isAvailable);
-            element.style.pointerEvents = isAvailable ? 'auto' : 'none';
-          });
-        }
-      });
-    }
-
-    function selectFirstAvailableVariant(card) {
-      const firstAvailableVariant = card.querySelector('.variant-value:not(.variant-unavailable)');
-      if (firstAvailableVariant) {
-        firstAvailableVariant.click();
-      }
-    }
-
-    function computeFinalVariantId(variantState) {
-      // Assume you have a mapping or function to convert the selected options to a final variant index
-      let optionsArray = Object.keys(variantState).map((key) => parseInt(variantState[key]));
-      console.log('Options Array for Index Calculation:', optionsArray); // Log the options array before passing to index calculation
-
-      return optionsToVariantIndex(optionsArray);
-    }
-
-    function optionsToVariantIndex(options) {
-      // Translate your option selection to a variant index
-      let addcumulator = 0;
-      let multcumulator;
-      for (let i = 0; i < options.length - 1; i++) {
-        multcumulator = options[i];
-        for (let j = i + 1; j < optionSizes.length; j++) {
-          multcumulator *= optionSizes[j];
-        }
-        addcumulator += multcumulator;
-      }
-      addcumulator += options[options.length - 1];
-      return addcumulator;
-      console.log('Computed Variant Index:', addcumulator); // Log the computed index
-    }
-  </script>
 {%- endunless -%}
