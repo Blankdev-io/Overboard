@@ -16,7 +16,7 @@
           "type": "slide",
           "settings": {
             "media_type": "video",
-            "video": "shopify:\/\/files\/videos\/1-hero-banner-sharpeye-synergy 1080.mov",
+            "video": "shopify://files/videos/1-hero-banner-sharpeye-synergy 1080.mov",
             "description": "",
             "full_width": true,
             "heading": "synergy",
@@ -38,7 +38,7 @@
             "media_type": "image",
             "description": "",
             "full_width": false,
-            "image": "shopify:\/\/shop_images\/2-hero-banner-FCS-fins.png",
+            "image": "shopify://shop_images/2-hero-banner-FCS-fins.png",
             "heading": "FCS FINS",
             "heading_size": "h0",
             "subheading": "",
@@ -56,7 +56,7 @@
           "type": "slide",
           "settings": {
             "media_type": "video",
-            "video": "shopify:\/\/files\/videos\/34CF9DA42BAD42C9BA76E4CBFBEBB82B.mp4",
+            "video": "shopify://files/videos/34CF9DA42BAD42C9BA76E4CBFBEBB82B.mp4",
             "description": "",
             "full_width": true,
             "heading": "JS CARBOTUNE",
@@ -78,7 +78,7 @@
             "media_type": "image",
             "description": "",
             "full_width": false,
-            "image": "shopify:\/\/shop_images\/4-hero-banner-vissla-wetsuits.png",
+            "image": "shopify://shop_images/4-hero-banner-vissla-wetsuits.png",
             "heading": "VISSLA WETSUITS",
             "heading_size": "h0",
             "subheading": "",
@@ -113,7 +113,7 @@
           "settings": {
             "image": "logo1",
             "alttext": "Brand Image",
-            "url": "shopify:\/\/blogs\/news"
+            "url": "shopify://blogs/news"
           }
         },
         "df694f8d-fe81-4888-bda9-1166d951993a": {
@@ -214,7 +214,7 @@
         "template--17022770643186__151614d1-d5c0-4006-bb31-3638c6e51111-featured_collection-1": {
           "type": "featured_collection",
           "settings": {
-            "collection": "boards"
+            "collection": "boards1"
           }
         },
         "template--17022770643186__151614d1-d5c0-4006-bb31-3638c6e51111-featured_collection-2": {
@@ -314,7 +314,7 @@
         "text_Phgjed": {
           "type": "text",
           "settings": {
-            "text": "<p><strong>OPENING HOURS<\/strong><\/p><p>Monday - Friday: 9:00am - 5:30pm<\/p><p>Saturday: 9:00am - 4:00pm<\/p><p>Sunday: 10:00am - 4:00pm<\/p>",
+            "text": "<p><strong>OPENING HOURS</strong></p><p>Monday - Friday: 9:00am - 5:30pm</p><p>Saturday: 9:00am - 4:00pm</p><p>Sunday: 10:00am - 4:00pm</p>",
             "mobilecenter2": true,
             "text_style": "body"
           }
@@ -322,9 +322,9 @@
         "text3_kdnYXd": {
           "type": "text3",
           "settings": {
-            "text1": "<p><strong>LOCATION<\/strong><\/p>",
-            "map_link_url": "https:\/\/maps.app.goo.gl\/mMrdh7FkSmboRBuH9",
-            "text2": "<p><a href=\"https:\/\/maps.app.goo.gl\/mMrdh7FkSmboRBuH9\" target=\"_blank\" title=\"https:\/\/maps.app.goo.gl\/mMrdh7FkSmboRBuH9\">94 Flinders St Wollongong NSW 2500<\/a><\/p>",
+            "text1": "<p><strong>LOCATION</strong></p>",
+            "map_link_url": "https://maps.app.goo.gl/mMrdh7FkSmboRBuH9",
+            "text2": "<p><a href=\"https://maps.app.goo.gl/mMrdh7FkSmboRBuH9\" target=\"_blank\" title=\"https://maps.app.goo.gl/mMrdh7FkSmboRBuH9\">94 Flinders St Wollongong NSW 2500</a></p>",
             "mobilecenter2": true,
             "maplinksvg": true,
             "text_style": "body"
@@ -333,7 +333,7 @@
         "text_ecn83D": {
           "type": "text",
           "settings": {
-            "text": "<p><strong>CALL US<\/strong><\/p><p>+61 (02) 4225 0644<\/p>",
+            "text": "<p><strong>CALL US</strong></p><p>+61 (02) 4225 0644</p>",
             "mobilecenter2": true,
             "text_style": "body"
           }
@@ -341,7 +341,7 @@
         "text_H37REz": {
           "type": "text",
           "settings": {
-            "text": "<p><strong>EMAIL<\/strong><\/p><p>info@overboardsurf.com.au<\/p>",
+            "text": "<p><strong>EMAIL</strong></p><p>info@overboardsurf.com.au</p>",
             "mobilecenter2": true,
             "text_style": "body"
           }
@@ -370,7 +370,7 @@
         "caption_VC9x96"
       ],
       "settings": {
-        "image": "shopify:\/\/shop_images\/Frame_42.png",
+        "image": "shopify://shop_images/Frame_42.png",
         "height": "adapt",
         "desktop_image_width": "medium",
         "noright": true,
@@ -393,7 +393,7 @@
         ".Header__WidgetTitle-sc-17gc7x6-2.igfMeX {font-family: Plus Jakarta Sans, sans-serif !important; color: #000000; font-size: 23px !important;}"
       ],
       "settings": {
-        "custom_liquid": "<div class=\"elfsight-sapp-560f20ea-c955-451b-8ad0-4560d0a3bd9b\"><\/div>",
+        "custom_liquid": "<div class=\"elfsight-sapp-560f20ea-c955-451b-8ad0-4560d0a3bd9b\"></div>",
         "color_scheme": "",
         "padding_top": 40,
         "padding_bottom": 52
@@ -405,7 +405,7 @@
         "9086d593-e975-469b-9d12-0f70269a4551": {
           "type": "top-carousel-image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/401484460_18395754652003374_5054536302383283478_n.jpg",
+            "image": "shopify://shop_images/401484460_18395754652003374_5054536302383283478_n.jpg",
             "image_link": "",
             "img_width": 100
           }
@@ -413,7 +413,7 @@
         "db8cf30b-d865-461d-a17b-782ce862b8fa": {
           "type": "top-carousel-image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/407393850_1309128503078570_4072538404302219444_n.jpg",
+            "image": "shopify://shop_images/407393850_1309128503078570_4072538404302219444_n.jpg",
             "image_link": "",
             "img_width": 100
           }
@@ -421,7 +421,7 @@
         "9a88c949-f294-4931-bfc2-723314449b84": {
           "type": "top-carousel-image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/405764075_1590053808415464_4810523154212427302_n.jpg",
+            "image": "shopify://shop_images/405764075_1590053808415464_4810523154212427302_n.jpg",
             "image_link": "",
             "img_width": 100
           }
@@ -429,7 +429,7 @@
         "14db2f3a-b0c2-4c39-bdac-95ea97be52bf": {
           "type": "top-carousel-image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/405805011_739372538232839_89907033422350787_n.jpg",
+            "image": "shopify://shop_images/405805011_739372538232839_89907033422350787_n.jpg",
             "image_link": "",
             "img_width": 100
           }
@@ -437,7 +437,7 @@
         "421a4e7a-0bb1-43a2-8e5f-f11ad459ab2f": {
           "type": "top-carousel-image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/410179287_691776379600483_8951970996200362955_n.jpg",
+            "image": "shopify://shop_images/410179287_691776379600483_8951970996200362955_n.jpg",
             "image_link": "",
             "img_width": 100
           }
@@ -445,7 +445,7 @@
         "f3230174-a4c0-46a2-b0c1-3db7a11b0922": {
           "type": "top-carousel-image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/405115906_18394441276003374_7470561645883916127_n.jpg",
+            "image": "shopify://shop_images/405115906_18394441276003374_7470561645883916127_n.jpg",
             "image_link": "",
             "img_width": 100
           }
@@ -453,7 +453,7 @@
         "e031db82-13f6-4007-be63-3c26186119be": {
           "type": "bottom-carousel-image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/401897950_2421366938048703_1536928545612921462_n.jpg",
+            "image": "shopify://shop_images/401897950_2421366938048703_1536928545612921462_n.jpg",
             "image_link": "",
             "img_width": 100
           }
@@ -461,7 +461,7 @@
         "178ad27a-7643-47e9-acc3-b356eb1b655a": {
           "type": "bottom-carousel-image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/405266642_886274946000418_2784987349934295521_n.jpg",
+            "image": "shopify://shop_images/405266642_886274946000418_2784987349934295521_n.jpg",
             "image_link": "",
             "img_width": 100
           }
@@ -469,7 +469,7 @@
         "197972dc-1851-47e1-9ced-47512bb34b54": {
           "type": "bottom-carousel-image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/404263122_2023084421383301_4741641587114572229_n.jpg",
+            "image": "shopify://shop_images/404263122_2023084421383301_4741641587114572229_n.jpg",
             "image_link": "",
             "img_width": 100
           }
@@ -477,7 +477,7 @@
         "f215a9b2-594b-4bb4-b439-2c19bb182cf5": {
           "type": "bottom-carousel-image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/403465520_1456674581844982_6829029064607203692_n.jpg",
+            "image": "shopify://shop_images/403465520_1456674581844982_6829029064607203692_n.jpg",
             "image_link": "",
             "img_width": 100
           }
@@ -485,7 +485,7 @@
         "ea608541-948a-46b5-beb0-ed26b34638c3": {
           "type": "bottom-carousel-image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/403688300_701748291919444_9065422382085736648_n.jpg",
+            "image": "shopify://shop_images/403688300_701748291919444_9065422382085736648_n.jpg",
             "image_link": "",
             "img_width": 100
           }
@@ -493,7 +493,7 @@
         "392cddfa-bd14-493a-8feb-4a6035c6d900": {
           "type": "bottom-carousel-image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/403778212_309248385245788_7217634630302562975_n.jpg",
+            "image": "shopify://shop_images/403778212_309248385245788_7217634630302562975_n.jpg",
             "image_link": "",
             "img_width": 100
           }
